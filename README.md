@@ -12,8 +12,9 @@ Eventually will be published at https://mixolyde.github.io/mmolb-playoff-status/
 * Find a codeship replacement 
 * Update web code to latest Dart standards
 * Pull data from new sources
+* Update tiebreakers
+* Get all the yhe previous functionality working again
 * Figure out postseason calculations
-* Figure out new tiebreakers
 * Figure out what's up with tied records getting weird sim results
 * Postseason schedule
 * Handle postseason data live
@@ -22,12 +23,12 @@ Eventually will be published at https://mixolyde.github.io/mmolb-playoff-status/
 * Get a twitter account and button
 * Factor future schedule into magic numbers
 * Move project to a MMOLB-specific account on github
-* Reduce API calls during siesta
+* Reduce API calls during breaks
 
 ## Planned release schedule
 * v0.0.1 
 - [ ] Publish a broken site again
-- [ ] Update about page
+- [ ] Update About page info
 - [ ] Disable the rest
 
 * v0.0.2

@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:web/web.dart';
 import 'package:mmolb_playoff_status/site_objects.dart';
 
@@ -14,13 +16,13 @@ void populateWinsBehindTable(List<TeamStandings> subStandings, bool groupByDiv, 
   for (var row in standings){
     var trow = insertCommonCells(table, row);
     var cell = trow.insertCell(5);
-    cell.text = row.gamesPlayed.toString();    
+    cell.textContent = row.gamesPlayed.toString();    
     cell = trow.insertCell(6);
-    cell.text = (sitedata.gamesInSeason - row.gamesPlayed).toString();       
+    cell.textContent = (sitedata.gamesInSeason - row.gamesPlayed).toString();       
     cell = trow.insertCell(7);
-    cell.text = row.gbDiv;        
+    cell.textContent = row.gbDiv;        
     cell = trow.insertCell(8);
-    cell.text = row.gbWc;
+    cell.textContent = row.gbWc;
   }
   
   if(groupByDiv == true){
@@ -37,11 +39,11 @@ void populatePlayoffBracket(List<PlayoffBracketEntry> entries){
   
   // Set Leagues
   for (var s in ['brk-mu_1_2', 'brk-mu_2_1', 'brk-mu_2_2', 'brk-mu_3_1']) {
-    document.querySelector('#$s .brk-date')?.text = '${entries[0].subleague} League';
+    document.querySelector('#$s .brk-date')?.textContent = '${entries[0].subleague} League';
   }
   
   for (var s in ['brk-mu_1_7', 'brk-mu_2_3', 'brk-mu_2_4', 'brk-mu_3_2']) {
-    document.querySelector('#$s .brk-date')?.text = '${entries[2].subleague} League';
+    document.querySelector('#$s .brk-date')?.textContent = '${entries[2].subleague} League';
   }
   
   // Set Entries
@@ -64,7 +66,7 @@ void populatePlayoffBracket(List<PlayoffBracketEntry> entries){
     if (span == null){
       print('ERROR: span #${matchupIDs[index]} .brk-tteam .brk-tseed is null');
     } else {
-      span.text = getEntryText(top);
+      span.textContent = getEntryText(top);
       assignBracketClass(span, top);
     }
     
@@ -72,7 +74,7 @@ void populatePlayoffBracket(List<PlayoffBracketEntry> entries){
     if (span == null){
       print('ERROR: span #${matchupIDs[index]} .brk-bteam .brk-tseed is null');
     } else {
-      span.text = getEntryText(bottom);
+      span.textContent = getEntryText(bottom);
       assignBracketClass(span, bottom);
     }
     
@@ -84,9 +86,9 @@ void populatePlayoffBracket(List<PlayoffBracketEntry> entries){
     print('ERROR: span #brk-final-box .brk-tseed is null');
   } else {
     if (winner.teamNickname == 'TBD'){
-      span.text = 'TBD';
+      span.textContent = 'TBD';
     } else {
-      span.text = '(${winner.seed}) ${winner.teamNickname}';
+      span.textContent = '(${winner.seed}) ${winner.teamNickname}';
     }
   }
   
@@ -127,10 +129,10 @@ void populateChancesTable(List<TeamStandings> subStandings, bool groupByDiv, Sit
   for(var row in standings) {
     var trow = insertCommonCells(table, row);
     var cell = trow.insertCell(5);
-    cell.text = (sitedata.gamesInSeason - row.gamesPlayed).toString();  
+    cell.textContent = (sitedata.gamesInSeason - row.gamesPlayed).toString();  
     for(var i = 0; i < 5; i++){
       var cell = trow.insertCell(6 + i);
-      cell.text = row.po[i];
+      cell.textContent = row.po[i];
       switch (row.po[i]){
         case 'PT':
         case 'X':
@@ -193,7 +195,7 @@ void populatePostseasonTable(List<List<TeamStandings>> allStandings, bool groupB
     }
     for(var i = 0; i < psRounds; i++){
       var cell = trow.insertCell(6 + i);
-      cell.text = row.post[i];
+      cell.textContent = row.post[i];
       if(row.winning[4] == 'PT' || 
           (row.winning[2] == 'DNCD' && row.winning[3] == 'DNCD') ){
         cell.classList.add('redcell');
@@ -228,10 +230,10 @@ void populateWinningTable(List<TeamStandings> subStandings, bool groupByDiv, Sit
   for(var row in standings) {
     var trow = insertCommonCells(table, row);
     var cell = trow.insertCell(5);
-    cell.text = (sitedata.gamesInSeason - row.gamesPlayed).toString();      
+    cell.textContent = (sitedata.gamesInSeason - row.gamesPlayed).toString();      
     for(var i = 0; i < 5; i++){
       cell = trow.insertCell(6 + i);
-      cell.text = row.winning[i];
+      cell.textContent = row.winning[i];
       switch (row.winning[i]){
         case 'PT':
         case 'X':
@@ -269,10 +271,10 @@ void populatePartyTimeTable(List<TeamStandings> subStandings, bool groupByDiv, S
   for(var row in standings) {
     var trow = insertCommonCells(table, row);   
     var cell = trow.insertCell(5);
-    cell.text = (sitedata.gamesInSeason - row.gamesPlayed).toString();    
+    cell.textContent = (sitedata.gamesInSeason - row.gamesPlayed).toString();    
     for(var i = 0; i < 5; i++){
       var cell = trow.insertCell(6 + i);
-      cell.text = row.partytime[i];
+      cell.textContent = row.partytime[i];
       switch (row.partytime[i]){
         case 'PT':
         case 'X':
@@ -293,13 +295,14 @@ void populatePartyTimeTable(List<TeamStandings> subStandings, bool groupByDiv, S
 }
 
 void populateAboutPageData(List<List<TeamStandings>> subStandings){
-  var tbList = document.querySelector('#tiebreakerlist') as HTMLOListElement?;
+  HTMLOListElement? tbList = document.querySelector('#tiebreakerlist') as HTMLOListElement?;
   if(tbList == null){
     print('ERROR: OList #tiebreakerlist is null');
     return;
   }
 
-  tbList.children.clear();
+  tbList.replaceChildren(JSArray());
+
 
   var allStandings = <TeamStandings>[];
   allStandings.addAll(subStandings[0]);
@@ -308,8 +311,8 @@ void populateAboutPageData(List<List<TeamStandings>> subStandings){
   for(var favor = 0; favor < allStandings.length; favor++){
     var stand = allStandings.firstWhere((team) =>
       team.favor == favor);
-    var item = LIElement();
-    item.text = stand.nickname;
+    HTMLLIElement item = HTMLLIElement();
+    item.textContent = stand.nickname;
     tbList.children.add(item);
   }
       
@@ -317,24 +320,24 @@ void populateAboutPageData(List<List<TeamStandings>> subStandings){
 
 HTMLTableRowElement insertCommonCells(HTMLTableElement table, 
   TeamStandings row, {showLeague = false} ){
-  var trow = table.addRow();
-  var shortTeamLink = HTMLAnchorElement(
-    href:'https://www.blaseball.com/team/${row.id}')
-    ..text = row.nickname
+  var trow = table.insertRow();
+  HTMLAnchorElement shortTeamLink = HTMLAnchorElement()
+    ..href = 'https://www.blaseball.com/team/${row.id}'
+    ..textContent = row.nickname
     ..target = '_new';
-  var longTeamLink = HTMLAnchorElement(
-    href:'https://www.blaseball.com/team/${row.id}')
-    ..text = row.fullName
+  var longTeamLink = HTMLAnchorElement()
+    ..href = 'https://www.blaseball.com/team/${row.id}'
+    ..textContent = row.fullName
     ..target = '_new';  
   var emojiSpan = HTMLSpanElement();
   //print('Emoji string: ${row.emoji}');
   if(row.emoji.startsWith('0')){
-    emojiSpan.innerHtml = ' &#${row.emoji.substring(1, row.emoji.length)};';
+    emojiSpan.innerHTML = ' &#${row.emoji.substring(1, row.emoji.length)};'.toJS;
   } else if (row.nickname == 'Lift') {
     //stupid manual correction for one team with a weird character
-    emojiSpan.innerHtml = ' &#x1F3CB;';
+    emojiSpan.innerHTML = ' &#x1F3CB;'.toJS;
   } else {
-    emojiSpan.innerHtml = '  ';
+    emojiSpan.innerHTML = '  '.toJS;
   }
   
   var cell = trow.insertCell(0);
@@ -354,17 +357,17 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
   if(showLeague){
     leagueAdjust = 1;
     var cell = trow.insertCell(1);
-    cell.text = row.subleague;    
+    cell.textContent = row.subleague;    
   }
   cell = trow.insertCell(1 + leagueAdjust);
-  cell.text = row.division;
+  cell.textContent = row.division;
   cell = trow.insertCell(2 + leagueAdjust);
-  cell.text = (row.favor + 1).toString();
+  cell.textContent = (row.favor + 1).toString();
   cell = trow.insertCell(3 + leagueAdjust);
-  cell.text = row.wins.toString();
+  cell.textContent = row.wins.toString();
   var record = '${row.gamesPlayed - row.losses} - ${row.losses}';
   cell = trow.insertCell(4 + leagueAdjust);
-  cell.text = record;   
+  cell.textContent = record;   
 
   return trow;
 
@@ -373,7 +376,7 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
 void insertSeparatorRow(HTMLTableElement table, int row, int columns){
   var sepRow = table.insertRow(row);
   sepRow.insertCell(0)
-    ..text = '&nbsp;'
+    ..textContent = '&nbsp;'
     ..colSpan = columns
     ..classList.add('sepRow');  
 }

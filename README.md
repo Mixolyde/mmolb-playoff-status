@@ -11,6 +11,7 @@ Eventually will be published at https://mixolyde.github.io/mmolb-playoff-status/
 * Disable all the stuff that doesn't work
 * Find a codeship replacement 
 * Update web code to latest Dart standards
+* Update stat and simulation code to latest Dart standards 
 * Pull data from new sources
 * Update tiebreakers
 * Get all the yhe previous functionality working again

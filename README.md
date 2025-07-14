@@ -4,7 +4,7 @@
 An attempt to replicate [Playoff Status](http://playoffstatus.com)
  behavior, but for [MMOLB](https://mmolb.com).
  
-Eventually will be published at https://mixolyde.github.io/mmolb-playoff-status/
+Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 
 ## TODO
 * Replace references to Blaseball with MMOLB

@@ -29,7 +29,8 @@ List<List<TeamStandings>> subStandings = [];
 
 void main() {
 
-  String envBucket = js.globalContext.getProperty('envBucket'.toJS) ?? "";
+  //String envBucket = js.globalContext.getProperty('envBucket'.toJS) ?? "";
+  String envBucket = "";
   s3.envBucket = envBucket;
   
   print ("EnvBucket: $envBucket");

@@ -1,5 +1,3 @@
-part of database_api;
-
 class CompletePostseason {
   final String id;
   final Playoffs playoffs;

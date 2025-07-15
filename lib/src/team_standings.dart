@@ -1,5 +1,3 @@
-part of site_objects;
-
 class TeamStandings {
   final String id;
   final String fullName;

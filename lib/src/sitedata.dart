@@ -1,5 +1,3 @@
-part of site_objects;
-
 class SiteData {
   final String lastUpdate;
   final int season;

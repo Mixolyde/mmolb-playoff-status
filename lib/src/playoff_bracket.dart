@@ -1,5 +1,3 @@
-part of site_objects;
-
 class PlayoffBracketEntry{
   //position in display bracket [0-18]
   final int position;

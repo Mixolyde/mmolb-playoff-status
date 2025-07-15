@@ -1,17 +1,15 @@
-library database_api;
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:web/web.dart';
 //import 'eventsource/eventsource.dart';
 
-part 'src/game.dart';
-part 'src/league.dart';
-part 'src/playoffs.dart';
-part 'src/simulationdata.dart';
-part 'src/standings.dart';
-part 'src/team.dart';
-part 'src/tiebreakers.dart';
+export 'src/game.dart';
+export 'src/league.dart';
+export 'src/playoffs.dart';
+export 'src/simulationdata.dart';
+export 'src/standings.dart';
+export 'src/team.dart';
+export 'src/tiebreakers.dart';
 
 String apiUrl = 'https://api.blaseball.com/';
 String api2Url = 'https://api2.blaseball.com/';

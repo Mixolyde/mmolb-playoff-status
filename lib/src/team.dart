@@ -1,5 +1,3 @@
-part of database_api;
-
 class Team {
   final String id;
   final String fullName;

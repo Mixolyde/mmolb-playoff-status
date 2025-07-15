@@ -1,4 +1,4 @@
-part of database_api;
+import 'package:mmolb_playoff_status/src/tiebreakers.dart';
 
 /*
   api2

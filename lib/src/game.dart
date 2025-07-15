@@ -1,5 +1,3 @@
-part of database_api;
-
 /*
   'id': 'dc767612-eb77-417b-8d2f-c21eb4dab868',
   'basesOccupied': [],

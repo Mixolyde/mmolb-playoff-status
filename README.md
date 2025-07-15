@@ -14,7 +14,8 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 * Update stat and simulation code to latest Dart standards 
 * Pull data from new sources
 * Update tiebreakers
-* Get all the yhe previous functionality working again
+* Get all the the previous functionality working again
+* Replace http get calls with read calls
 * Figure out postseason calculations
 * Figure out what's up with tied records getting weird sim results
 * Postseason schedule

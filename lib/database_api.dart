@@ -1,7 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:web/web.dart';
+import 'package:http/http.dart';
 //import 'eventsource/eventsource.dart';
+import 'package:mmolb_playoff_status/src/league.dart';
+import 'package:mmolb_playoff_status/src/playoffs.dart';
+import 'package:mmolb_playoff_status/src/simulationdata.dart';
+import 'package:mmolb_playoff_status/src/team.dart';
 
 export 'src/game.dart';
 export 'src/league.dart';
@@ -53,7 +57,7 @@ Future<Division> getDivision(String id) async {
 }
 */
 
-Future<League> getLeague({deep:false}) async {
+Future<League> getLeague({bool deep = false}) async {
   var response = await get(Uri.parse(_simulationDataUrl));
   var responsejson = json.decode(response.body);
   Map<String, dynamic> simJson = responsejson['simData'];

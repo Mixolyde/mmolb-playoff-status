@@ -29,7 +29,7 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 
 ## Planned release schedule
 * v0.0.1 
-- [ ] Publish a broken site again
+- [x] Publish a broken site again
 - [ ] Update About page info
 - [ ] Disable the rest
 

@@ -76,6 +76,6 @@ class TeamStandings {
   };
   
   @override
-  String toString() => 'Standings: $nickname - $subleague $division ($wins - $losses) Favor: #$favor';
+  String toString() => 'Standings: $fullName:$nickname - $subleague $division ($wins - $losses) Favor: #$favor';
   
 }

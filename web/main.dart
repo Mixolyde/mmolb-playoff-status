@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:js_interop' as js;
-import 'dart:js_interop_unsafe';
 import 'package:cron/cron.dart';
 import 'package:intl/intl.dart';
 import 'package:web/web.dart';
@@ -51,7 +50,6 @@ void main() {
     }
 
     selectLeagueButton();
-    selectGroupByDivision();
     selectViewButton();
     redisplayData();
     
@@ -61,7 +59,7 @@ void main() {
     var cron = Cron();
     //Every five minutes from 20-50
     cron.schedule(Schedule.parse('1,21,26,31,36,41,46,51 * * * *'), () async {
-      if(!(document.hidden ?? true) && 
+      if(!document.hidden && 
         currentView.activeView != View.about){
         await refreshData();
       }
@@ -80,8 +78,8 @@ Future<void> getContentPages() async {
   
   setUpdateTime(sitedata);
   
-  document.querySelector('#pickLeague1')!.text = sitedata.subnicknames[0];
-  document.querySelector('#pickLeague2')!.text = sitedata.subnicknames[1];
+  (document.querySelector('#pickLeague1')! as HTMLElement).innerText = sitedata.subnicknames[0];
+  (document.querySelector('#pickLeague2')! as HTMLElement).innerText = sitedata.subnicknames[1];
 
   if(sitedata.leagueWildCards || sitedata.leagueMildCards){
     winsbehindHTML = await HttpRequest.getString('winsbehind_wc.html');
@@ -91,14 +89,14 @@ Future<void> getContentPages() async {
   } else {
     winsbehindHTML = await HttpRequest.getString('winsbehind.html');
     setMainContent(winsbehindHTML);
-    magicHTML = await HttpRequest.getString('magic.html');
-    postseasonHTML = await HttpRequest.getString('postseason.html');
+    //magicHTML = await HttpRequest.getString('magic.html');
+    //postseasonHTML = await HttpRequest.getString('postseason.html');
   }
   aboutHTML = await HttpRequest.getString('about.html');
-  bracketHTML = await HttpRequest.getString('bracket.html');
-  chancesNotesHTML = await HttpRequest.getString('chancesNotes.html');
-  partytimeNotesHTML = await HttpRequest.getString('partytimeNotes.html');
-  winningNotesHTML = await HttpRequest.getString('winningNotes.html');
+  //bracketHTML = await HttpRequest.getString('bracket.html');
+  //chancesNotesHTML = await HttpRequest.getString('chancesNotes.html');
+  //partytimeNotesHTML = await HttpRequest.getString('partytimeNotes.html');
+  //winningNotesHTML = await HttpRequest.getString('winningNotes.html');
 }
 
 Future<void> refreshData() async{
@@ -149,7 +147,7 @@ Future<void> refreshData() async{
 void setUpdateTime(SiteData sitedata){
   var local = DateFormat("yyyy-MM-ddTHH:mm:ssZ")
     .parseUTC(sitedata.lastUpdate).toLocal();
-  document.querySelector('#lastUpdate')!.text = 
+  (document.querySelector('#lastUpdate')! as HTMLElement).innerText = 
     DateFormat("MMMM d, h:mm a").format(local);
 }
 
@@ -158,22 +156,18 @@ void setNavButtonStates(){
   case View.about:
     (document.querySelector('#pickLeague1')! as HTMLButtonElement).disabled = true;
     (document.querySelector('#pickLeague2')! as HTMLButtonElement).disabled = true;
-    (document.querySelector('#doGroup')! as HTMLButtonElement).disabled = true;  
     break;    
   case View.postseason:
     (document.querySelector('#pickLeague1')! as HTMLButtonElement).disabled = true;
     (document.querySelector('#pickLeague2')! as HTMLButtonElement).disabled = true;  
-    (document.querySelector('#doGroup')! as HTMLButtonElement).disabled = false;
     break; 
   case View.bracket:
     (document.querySelector('#pickLeague1')! as HTMLButtonElement).disabled = true;
-    (document.querySelector('#pickLeague2')! as HTMLButtonElement).disabled = true;
-    (document.querySelector('#doGroup')! as HTMLButtonElement).disabled = true;  
+    (document.querySelector('#pickLeague2')! as HTMLButtonElement).disabled = true; 
     break;    
   default:
     (document.querySelector('#pickLeague1')! as HTMLButtonElement).disabled = false;
     (document.querySelector('#pickLeague2')! as HTMLButtonElement).disabled = false;
-    (document.querySelector('#doGroup')! as HTMLButtonElement).disabled = false;
     break;
   }  
   
@@ -183,10 +177,10 @@ void setSeasonDay(SiteData sitedata){
   var season = sitedata.season + 1;
   var day = sitedata.day + 1;
   if(day <= sitedata.daysInSeason){
-    document.querySelector('.wkinfo')!.text = 
+    (document.querySelector('.wkinfo')! as HTMLElement).innerText = 
       'Season $season: Day $day';
   } else {
-    document.querySelector('.wkinfo')!.text = 
+    (document.querySelector('.wkinfo')! as HTMLElement).innerText = 
       'Season $season: Day $day (Postseason)';    
   }
 }
@@ -205,7 +199,6 @@ void addListeners(){
   document.querySelector('#viewPostseasonChances')!.onClick.listen(selectViewPost);
   //document.querySelector('#viewPlayoffBracket')!.onClick.listen(selectViewBracket);
   
-  document.querySelector('#doGroup')!.onClick.listen(clickGroupByDivision);
 }
 
 void handlePopState(PopStateEvent event){
@@ -217,7 +210,6 @@ void handlePopState(PopStateEvent event){
       ).map((k, v) => MapEntry<String, dynamic>(k.toString(), v));
     currentView = CurrentView.fromJson(jsonState);
     selectLeagueButton();
-    selectGroupByDivision();
     selectViewButton();
     redisplayData();
   }
@@ -400,30 +392,6 @@ void selectViewButton(){
 
 }
 
-void clickGroupByDivision(MouseEvent event) {
-
-  if(currentView.groupByDiv){
-    currentView.groupByDiv = false;
-    selectGroupByDivision();
-  } else {
-    currentView.groupByDiv = true;
-    selectGroupByDivision();
-  }
-  
-  saveCurrentView();
-  pushViewState();
-  redisplayData();
-}
-
-void selectGroupByDivision(){
-  var groupButton = document.querySelector('#doGroup')!;
-  if(currentView.groupByDiv){
-    groupButton.classList.add('nav-button-active');
-  } else {
-    groupButton.classList.remove('nav-button-active');
-  }
-}
-
 void redisplayData(){
   switch(currentView.activeView){
   case View.about:
@@ -432,34 +400,34 @@ void redisplayData(){
     break;
   case View.winsbehind:
     setMainContent(winsbehindHTML);
-    document.querySelector('#leagueTitle')!.textContent = 
+    (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
       sitedata.subnicknames[currentView.activeLeague]; 
     populateWinsBehindTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
     break;
   case View.chances:
     setMainContent(magicHTML);
-    document.querySelector('#leagueTitle')!.textContent = 
+    (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
       '${sitedata.subnicknames[currentView.activeLeague]} League Playoff Chances';
     populateChancesTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
     setNotes(chancesNotesHTML);
     break;    
   case View.winningmagic:
     setMainContent(magicHTML);
-    document.querySelector('#leagueTitle')!.textContent =
+    (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
       '${sitedata.subnicknames[currentView.activeLeague]} League Winning Magic Numbers';
     populateWinningTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
     setNotes(winningNotesHTML);
     break;
   case View.partytimemagic:
     setMainContent(magicHTML);
-    document.querySelector('#leagueTitle')!.textContent =
+    (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
       '${sitedata.subnicknames[currentView.activeLeague]} League Party Time Magic Numbers';
     populatePartyTimeTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
     setNotes(partytimeNotesHTML);
     break;
   case View.postseason:
     setMainContent(postseasonHTML);
-    document.querySelector('#leagueTitle')!.textContent =
+    (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
       'MMOLB Post Season Chances';
     populatePostseasonTable(subStandings, currentView.groupByDiv, sitedata);
     break;  

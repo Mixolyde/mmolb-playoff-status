@@ -1,7 +1,7 @@
 # Local temp Files
 *.swp
 token.txt
-
+.vscode
 
 # See https://www.dartlang.org/guides/libraries/private-files
 

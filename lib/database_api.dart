@@ -6,6 +6,7 @@ import 'package:mmolb_playoff_status/src/league.dart';
 import 'package:mmolb_playoff_status/src/playoffs.dart';
 import 'package:mmolb_playoff_status/src/simulationdata.dart';
 import 'package:mmolb_playoff_status/src/team.dart';
+import 'package:mmolb_playoff_status/src/timedata.dart';
 
 export 'src/game.dart';
 export 'src/league.dart';
@@ -13,17 +14,21 @@ export 'src/playoffs.dart';
 export 'src/simulationdata.dart';
 export 'src/standings.dart';
 export 'src/team.dart';
-export 'src/tiebreakers.dart';
+export 'src/timedata.dart';
 
+String mmolbApiUrl = 'https://mmolb.com/api/';
+
+final String _timeUrl = '${mmolbApiUrl}time';
+
+// Old Blaseball URLs
 String apiUrl = 'https://api.blaseball.com/';
-String api2Url = 'https://api2.blaseball.com/';
 String authToken = Platform.environment['AUTH_TOKEN'] ?? "";
 
 final String _dbUrl = '${apiUrl}database/';
 final String _playoffsUrl = '${_dbUrl}playoffs?number=';
 final String _playoffMatchupsUrl = '${_dbUrl}playoffMatchups?ids=';
 final String _playoffRoundUrl = '${_dbUrl}playoffRound?id=';
-final String _simulationDataUrl = '${api2Url}sim';
+final String _simulationDataUrl = '${apiUrl}sim';
 
 //final String _ilbId = 'd3182b4d-91b6-4b4e-96a5-13d69e0043b7';
 //final String _scheduleUrl = apiUrl + 'api/games/schedule/';
@@ -41,6 +46,13 @@ Future<Response> getWithAuthToken(String url) {
     Uri.parse(url),
     headers: {'Cookie': authToken}
   );
+}
+
+Future<TimeData> getTimeData() async {
+  //print("time url: $_timeUrl");
+  var timeResponse = await get(Uri.parse(_timeUrl));
+  print('Time Response body: ${timeResponse.body}');
+  return TimeData.fromJson(json.decode(timeResponse.body));
 }
 
 /*
@@ -127,7 +139,7 @@ Future<List<Team>> getTeams() async {
 Future<Map<String,List<Team>>> getTeamsByDivision(String seasonId, int day) async {
   //https://api2.blaseball.com/seasons/cd1b6714-f4de-4dfc-a030-851b3459d8d1/days/0/teams
   var response = await getWithAuthToken(
-    "${api2Url}seasons/$seasonId/days/$day/teams");
+    "${apiUrl}seasons/$seasonId/days/$day/teams");
   //print(response.body);
   print(response.statusCode);
   Map<String,dynamic> divisions = json.decode(response.body);

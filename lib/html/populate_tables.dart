@@ -9,13 +9,13 @@ void populateWinsBehindTable(List<TeamStandings> subStandings, bool groupByDiv, 
   
   for (var row in standings){
     var trow = insertCommonCells(table, row);
-    var cell = trow.insertCell(5);
+    var cell = trow.insertCell(3);
     cell.innerText = row.gamesPlayed.toString();    
-    cell = trow.insertCell(6);
+    cell = trow.insertCell(4);
     cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();       
-    cell = trow.insertCell(7);
+    cell = trow.insertCell(5);
     cell.innerText = row.gbDiv;        
-    cell = trow.insertCell(8);
+    cell = trow.insertCell(6);
     cell.innerText = row.gbWc;
   }
   
@@ -296,7 +296,7 @@ void populateAboutPageData(List<List<TeamStandings>> subStandings){
 
 HTMLTableRowElement insertCommonCells(HTMLTableElement table, 
   TeamStandings row, {showLeague = false} ){
-  print('Inserting TeamStandings for $row');
+  //print('Inserting TeamStandings for $row');
   var trow = table.insertRow();
   HTMLAnchorElement shortTeamLink = HTMLAnchorElement();
   shortTeamLink.href = 'https://www.blaseball.com/team/${row.id}';
@@ -306,9 +306,6 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
   longTeamLink.href = 'https://www.blaseball.com/team/${row.id}';
   longTeamLink.innerText = row.fullName;
   longTeamLink.target = '_new';  
-  print(longTeamLink);
-  print(longTeamLink.innerText);
-  print(shortTeamLink);
   var emojiSpan = HTMLSpanElement();
   //print('Emoji string: ${row.emoji}');
   if(row.emoji.startsWith('0')){
@@ -326,6 +323,7 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
   wideSpan.classList.add('wide');
   var narrowSpan = HTMLSpanElement();
   narrowSpan.classList.add('narrow');
+
   wideSpan.appendChild(longTeamLink);
   narrowSpan.appendChild(shortTeamLink);
   
@@ -339,14 +337,11 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
     var cell = trow.insertCell(1);
     cell.innerText = row.subleague;    
   }
+
   cell = trow.insertCell(1 + leagueAdjust);
-  cell.innerText = row.division;
-  cell = trow.insertCell(2 + leagueAdjust);
-  cell.innerText = (row.favor + 1).toString();
-  cell = trow.insertCell(3 + leagueAdjust);
   cell.innerText = row.wins.toString();
   var record = '${row.gamesPlayed - row.losses} - ${row.losses}';
-  cell = trow.insertCell(4 + leagueAdjust);
+  cell = trow.insertCell(2 + leagueAdjust);
   cell.innerText = record;   
 
   return trow;

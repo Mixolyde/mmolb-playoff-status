@@ -46,15 +46,15 @@ class SiteData {
   }
   
   Map toJson() => {
-      'lastUpdate': lastUpdate,
-      'season':     season,
-      'day':        day,
-      'sub1id':     sub1id,
-      'sub1name':   sub1name,
-      'sub2id':     sub2id,
-      'sub2name':   sub2name,
-      'attributes': attributes,
-      'daysInSeason': daysInSeason,
+      'lastUpdate':    lastUpdate,
+      'season':        season,
+      'day':           day,
+      'sub1id':        sub1id,
+      'sub1name':      sub1name,
+      'sub2id':        sub2id,
+      'sub2name':      sub2name,
+      'attributes':    attributes,
+      'daysInSeason':  daysInSeason,
       'gamesInSeason': gamesInSeason,
   };
   

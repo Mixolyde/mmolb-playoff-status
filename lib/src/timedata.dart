@@ -46,7 +46,7 @@ class TimeData {
   @override
   String toString() => 'Phase Times: $phaseTimes, Season Day: $seasonDay, Season Number: $seasonNumber, Season Status: $seasonStatus';
   
-    bool get inPostSeason => seasonDay >= daysInRegularSeason();
+  bool get inPostSeason => seasonDay >= daysInRegularSeason();
   
   static int daysInRegularSeason() {
     return 239;

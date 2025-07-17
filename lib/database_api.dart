@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:mmolb_playoff_status/src/league.dart';
 import 'package:mmolb_playoff_status/src/playoffs.dart';
 import 'package:mmolb_playoff_status/src/simulationdata.dart';
+import 'package:mmolb_playoff_status/src/statedata.dart';
 import 'package:mmolb_playoff_status/src/team.dart';
 import 'package:mmolb_playoff_status/src/timedata.dart';
 
@@ -13,11 +14,13 @@ export 'src/league.dart';
 export 'src/playoffs.dart';
 export 'src/simulationdata.dart';
 export 'src/standings.dart';
+export 'src/statedata.dart';
 export 'src/team.dart';
 export 'src/timedata.dart';
 
 String mmolbApiUrl = 'https://mmolb.com/api/';
 
+final String _stateUrl = '${mmolbApiUrl}state';
 final String _timeUrl = '${mmolbApiUrl}time';
 
 // Old Blaseball URLs
@@ -48,12 +51,22 @@ Future<Response> getWithAuthToken(String url) {
   );
 }
 
+Future<StateData> getStateData() async {
+  //print("state url: $_stateUrl");
+  var stateResponse = await get(Uri.parse(_stateUrl));
+  print('state Response body: ${stateResponse.body}');
+  return StateData.fromJson(json.decode(stateResponse.body));
+}
+
 Future<TimeData> getTimeData() async {
   //print("time url: $_timeUrl");
   var timeResponse = await get(Uri.parse(_timeUrl));
   print('Time Response body: ${timeResponse.body}');
   return TimeData.fromJson(json.decode(timeResponse.body));
 }
+
+// get greater league division data: https://mmolb.com/api/league/6805db0cac48194de3cd3fe4
+// get team data: https://mmolb.com/api/team/6805db0cac48194de3cd3ff7
 
 /*
 Future<Standings> getStandings() async {

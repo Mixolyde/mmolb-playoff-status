@@ -79,8 +79,8 @@ Future<void> getContentPages() async {
   
   setUpdateTime(sitedata);
   
-  (document.querySelector('#pickLeague1')! as HTMLElement).innerText = sitedata.subnicknames[0];
-  (document.querySelector('#pickLeague2')! as HTMLElement).innerText = sitedata.subnicknames[1];
+  (document.querySelector('#pickLeague1')! as HTMLElement).innerText = sitedata.subNicknames[0];
+  (document.querySelector('#pickLeague2')! as HTMLElement).innerText = sitedata.subNicknames[1];
 
   if(sitedata.leagueWildCards || sitedata.leagueMildCards){
     winsbehindHTML = await read(Uri.parse('winsbehind_wc.html'));
@@ -402,27 +402,27 @@ void redisplayData(){
   case View.winsbehind:
     setMainContent(winsbehindHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
-      sitedata.subnicknames[currentView.activeLeague]; 
+      sitedata.subNicknames[currentView.activeLeague]; 
     populateWinsBehindTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
     break;
   case View.chances:
     setMainContent(magicHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
-      '${sitedata.subnicknames[currentView.activeLeague]} League Playoff Chances';
+      '${sitedata.subNicknames[currentView.activeLeague]} League Playoff Chances';
     populateChancesTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
     setNotes(chancesNotesHTML);
     break;    
   case View.winningmagic:
     setMainContent(magicHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
-      '${sitedata.subnicknames[currentView.activeLeague]} League Winning Magic Numbers';
+      '${sitedata.subNicknames[currentView.activeLeague]} League Winning Magic Numbers';
     populateWinningTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
     setNotes(winningNotesHTML);
     break;
   case View.partytimemagic:
     setMainContent(magicHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
-      '${sitedata.subnicknames[currentView.activeLeague]} League Party Time Magic Numbers';
+      '${sitedata.subNicknames[currentView.activeLeague]} League Party Time Magic Numbers';
     populatePartyTimeTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
     setNotes(partytimeNotesHTML);
     break;

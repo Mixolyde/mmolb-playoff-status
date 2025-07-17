@@ -11,9 +11,7 @@ class SiteData {
   final int gamesInSeason;
 
   
-  List<String> get subnicknames => 
-    //[sub1name.split(' ')[1],
-    //sub2name.split(' ')[1]];
+  List<String> get subNicknames => 
     [sub1name, sub2name];
   
   SiteData.fromMap({this.lastUpdate = '', 

@@ -307,6 +307,7 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
   longTeamLink.innerText = row.fullName;
   longTeamLink.target = '_new';  
   print(longTeamLink);
+  print(longTeamLink.innerText);
   print(shortTeamLink);
   var emojiSpan = HTMLSpanElement();
   //print('Emoji string: ${row.emoji}');
@@ -325,12 +326,12 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
   wideSpan.classList.add('wide');
   var narrowSpan = HTMLSpanElement();
   narrowSpan.classList.add('narrow');
-  wideSpan.children.add(longTeamLink);
-  narrowSpan.children.add(shortTeamLink);
+  wideSpan.appendChild(longTeamLink);
+  narrowSpan.appendChild(shortTeamLink);
   
-  cell.children.add(wideSpan);
-  cell.children.add(narrowSpan);
-  cell.children.add(emojiSpan);
+  cell.appendChild(wideSpan);
+  cell.appendChild(narrowSpan);
+  cell.appendChild(emojiSpan);
   
   var leagueAdjust = 0;
   if(showLeague){

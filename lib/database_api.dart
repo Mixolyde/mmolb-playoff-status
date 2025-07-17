@@ -19,22 +19,21 @@ String apiUrl = 'https://api.blaseball.com/';
 String api2Url = 'https://api2.blaseball.com/';
 String authToken = Platform.environment['AUTH_TOKEN'] ?? "";
 
-final String _dbUrl = apiUrl + 'database/';
+final String _dbUrl = '${apiUrl}database/';
+final String _playoffsUrl = '${_dbUrl}playoffs?number=';
+final String _playoffMatchupsUrl = '${_dbUrl}playoffMatchups?ids=';
+final String _playoffRoundUrl = '${_dbUrl}playoffRound?id=';
+final String _simulationDataUrl = '${api2Url}sim';
 
-final String _ilbId = 'd3182b4d-91b6-4b4e-96a5-13d69e0043b7';
-final String _allTeamsUrl = _dbUrl + 'allTeams';
-final String _divisionUrl = _dbUrl + 'division?id=';
-final String _leagueUrl = _dbUrl + 'league?id=' + _ilbId;
-final String _playoffsUrl = _dbUrl + 'playoffs?number=';
-final String _playoffMatchupsUrl = _dbUrl + 'playoffMatchups?ids=';
-final String _playoffRoundUrl = _dbUrl + 'playoffRound?id=';
-final String _scheduleUrl = apiUrl + 'api/games/schedule/';
+//final String _ilbId = 'd3182b4d-91b6-4b4e-96a5-13d69e0043b7';
+//final String _scheduleUrl = apiUrl + 'api/games/schedule/';
 //final String _simulationDataUrl = _dbUrl + 'simulationData';
-final String _simulationDataUrl = api2Url + 'sim';
-final String _standingsUrl = apiUrl + 'api/standings';
-final String _subleagueUrl = _dbUrl + 'subleague?id=';
-final String _tiebreakersUrl = _dbUrl + 'tiebreakers?id=';
-final String _streamDataUrl = apiUrl + 'events/streamData';
+//final String _allTeamsUrl = _dbUrl + 'allTeams';
+//final String _divisionUrl = _dbUrl + 'division?id=';
+//final String _leagueUrl = _dbUrl + 'league?id=' + _ilbId;
+//final String _standingsUrl = apiUrl + 'api/standings';
+//final String _subleagueUrl = _dbUrl + 'subleague?id=';
+//final String _streamDataUrl = apiUrl + 'events/streamData';
 
 Future<Response> getWithAuthToken(String url) {
   print("Using authToken: $authToken");
@@ -128,14 +127,13 @@ Future<List<Team>> getTeams() async {
 Future<Map<String,List<Team>>> getTeamsByDivision(String seasonId, int day) async {
   //https://api2.blaseball.com/seasons/cd1b6714-f4de-4dfc-a030-851b3459d8d1/days/0/teams
   var response = await getWithAuthToken(
-    api2Url + "seasons/$seasonId/days/$day/teams");
+    "${api2Url}seasons/$seasonId/days/$day/teams");
   //print(response.body);
   print(response.statusCode);
   Map<String,dynamic> divisions = json.decode(response.body);
   Map<String,List<Team>> teamMap = {};
   print("${divisions.keys}");
-  
-  divisions.keys.forEach((key) {
+  for(var key in divisions.keys) {
     List<Team> teams = [];
     print("Key: $key");
     divisions[key].forEach((json){
@@ -149,17 +147,9 @@ Future<Map<String,List<Team>>> getTeamsByDivision(String seasonId, int day) asyn
     });
     
     teamMap[key] = teams;
-  });
+  }
   return teamMap;
 }
-
-/*
-Future<Tiebreakers> getTiebreakers(String id) async {
-  var response = await get(Uri.parse(_tiebreakersUrl + id));
-  var decjson = json.decode(response.body)[0];
-  return Tiebreakers.fromJson(decjson);
-}
-*/
 
 Future<Playoffs?> getPlayoffs(int season) async {
   print('GetPlayoffs Request URL: ${_playoffsUrl + season.toString()}');

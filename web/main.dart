@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:js_interop' as js;
 import 'package:cron/cron.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:web/web.dart';
 
@@ -82,17 +83,17 @@ Future<void> getContentPages() async {
   (document.querySelector('#pickLeague2')! as HTMLElement).innerText = sitedata.subnicknames[1];
 
   if(sitedata.leagueWildCards || sitedata.leagueMildCards){
-    winsbehindHTML = await HttpRequest.getString('winsbehind_wc.html');
+    winsbehindHTML = await read(Uri.parse('winsbehind_wc.html'));
     setMainContent(winsbehindHTML);
-    magicHTML = await HttpRequest.getString('magic_wc.html');
-    postseasonHTML = await HttpRequest.getString('postseason_wc.html');
+    magicHTML = await read(Uri.parse('magic_wc.html'));
+    postseasonHTML = await read(Uri.parse('postseason_wc.html'));
   } else {
-    winsbehindHTML = await HttpRequest.getString('winsbehind.html');
+    winsbehindHTML = await read(Uri.parse('winsbehind.html'));
     setMainContent(winsbehindHTML);
     //magicHTML = await HttpRequest.getString('magic.html');
     //postseasonHTML = await HttpRequest.getString('postseason.html');
   }
-  aboutHTML = await HttpRequest.getString('about.html');
+  aboutHTML = await read(Uri.parse('about.html'));
   //bracketHTML = await HttpRequest.getString('bracket.html');
   //chancesNotesHTML = await HttpRequest.getString('chancesNotes.html');
   //partytimeNotesHTML = await HttpRequest.getString('partytimeNotes.html');

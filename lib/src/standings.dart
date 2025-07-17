@@ -22,7 +22,26 @@ class Standings {
   factory Standings.fromJson(Map<String, dynamic> json){
     //var standingsMap = json as Map<String, Map<String, List<Map<String, dynamic>>>>;
     Map<String, Standing> result = <String, Standing>{};
-    json.values.forEach( (leagueMap) =>
+    for (var leagueMap in json.values) {
+      for (var subleagueList in leagueMap.values) {
+        for (var stand in subleagueList) {
+          //print(stand);
+          result[stand['id'] as String] = Standing(
+            id: stand['id'] as String,
+            emoji: stand['emoji'] as String,
+            mainColor: stand['mainColor'] as String,
+            secondaryColor: stand['secondaryColor'] as String,
+            fullName: stand['fullName'] as String,
+            wins: stand['wins'] as int,
+            losses: stand['losses'] as int,
+            partyTime: stand['partyTime'] as bool,
+            deceased: stand['deceased'] as bool,
+            scattered: stand['scattered'] as bool,
+          );
+        }
+      }
+    }
+    for (var leagueMap in json.values) {
       leagueMap.values.forEach( (subleagueList) =>
         subleagueList.forEach((stand){
           //print(stand);
@@ -38,8 +57,8 @@ class Standings {
             deceased: stand['deceased'] as bool,
             scattered: stand['scattered'] as bool,
           );
-        }))
-    );
+        }));
+    }
       
     return Standings(result);
   }

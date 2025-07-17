@@ -13,7 +13,7 @@ class CompletePostseason {
       name: json['playoffs']['name'] as String,
       numberOfRounds: json['playoffs']['numberOfRounds'] as int,
       playoffDay: json['playoffs']['playoffDay'] as int,
-      rounds: (json['playoffs']['rounds'] as List<dynamic>)
+      rounds: json['playoffs']['rounds']
         .map((t) => t.toString()).toList() as List<String>,
       season: json['playoffs']['season'] as int,
       round: json['playoffs']['round'] as int, 
@@ -99,7 +99,7 @@ class Playoffs {
       name: json['name'] as String,
       numberOfRounds: json['numberOfRounds'] as int,
       playoffDay: json['playoffDay'] as int,
-      rounds: (json['rounds'] as List<dynamic>)
+      rounds: json['rounds']
         .map((t) => t.toString()).toList() as List<String>,
       season: json['season'] as int,
       round: json['round'] as int, 

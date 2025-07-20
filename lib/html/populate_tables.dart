@@ -113,12 +113,6 @@ void populateChancesTable(List<TeamStandings> subStandings, bool groupByDiv, Sit
     return;
   }
   var standings = subStandings.toList();
-  if(groupByDiv == true){
-    var firstDiv = subStandings[0].division;
-    standings = subStandings.where((t) => t.division == firstDiv).toList();
-    standings.addAll(subStandings.where((t) => 
-      t.division != firstDiv).toList());
-  }
   
   for(var row in standings) {
     var trow = insertCommonCells(table, row);
@@ -162,13 +156,6 @@ void populatePostseasonTable(List<List<TeamStandings>> allStandings, bool groupB
   standings.addAll(allStandings[1]);
 
   standings.sort((a, b) {
-    if(groupByDiv){
-      if(a.subleague != b.subleague){
-        return a.subleague.compareTo(b.subleague);
-      } else if (a.division != b.division){
-        return a.division.compareTo(b.division);
-      }
-    }
     for(var i = 0; i < 5; i++){
       if(b.post[i] != a.post[i]){
         return getOrderValue(b.post[i]).compareTo(getOrderValue(a.post[i]));
@@ -177,7 +164,7 @@ void populatePostseasonTable(List<List<TeamStandings>> allStandings, bool groupB
     if(a.wins != b.wins){
       return b.wins.compareTo(a.wins);
     } else {
-      return a.favor.compareTo(b.favor);
+      return a.fullName.compareTo(b.fullName);
     }
   });
   
@@ -214,12 +201,6 @@ void populateWinningTable(List<TeamStandings> subStandings, bool groupByDiv, Sit
     return;
   }
   var standings = subStandings.toList();
-  if(groupByDiv == true){
-    var firstDiv = subStandings[0].division;
-    standings = subStandings.where((t) => t.division == firstDiv).toList();
-    standings.addAll(subStandings.where((t) => 
-      t.division != firstDiv).toList());
-  }
   
   for(var row in standings) {
     var trow = insertCommonCells(table, row);
@@ -255,12 +236,6 @@ void populatePartyTimeTable(List<TeamStandings> subStandings, bool groupByDiv, S
     return;
   }
   var standings = subStandings.toList();
-  if(groupByDiv == true){
-    var firstDiv = subStandings[0].division;
-    standings = subStandings.where((t) => t.division == firstDiv).toList();
-    standings.addAll(subStandings.where((t) => 
-      t.division != firstDiv).toList());
-  }
   
   for(var row in standings) {
     var trow = insertCommonCells(table, row);   

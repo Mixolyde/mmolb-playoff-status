@@ -3,12 +3,10 @@ class TeamStandings {
   final String fullName;
   final String nickname;
   final String emoji;
-  final String division;
   final String subleague;
   int wins;
   int losses;
   final int gamesPlayed;
-  final int favor;
   
   String gbDiv = '-';
   String gbWc = '-';
@@ -17,14 +15,15 @@ class TeamStandings {
   final List<String> partytime = ['-', '-', '-', '-', '-'];
   final List<String> post = ['-', '-', '-', '-', '-'];  
   
-  TeamStandings(this.id, this.fullName, this.nickname, 
-    this.emoji, this.subleague, this.division,
-    this.wins, this.losses, this.gamesPlayed, this.favor);
+  TeamStandings(this.id, 
+    this.fullName, this.nickname, 
+    this.emoji, this.subleague,
+    this.wins, this.losses, this.gamesPlayed);
     
   TeamStandings.fromMap({this.id = '', this.fullName = '',
-    this.nickname = '', this.emoji = '', this.subleague = '', this.division = '',
+    this.nickname = '', this.emoji = '', this.subleague = '', 
     this.wins = 0, this.losses = 0,
-    this.gamesPlayed = 0, this.favor = 0,
+    this.gamesPlayed = 0,
     this.gbDiv = '-', this.gbWc = '-',
     po, winning, partytime, post}){
     for(var i = 0; i < 5; i++){
@@ -42,11 +41,9 @@ class TeamStandings {
       nickname: json['nickname'] as String,
       emoji: json['emoji'] as String,
       subleague: json['subleague'] as String,
-      division: json['division'] as String,
       wins: json['wins'] as int,
       losses: json['losses'] as int,
       gamesPlayed: json['gamesPlayed'] as int,
-      favor: json['favor'] as int,
       gbDiv: json['gbDiv'] as String,
       gbWc: json['gbWc'] as String,
       po: json['po'] as List<dynamic>,
@@ -62,11 +59,9 @@ class TeamStandings {
     'nickname': nickname,
     'emoji': emoji,
     'subleague': subleague,
-    'division': division,
     'wins': wins,
     'losses': losses,
     'gamesPlayed': gamesPlayed,
-    'favor': favor,
     'gbDiv': gbDiv,
     'gbWc': gbWc,
     'po': po,
@@ -76,6 +71,6 @@ class TeamStandings {
   };
   
   @override
-  String toString() => 'Standings: $fullName:$nickname - $subleague $division ($wins - $losses) Favor: #$favor';
+  String toString() => 'Standings: $fullName:$nickname - $subleague ($wins - $losses)';
   
 }

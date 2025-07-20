@@ -68,23 +68,6 @@ Future<TimeData> getTimeData() async {
   return TimeData.fromJson(json.decode(timeResponse.body));
 }
 
-Future<Map<String,List<Team>>> getTeamsBySubleague(StateData stateData) async {
-  print("Greater League subleague ids: ${stateData.greaterLeagues}");
-  Map<String,List<Team>> teamMap = {};
-  for (var subleagueId in stateData.greaterLeagues) {
-    var subleague = await getSubleague(subleagueId);
-    print("Subleague: ${subleague.name} (${subleague.id})");
-    List<Team> teams = [];
-    for (var teamId in subleague.teams) {
-      var team = await getTeam(teamId);
-      teams.add(team);
-    }
-    teamMap[subleague.id] = teams;
-  }
-
-  return teamMap;
-}
-
 // get subleague/division data: https://mmolb.com/api/league/6805db0cac48194de3cd3fe4
 Future<Subleague> getSubleague(String id) async {
   var response = await get(Uri.parse(_subleagueUrl + id));

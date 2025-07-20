@@ -18,10 +18,13 @@ export 'src/statedata.dart';
 export 'src/team.dart';
 export 'src/timedata.dart';
 
+// New MMOLB API URLs
 String mmolbApiUrl = 'https://mmolb.com/api/';
 
 final String _stateUrl = '${mmolbApiUrl}state';
 final String _timeUrl = '${mmolbApiUrl}time';
+final String _subleagueUrl = '${mmolbApiUrl}league/';
+final String _teamUrl = '${mmolbApiUrl}team/';
 
 // Old Blaseball URLs
 String apiUrl = 'https://api.blaseball.com/';
@@ -65,8 +68,44 @@ Future<TimeData> getTimeData() async {
   return TimeData.fromJson(json.decode(timeResponse.body));
 }
 
-// get greater league division data: https://mmolb.com/api/league/6805db0cac48194de3cd3fe4
+Future<Map<String,List<Team>>> getTeamsBySubleague(StateData stateData) async {
+  print("Greater League subleague ids: ${stateData.greaterLeagues}");
+  Map<String,List<Team>> teamMap = {};
+  for (var subleagueId in stateData.greaterLeagues) {
+    var subleague = await getSubleague(subleagueId);
+    print("Subleague: ${subleague.name} (${subleague.id})");
+    List<Team> teams = [];
+    for (var teamId in subleague.teams) {
+      var team = await getTeam(teamId);
+      teams.add(team);
+    }
+    teamMap[subleague.id] = teams;
+  }
+
+  return teamMap;
+}
+
+// get subleague/division data: https://mmolb.com/api/league/6805db0cac48194de3cd3fe4
+Future<Subleague> getSubleague(String id) async {
+  var response = await get(Uri.parse(_subleagueUrl + id));
+  print('Subleague Response body: ${response.body}');
+  if (response.statusCode == 200) {
+    return Subleague.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Failed to load subleague');
+  }
+}
+
 // get team data: https://mmolb.com/api/team/6805db0cac48194de3cd3ff7
+Future<Team> getTeam(String id) async {
+  var response = await get(Uri.parse(_teamUrl + id));
+  //print('Team Response body: ${response.body}');
+  if (response.statusCode == 200) {
+    return Team.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Failed to load team');
+  }
+}
 
 /*
 Future<Standings> getStandings() async {
@@ -81,6 +120,7 @@ Future<Division> getDivision(String id) async {
 }
 */
 
+// Old blaseeball API functions
 Future<League> getLeague({bool deep = false}) async {
   var response = await get(Uri.parse(_simulationDataUrl));
   var responsejson = json.decode(response.body);
@@ -113,16 +153,6 @@ Future<League> getLeague({bool deep = false}) async {
       (subLeagueJson[0] as Map<String, dynamic>));
     league.subleague2 = Subleague.fromJson(
       (subLeagueJson[1] as Map<String, dynamic>));
-      
-    league.subleague1!.division1 = 
-      Division.fromJson(divisions1[0]);
-    league.subleague1!.division2 = 
-      Division.fromJson(divisions1[1]);
-      
-    league.subleague2!.division1 = 
-      Division.fromJson(divisions2[0]);
-    league.subleague2!.division2 = 
-      Division.fromJson(divisions2[1]);
     
     return league;
   }

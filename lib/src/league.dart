@@ -44,36 +44,46 @@ class League {
   String toString() => '$name:$id';
 }
 
-/*
-  'divisions': [
-    'f711d960-dc28-4ae2-9249-e1f320fec7d7',
-    '5eb2271a-3e49-48dc-b002-9cb615288836'
-  ],
-  'id':'7d3a3dd6-9ea1-4535-9d91-bde875c85e80',
-  'name':'The Good League'
-  */
+/* MMOLB api subleague/division data
+{
+    "Color": "39993a",
+    "Emoji": "\u2618\ufe0f",
+    "LeagueType": "Greater",
+    "Name": "Clover",
+    "SuperstarTeam": "6805db0dac48194de3cd4257",
+    "Teams": [
+        "6805db0cac48194de3cd3ff7",
+        "6805db0cac48194de3cd400a",
+        "6805db0cac48194de3cd401d",
+        "6805db0cac48194de3cd407c",
+        "6805db0cac48194de3cd40a2",
+        "6805db0cac48194de3cd40b5",
+        "6805db0cac48194de3cd40ee",
+        "6805db0cac48194de3cd4101"
+    ],
+    "_id": "6805db0cac48194de3cd3fe4"
+}
+*/
 class Subleague {
   final String id;
   final String name;
-  final String divisionId1;
-  final String divisionId2;
-  
-  Division? division1;
-  Division? division2;
+  final String leagueType;
+  final List<String> teams;
 
-  Subleague({this.id = '', this.name = '', this.divisionId1 = '', this.divisionId2 = ''});
+  Subleague({this.id = '', this.name = '', this.leagueType = '', this.teams = const []});
     
   factory Subleague.fromJson(Map<String, dynamic> json){
     return Subleague(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      divisionId1: (json['divisions'] as List)[0]['id'],
-      divisionId2: (json['divisions'] as List)[1]['id'],
+      id: json['_id'] as String,
+      name: json['Name'] as String,
+      leagueType: json['LeagueType'] as String,
+      teams: (json['Teams'] as List<dynamic>)
+        .map((t) => t.toString()).toList(),
     );
   }  
   
   @override
-  String toString() => '$name:$id';
+  String toString() => '$name:$id:$leagueType';
 
 }
 

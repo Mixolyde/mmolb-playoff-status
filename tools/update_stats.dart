@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:mmolb_playoff_status/calc_stats.dart';
 import 'package:mmolb_playoff_status/database_api.dart' as db;
 
@@ -18,5 +21,27 @@ Future<void> main(List<String> args) async {
   //print out data
   print(subStandings[0]);
   print(subStandings[1]);
+
+  var temp = Directory.systemTemp;
+  print(temp);
+  
+  var dataDir = Directory('${temp.path}/data/');
+  await dataDir.create(recursive: true);
+  
+  var filenameJSON = '${temp.path}/data/sitedata.json';
+  var sinkJSON = File(filenameJSON).openWrite();
+  sinkJSON.write(json.encode(siteData));
+  await sinkJSON.close();
+ 
+  
+  filenameJSON = '${temp.path}/data/${siteData.sub1id}.json';
+  sinkJSON = File(filenameJSON).openWrite();
+  sinkJSON.write(json.encode(subStandings[0]));
+  await sinkJSON.close();
+  
+  filenameJSON = '${temp.path}/data/${siteData.sub2id}.json';
+  sinkJSON = File(filenameJSON).openWrite();
+  sinkJSON.write(json.encode(subStandings[1]));
+  await sinkJSON.close();
 
 }

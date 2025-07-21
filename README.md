@@ -7,16 +7,14 @@ An attempt to replicate [Playoff Status](http://playoffstatus.com)
 Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 
 ## TODO
-* Replace references to Blaseball with MMOLB
-* Disable all the stuff that doesn't work
-* Find a codeship replacement 
-* Update web code to latest Dart standards
-* Update stat and simulation code to latest Dart standards 
+* Find a github action for web code deployment
+* Find a github action for testing code
+* Peanut call with /url/ after domain
 * Pull data from new sources
-* Update tiebreakers
+* Replace tiebreakers
 * Get all the the previous functionality working again
-* Replace http get calls with read calls
 * Figure out postseason calculations
+* Setup multiple development environments for testing data/web changes
 * Figure out what's up with tied records getting weird sim results
 * Postseason schedule
 * Handle postseason data live
@@ -30,11 +28,27 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 ## Planned release schedule
 * v0.0.1 
 - [x] Publish a broken site again
-- [ ] Update About page info
-- [ ] Disable the rest
+- [x] Update About page info
+- [x] Remove blaseball references
+- [x] Disable the rest
 
 * v0.0.2
-- [ ] Get Wins Behind working
+- [x] Get Wins Behind data working
+- [x] Remove Divine Favor
+- [ ] Remove Group By Div
+- [ ] Restore data update automation
+
+* v0.0.3
+- [ ] Fix Wild Card games behind
+- [ ] Fix tie breaking
+- [ ] Automate web update deployment
+
+* v0.0.4
+- [ ] Fix Magic Number calculations
+
+* v0.0.5
+- [ ] Fix simulations and postseason chances
+
 
 ## Contributing
 

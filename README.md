@@ -8,6 +8,7 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 
 ## TODO
 * Test the github action for web code deployment
+* Fix peanut publish issues from github action
 * Find a github action for testing code
 * Peanut call with /url/ after domain
 * Pull data from new sources

@@ -43,6 +43,12 @@ jobs:
       # want to change this to 'flutter test'.
       # - name: Run tests
       #  run: dart test
+
+      - name: Configure git for peanut
+        run: git config --global user.email "mixolyde@gmail.com"
+      - name: Configure git for peanut
+        run: git config --global user.name "Brian Grey"
+      
       - name: Run peanut
         run: peanut
 

@@ -11,6 +11,10 @@ Future<void> main() async {
   var timeData = await getTimeData();
   print('Time Data: $timeData');
 
+  //site data
+  var siteData = await calcSiteData(stateData, timeData);
+  print(siteData);
+
   // Example: Fetching subleague data
   var subleague = await getSubleague('6805db0cac48194de3cd3fe4');
   print('Subleague Data: $subleague');

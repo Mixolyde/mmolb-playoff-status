@@ -48,6 +48,8 @@ jobs:
         run: git config --global user.email "mixolyde@gmail.com"
       - name: Configure git for peanut
         run: git config --global user.name "Brian Grey"
+      - name: Ensure latest git updates
+        run: git pull
       
       - name: Run peanut
         run: peanut

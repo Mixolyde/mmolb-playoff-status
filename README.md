@@ -7,7 +7,7 @@ An attempt to replicate [Playoff Status](http://playoffstatus.com)
 Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 
 ## TODO
-* Find a github action for web code deployment
+* Test the github action for web code deployment
 * Find a github action for testing code
 * Peanut call with /url/ after domain
 * Pull data from new sources

@@ -247,6 +247,8 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
   TeamStandings row, {showLeague = false} ){
   //print('Inserting TeamStandings for $row');
   var trow = table.insertRow();
+
+  //TODO fix team links to mmolb pages
   HTMLAnchorElement shortTeamLink = HTMLAnchorElement();
   shortTeamLink.href = 'https://www.blaseball.com/team/${row.id}';
   shortTeamLink.innerText = row.nickname;

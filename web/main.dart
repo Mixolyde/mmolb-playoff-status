@@ -30,12 +30,11 @@ List<List<TeamStandings>> subStandings = [];
 void main() {
 
   //String envBucket = js.globalContext.getProperty('envBucket'.toJS) ?? "";
-  String envBucket = "";
+  String envBucket = "prod";
   s3.envBucket = envBucket;
   
   print ("EnvBucket: $envBucket");
 
-  //apiUrl = 'https://api.sibr.dev/corsmechanics/api.blaseball.com/';
   getContentPages().then((v) {
     print('Retrieved content pages and data');
     

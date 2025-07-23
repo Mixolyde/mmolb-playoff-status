@@ -37,9 +37,7 @@ class SiteData {
       sub1name: json['sub1name'] as String,
       sub2id: json['sub2id'] as String,
       sub2name: json['sub2name'] as String,
-      attributes: json['attributes'] == null ? [] :
-        json['attributes']
-          .map((t) => t.toString()).toList() as List<String>,      
+      attributes: [],      
       daysInSeason: json['daysInSeason'] as int,
       gamesInSeason: json['gamesInSeason'] ?? 99, // Default to 99 if not provided
     );

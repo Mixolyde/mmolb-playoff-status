@@ -10,8 +10,9 @@ final String _entriesUrl = '${_apiUrl}entries.json';
 
 Future<SiteData> getSiteData() async {
   var response = await get( Uri.parse(_sitedataUrl ));
-  //print('SiteData Url: $_sitedataUrl');
-  //print('Response body: ${response.body}');
+  print('SiteData Url: $_sitedataUrl');
+  print('Response body: ${response.body}');
+  print('json.decode: ${json.decode(response.body)}');
   
   var sitedata = SiteData.fromJson(json.decode(response.body));
 

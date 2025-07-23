@@ -19,12 +19,6 @@ void populateWinsBehindTable(List<TeamStandings> subStandings, bool groupByDiv, 
     cell.innerText = row.gbWc;
   }
   
-  if(groupByDiv == true){
-    insertSeparatorRow(table, 8, 9); 
-  } else {
-    insertSeparatorRow(table, 6, 9); 
-  }
-  
 }
 
 void populatePlayoffBracket(List<PlayoffBracketEntry> entries){
@@ -137,11 +131,6 @@ void populateChancesTable(List<TeamStandings> subStandings, bool groupByDiv, Sit
     }
   }
   
-  if(groupByDiv == true){
-    insertSeparatorRow(table, 8, 11); 
-  } else {
-    insertSeparatorRow(table, 6, 11); 
-  }
 }
 
 void populatePostseasonTable(List<List<TeamStandings>> allStandings, bool groupByDiv,
@@ -187,11 +176,6 @@ void populatePostseasonTable(List<List<TeamStandings>> allStandings, bool groupB
     }
   }
   
-  if(groupByDiv == true){
-    insertSeparatorRow(table, 8, 11); 
-    insertSeparatorRow(table, 15, 11); 
-    insertSeparatorRow(table, 22, 11); 
-  } 
 }
 
 void populateWinningTable(List<TeamStandings> subStandings, bool groupByDiv, SiteData sitedata){
@@ -222,11 +206,6 @@ void populateWinningTable(List<TeamStandings> subStandings, bool groupByDiv, Sit
     }
   }
   
-  if(groupByDiv == true){
-    insertSeparatorRow(table, 8, 11); 
-  } else {
-    insertSeparatorRow(table, 6, 11); 
-  }
 }
 
 void populatePartyTimeTable(List<TeamStandings> subStandings, bool groupByDiv, SiteData sitedata){
@@ -256,11 +235,6 @@ void populatePartyTimeTable(List<TeamStandings> subStandings, bool groupByDiv, S
     }
   }
   
-  if(groupByDiv == true){
-    insertSeparatorRow(table, 8, 11); 
-  } else {
-    insertSeparatorRow(table, 6, 11); 
-  }
 }
 
 void populateAboutPageData(List<List<TeamStandings>> subStandings){

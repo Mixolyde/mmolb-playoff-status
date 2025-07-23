@@ -74,7 +74,7 @@ Future<void> getContentPages() async {
   setSeasonDay(sitedata);
   subStandings = await s3.getSubStandings(sitedata);
 
-  entries = await s3.getPlayoffBracketEntries();
+  //entries = await s3.getPlayoffBracketEntries();
   
   setUpdateTime(sitedata);
   
@@ -108,7 +108,7 @@ Future<void> refreshData() async{
   setSeasonDay(sitedata);
   subStandings = await s3.getSubStandings(sitedata);
   
-  entries = await s3.getPlayoffBracketEntries();
+  //entries = await s3.getPlayoffBracketEntries();
   
   var standingsTable = document.querySelector('#standingsTable') as HTMLTableElement?;
   if(standingsTable != null){

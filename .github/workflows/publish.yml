@@ -50,10 +50,10 @@ jobs:
           git config --global user.name "Brian Grey"
           git fetch --unshallow || true
           git fetch origin "+refs/heads/*:refs/remotes/origin/*"
-          git fetch origin gh-pages gh-pages
+          git fetch origin gh-pages:gh-pages
       
       - name: Run peanut
         run: peanut
 
       - name: Push gh-pages branch
-        run: git push origin --set-upstream gh-pages
+        run: git push origin gh-pages

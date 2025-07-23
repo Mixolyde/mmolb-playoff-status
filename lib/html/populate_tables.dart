@@ -249,6 +249,7 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
   var trow = table.insertRow();
 
   //TODO fix team links to mmolb pages
+  //TODO show location name in long name
   HTMLAnchorElement shortTeamLink = HTMLAnchorElement();
   shortTeamLink.href = 'https://www.blaseball.com/team/${row.id}';
   shortTeamLink.innerText = row.nickname;

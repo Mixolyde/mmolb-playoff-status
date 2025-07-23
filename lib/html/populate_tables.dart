@@ -251,11 +251,11 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
   //TODO fix team links to mmolb pages
   //TODO show location name in long name
   HTMLAnchorElement shortTeamLink = HTMLAnchorElement();
-  shortTeamLink.href = 'https://www.blaseball.com/team/${row.id}';
+  shortTeamLink.href = 'https://mmolb.com/team/${row.id}';
   shortTeamLink.innerText = row.nickname;
   shortTeamLink.target = '_new';
   HTMLAnchorElement longTeamLink = HTMLAnchorElement();
-  longTeamLink.href = 'https://www.blaseball.com/team/${row.id}';
+  longTeamLink.href = 'https://mmolb.com/team/${row.id}';
   longTeamLink.innerText = row.fullName;
   longTeamLink.target = '_new';  
   var emojiSpan = HTMLSpanElement();

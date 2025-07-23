@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="scaffolded-by" content="https://github.com/dart-lang/stagehand">
+    <title>Blaseball Playoff Status</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico">
+    <script>
+      // var serviceUrl = "@VALUE_OF_VAR@";
+      var envBucket = "";
+    </script>
+
+    <script defer src="main.dart.js"></script>
+    
+    <meta name="description" content="Work-in-progress source for detailed information on your MMOLB team playoff picture, standings, and status.">
+    <meta name="keywords" content="MMOLB, Baseball, Playoff Picture, Playoff Status, Playoff Standings">
+
+</head>
+
+<body>
+
+<header>  
+  
+<p id="top" class="bnr">
+  <a href="index.html">MMOLB Playoff Status</a>
+</p>
+		
+<div class="flxbx1">
+	<div class="breadcrumbs">
+  <a href="index.html">Home</a>
+  </div>
+  
+  <div class="datetime">
+		Last Updated: <span id="lastUpdate"></span>
+	</div>
+</div>
+
+<hr>
+</header>
+
+<div class="description">
+<h2 class="wkinfo">Season X: Day Y</h2>
+<h1>MMOLB Playoff Picture</h1>
+<p>
+<strong>Note</strong>: This site may not account for recent changes to game mechanics.
+Calculations do not account for more than one win/loss in future games.
+</p>
+</div>
+ 
+<div class="flxbx2" id="sflx">
+  <nav id="snav">
+  <br>
+	<div style="position:relative;">
+    <b>Site Navigation</b>
+  </div>
+  <br/>
+  <center><b>League</b></center>
+  <center>
+    <button type="button" id="pickLeague1" 
+      class="nav-button nav-button-active">Lg 1</button>
+    <button type="button"  id="pickLeague2"
+      class="nav-button nav-button-inactive">Lg 2</button>
+  </center>
+  <br/>
+  <br/>
+  <center><b>View</b></center>
+  <center>
+    <div style="display:flex;flex-direction:column">
+    <button type="button" id="viewWinsBehind" class="nav-button nav-button-active" 
+      >Wins Behind</button>
+    <button type="button" id="viewWinningNumbers" class="nav-button" enabled="false"
+      >Winning Magic Numbers</button>
+    <button type="button" id="viewPartyTimeNumbers" class="nav-button" enabled="false"
+      >Party Time Magic Numbers</button>
+    <button type="button" id="viewChances" class="nav-button" enabled="false"
+      >Playoff Chances</button>      
+    <button type="button" id="viewPostseasonChances" class="nav-button" enabled="false"
+      >Postseason Chances</button>        
+    <!-- Comment out playoff bracket to deploy and branch
+    <button type="button"  id="viewPlayoffBracket" class="nav-button" 
+      >Playoff Bracket</button>
+    -->
+    <button type="button" id="viewAbout" class="nav-button" 
+      >About/Info</button>
+    </div>
+  </center>
+  <br/>
+
+	<br/><br/><br/>
+  <center>
+  Donations for server costs
+  <br/>
+  are greatly appreciated!
+  <br/><br/>
+  <form action="https://www.paypal.com/donate" method="post" target="_top">
+    <input type="hidden" name="hosted_button_id" value="9T9KUCPX8VFXN" />
+    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+    <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+  </form>
+  </center>
+  <br><br><br>
+	<span style="font-size: smaller;color: #969696;">Data may change several<br> times on day of play<br>Bookmark site for easy return</span>			 							
+  </nav>
+
+  <div id="mncntnt" class="mncntnt" style="font-size:16px;">
+    <!-- mncntnt widgets go here -->
+    <center>Loading data...</center>
+  </div>
+
+</div>
+
+
+<footer>
+  <hr>
+  <address>
+    MMOLB Playoff Status is neither endorsed by nor directly affiliated with 
+    <a href="https://mmolb.com/" target="_new">MMOLB</a> or 
+    <a href="http://playoffstatus.com/" target="_new">PlayoffStatus.com</a>.
+    <br/>
+    <b>HUGE</b> thanks to 
+    <a href="http://playoffstatus.com" target="_new">PlayoffStatus.com</a> for inspiration
+    and both 
+    <a href="https://mmolb.com/" target="_new">MMOLB</a> and
+    <a href="https://blaseball.com" target="_new">Blaseball</a> for amazing games!
+    <br/>
+    <a href="mailto:mixolyde@gmail.com">Contact Me</a>
+    <br/>
+    This is a Work-in-Progress, see <a href="https://github.com/Mixolyde/mmolb-playoff-status" target="_new">Source</a> for future plans.
+    
+  </address>
+</footer>    
+
+</body>
+</html>

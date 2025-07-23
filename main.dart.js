@@ -3437,7 +3437,7 @@ switch(m[l]){case"PT":case"X":j.a(k.classList).add("redcell")
 break
 default:j.a(k.classList).add("greencell")
 break}}}},
-fr(a,b,c){var s,r,q,p,o,n,m,l=t.m,k=l.a(a.insertRow()),j=v.G,i=l.a(l.a(j.document).createElement("a")),h="https://www.blaseball.com/team/"+b.a
+fr(a,b,c){var s,r,q,p,o,n,m,l=t.m,k=l.a(a.insertRow()),j=v.G,i=l.a(l.a(j.document).createElement("a")),h="https://mmolb.com/team/"+b.a
 i.href=h
 s=b.c
 i.innerText=s

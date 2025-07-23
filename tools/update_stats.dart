@@ -44,4 +44,29 @@ Future<void> main(List<String> args) async {
   sinkJSON.write(json.encode(subStandings[1]));
   await sinkJSON.close();
 
+
+  var aws = File('/usr/bin/aws');
+  var exists = await aws.exists();
+  if(exists){
+    uploadFiles();
+  }
+
+}
+
+void uploadFiles() {
+  Map<String, String> envVars = Platform.environment;
+  String envBucket = envVars['BUCKET'] ?? "prod/";
+  print("Environment Bucket: $envBucket");
+  Process.run('/usr/bin/aws', [
+      's3', 'cp', '/tmp/data/',
+      's3://mmolb-playoff-status/data/$envBucket',
+      '--include="*.json"', 
+      '--recursive',
+      '--acl=public-read', 
+      '--content-type=application/json; charset=utf-8'
+  ]).then((ProcessResult results) {
+    print(results.stdout);
+    print(results.stderr);
+  });
+
 }

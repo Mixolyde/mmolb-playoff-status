@@ -62,7 +62,6 @@ void uploadFiles() {
       's3://mmolb-playoff-status/data/$envBucket',
       '--include="*.json"', 
       '--recursive',
-      '--acl=public-read', 
       '--content-type=application/json; charset=utf-8'
   ]).then((ProcessResult results) {
     print(results.stdout);

@@ -45,11 +45,12 @@ jobs:
       #  run: dart test
 
       - name: Configure git for peanut
-        run: git config --global user.email "mixolyde@gmail.com"
-      - name: Configure git for peanut
-        run: git config --global user.name "Brian Grey"
-      - name: Ensure latest git updates
-        run: git pull
+        run: |
+          git config --global user.email "mixolyde@gmail.com"
+          git config --global user.name "Brian Grey"
+          git fetch --unshallow || true
+          git fetch origin "+refs/heads/*:refs/remotes/origin/*"
+          git fetch origin gh-pages gh-pages
       
       - name: Run peanut
         run: peanut

@@ -7,11 +7,8 @@ An attempt to replicate [Playoff Status](http://playoffstatus.com)
 Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 
 ## TODO
-* Test the github action for web code deployment
-* Fix peanut publish issues from github action
 * Find a github action for testing code
 * Peanut call with /url/ after domain
-* Pull data from new sources
 * Replace tiebreakers
 * Get all the the previous functionality working again
 * Figure out postseason calculations
@@ -36,8 +33,8 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 * v0.0.2
 - [x] Get Wins Behind data working
 - [x] Remove Divine Favor
-- [ ] Remove Group By Div
-- [ ] Restore data update automation
+- [x] Remove Group By Div
+- [x] Restore data update automation
 
 * v0.0.3
 - [ ] Fix Wild Card games behind

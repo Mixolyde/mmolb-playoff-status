@@ -66,6 +66,7 @@ Future<List<TeamStandings>> calculateSubLeague(Subleague sub, List<Team> teams,
       sub.name,
       team.wins, 
       team.losses,
+      team.runDifferential,
       gamesPlayed);
     teamStandings.add(standing);
   }

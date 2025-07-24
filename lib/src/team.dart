@@ -32,11 +32,13 @@ class Team {
   final String location;
   int wins;
   int losses;
+  int runDifferential;
   
   Team({this.id = '', this.fullName = '',
     this.shorthand = '', this.emoji = '',
     this.location = '',
-    this.wins = 0, this.losses = 0});
+    this.wins = 0, this.losses = 0,
+    this.runDifferential = 0});
   
   factory Team.fromJson(Map<String, dynamic> json){ 
     return Team(
@@ -47,10 +49,11 @@ class Team {
       location: json['Location'] as String,
       wins: json['Record']['Regular Season']['Wins'] as int,
       losses: json['Record']['Regular Season']['Losses'] as int,
+      runDifferential: json['Record']['Regular Season']['RunDifferential'] as int,
     );
   }
   
   @override
-  String toString() => "$location $fullName ($shorthand) ($wins - $losses)";
+  String toString() => "$location $fullName ($shorthand) ($wins - $losses) RunDiff: $runDifferential)";
   
 }

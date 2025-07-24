@@ -6,6 +6,7 @@ class TeamStandings {
   final String subleague;
   int wins;
   int losses;
+  int runDifferential;
   final int gamesPlayed;
   
   String gbDiv = '-';
@@ -18,11 +19,14 @@ class TeamStandings {
   TeamStandings(this.id, 
     this.fullName, this.nickname, 
     this.emoji, this.subleague,
-    this.wins, this.losses, this.gamesPlayed);
+    this.wins, this.losses, 
+    this.runDifferential,
+    this.gamesPlayed);
     
   TeamStandings.fromMap({this.id = '', this.fullName = '',
     this.nickname = '', this.emoji = '', this.subleague = '', 
     this.wins = 0, this.losses = 0,
+    this.runDifferential = 0,
     this.gamesPlayed = 0,
     this.gbDiv = '-', this.gbWc = '-',
     po, winning, partytime, post}){
@@ -43,6 +47,7 @@ class TeamStandings {
       subleague: json['subleague'] as String,
       wins: json['wins'] as int,
       losses: json['losses'] as int,
+      runDifferential: json['runDifferential'] as int,
       gamesPlayed: json['gamesPlayed'] as int,
       gbDiv: json['gbDiv'] as String,
       gbWc: json['gbWc'] as String,
@@ -61,6 +66,7 @@ class TeamStandings {
     'subleague': subleague,
     'wins': wins,
     'losses': losses,
+    'runDifferential': runDifferential,
     'gamesPlayed': gamesPlayed,
     'gbDiv': gbDiv,
     'gbWc': gbWc,
@@ -71,6 +77,6 @@ class TeamStandings {
   };
   
   @override
-  String toString() => 'Standings: $fullName:$nickname - $subleague ($wins - $losses)';
+  String toString() => 'Standings: $fullName:$nickname - $subleague ($wins - $losses) RunDiff: $runDifferential';
   
 }

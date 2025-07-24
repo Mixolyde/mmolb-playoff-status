@@ -8719,7 +8719,7 @@ s=q.a(r.a(s.document).querySelector("#viewPostseasonChances"))
 s.toString
 A.b3(s,l,m.a(A.qV()),!1,n)
 n=A.j([],t.ca)
-m=A.oj("1,21,26,31,36,41,46,51 * * * *")
+m=A.oj("1,21,26,31,36,41,46,51,56 * * * *")
 s=t.O.a(new A.jC())
 B.b.n(n,new A.bP(m,s,A.fU(0,0,0,0,0,0,0)))
 new A.f3(n).d_()},

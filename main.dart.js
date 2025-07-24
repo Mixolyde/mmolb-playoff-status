@@ -3437,37 +3437,35 @@ switch(m[l]){case"PT":case"X":j.a(k.classList).add("redcell")
 break
 default:j.a(k.classList).add("greencell")
 break}}}},
-fr(a,b,c){var s,r,q,p,o,n,m,l=t.m,k=l.a(a.insertRow()),j=v.G,i=l.a(l.a(j.document).createElement("a")),h="https://mmolb.com/team/"+b.a
-i.href=h
-s=b.c
-i.innerText=s
-i.target="_new"
-r=l.a(l.a(j.document).createElement("a"))
-r.href=h
-r.innerText=b.b
-r.target="_new"
-q=l.a(l.a(j.document).createElement("span"))
-h=b.d
-if(B.a.F(h,"0"))q.innerHTML=" &#"+B.a.l(h,1,h.length)+";"
-else if(s==="Lift")q.innerHTML=" &#x1F3CB;"
-else q.innerHTML="  "
-p=l.a(k.insertCell(0))
-l.a(p.classList).add("tblteam")
-o=l.a(l.a(j.document).createElement("span"))
-l.a(o.classList).add("wide")
-n=l.a(l.a(j.document).createElement("span"))
-l.a(n.classList).add("narrow")
-l.a(o.appendChild(r))
-l.a(n.appendChild(i))
-l.a(p.appendChild(o))
-l.a(p.appendChild(n))
-l.a(p.appendChild(q))
-if(c){l.a(k.insertCell(1)).innerText=b.e
-m=1}else m=0
-l.a(k.insertCell(1+m)).innerText=B.c.i(b.f)
-j=b.r
-l.a(k.insertCell(2+m)).innerText=""+(b.w-j)+" - "+j
-return k},
+fr(a,b,c){var s,r,q,p,o,n,m=t.m,l=m.a(a.insertRow()),k=v.G,j=m.a(m.a(k.document).createElement("a")),i="https://mmolb.com/team/"+b.a
+j.href=i
+j.innerText=b.c
+j.target="_new"
+s=m.a(m.a(k.document).createElement("a"))
+s.href=i
+s.innerText=b.b
+s.target="_new"
+r=m.a(m.a(k.document).createElement("span"))
+i=b.d
+if(B.a.F(i,"0"))r.innerHTML=" &#"+B.a.l(i,1,i.length)+";"
+else r.innerHTML="  "
+q=m.a(l.insertCell(0))
+m.a(q.classList).add("tblteam")
+p=m.a(m.a(k.document).createElement("span"))
+m.a(p.classList).add("wide")
+o=m.a(m.a(k.document).createElement("span"))
+m.a(o.classList).add("narrow")
+m.a(p.appendChild(s))
+m.a(o.appendChild(j))
+m.a(q.appendChild(p))
+m.a(q.appendChild(o))
+m.a(q.appendChild(r))
+if(c){m.a(l.insertCell(1)).innerText=b.e
+n=1}else n=0
+m.a(l.insertCell(1+n)).innerText=B.c.i(b.f)
+k=b.r
+m.a(l.insertCell(2+n)).innerText=""+(b.w-k)+" - "+k
+return l},
 mC(a){if(a==="X")return-10
 else if(a==="<1%")return 0
 else if(a===">99%")return 100

@@ -7,7 +7,8 @@ An attempt to replicate [Playoff Status](http://playoffstatus.com)
 Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 
 ## TODO
-* Find a github action for testing code
+* Add unit tests
+* Create a github action for testing code
 * Peanut call with /url/ after domain
 * Replace tiebreakers
 * Get all the the previous functionality working again
@@ -18,7 +19,7 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 * Handle postseason data live
 * Team rank history over season chart
 * Schedule pages
-* Get a twitter account and button
+* Get a Bluesky account and button
 * Factor future schedule into magic numbers
 * Move project to a MMOLB-specific account on github
 * Reduce API calls during breaks

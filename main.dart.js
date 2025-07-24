@@ -3947,7 +3947,7 @@ r=p.a(q.a(r.document).querySelector("#pickLeague2"))
 r.toString
 r.disabled=!1
 break}},
-mU(a){var s=a.c+1,r=v.G,q=t.m,p=t.z,o=""+s,n="Season "+(a.b+1)
+mU(a){var s=a.c,r=v.G,q=t.m,p=t.z,o=""+s,n="Season "+a.b
 if(s<=a.x){r=p.a(q.a(r.document).querySelector(".wkinfo"))
 r.toString
 r.innerText=n+": Day "+o}else{r=p.a(q.a(r.document).querySelector(".wkinfo"))

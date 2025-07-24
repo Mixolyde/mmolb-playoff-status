@@ -248,8 +248,6 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
   //print('Inserting TeamStandings for $row');
   var trow = table.insertRow();
 
-  //TODO fix team links to mmolb pages
-  //TODO show location name in long name
   HTMLAnchorElement shortTeamLink = HTMLAnchorElement();
   shortTeamLink.href = 'https://mmolb.com/team/${row.id}';
   shortTeamLink.innerText = row.nickname;
@@ -262,9 +260,6 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
   //print('Emoji string: ${row.emoji}');
   if(row.emoji.startsWith('0')){
     emojiSpan.innerHTML = ' &#${row.emoji.substring(1, row.emoji.length)};'.toJS;
-  } else if (row.nickname == 'Lift') {
-    //stupid manual correction for one team with a weird character
-    emojiSpan.innerHTML = ' &#x1F3CB;'.toJS;
   } else {
     emojiSpan.innerHTML = '  '.toJS;
   }

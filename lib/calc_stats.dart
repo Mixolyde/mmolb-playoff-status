@@ -14,7 +14,6 @@ Future<SiteData> calcSiteData(StateData stateData, TimeData timeData) async {
   
   var lastUpdate = getUpdateTime();
   
-  //TODO get subleague nicknames from league data
   var sitedata = SiteData(lastUpdate, 
     timeData.seasonNumber, timeData.seasonDay,
     _sub1.id, _sub1.name, 
@@ -63,7 +62,7 @@ Future<List<TeamStandings>> calculateSubLeague(Subleague sub, List<Team> teams,
     
     var standing = 
       TeamStandings(team.id, 
-      team.fullName, team.shorthand, team.emoji,
+      '${team.location} ${team.fullName}', team.shorthand, team.emoji,
       sub.name,
       team.wins, 
       team.losses,

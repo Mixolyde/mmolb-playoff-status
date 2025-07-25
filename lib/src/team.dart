@@ -24,7 +24,7 @@ PLAYERS
 "_id":"6805db0cac48194de3cd3ff7"}
 */
 
-class Team {
+class Team implements Comparable<Team>  {
   final String id;
   final String fullName;
   final String shorthand;
@@ -55,5 +55,16 @@ class Team {
   
   @override
   String toString() => "$location $fullName ($shorthand) ($wins - $losses) RunDiff: $runDifferential)";
+
+    @override
+  int compareTo(Team other) {
+    if(wins != other.wins){
+      return other.wins.compareTo(wins);
+    } else if(runDifferential != other.runDifferential) {
+      return other.runDifferential.compareTo(runDifferential);
+    }{
+      return fullName.compareTo(other.fullName);
+    }
+  }
   
 }

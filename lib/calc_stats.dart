@@ -37,17 +37,19 @@ Future<List<List<TeamStandings>>> calcStats(StateData stateData, TimeData timeDa
  
   _allTeams = await getTeamsBySubleague(stateData);
 
+  var wcLeaderDiff = getWildCardDiff([_allTeams[_sub1.id]!, _allTeams[_sub2.id]!]);
+
   var sub1Standings = 
-    await calculateSubLeague(_sub1, _allTeams[_sub1.id]!, timeData);
+    await calculateSubLeague(_sub1, _allTeams[_sub1.id]!, timeData, wcLeaderDiff);
   var sub2Standings = 
-    await calculateSubLeague(_sub2, _allTeams[_sub2.id]!, timeData);
+    await calculateSubLeague(_sub2, _allTeams[_sub2.id]!, timeData, wcLeaderDiff);
   
   return [sub1Standings, sub2Standings];
     
 }
 
 Future<List<TeamStandings>> calculateSubLeague(Subleague sub, List<Team> teams,
-    TimeData timeData) async{
+    TimeData timeData, int wcLeaderDiff) async{
   print('Day ${timeData.seasonDay} ${sub.name} (${sub.id})');
 
   print("SubLeague Teams Length: ${teams.length}");
@@ -74,31 +76,62 @@ Future<List<TeamStandings>> calculateSubLeague(Subleague sub, List<Team> teams,
   print("SubLeague TeamStandings Length: ${teamStandings.length}");
 
   //sort first then calculate
-  sortTeamsNotGrouped(teamStandings);
+  teamStandings.sort();
 
 
-  calculateGamesBehind(teamStandings);
+  calculateGamesBehind(teamStandings, wcLeaderDiff);
   //calculateMagicNumbers(teamStandings);
   
   return teamStandings;
 
 }
 
-void calculateGamesBehind(List<TeamStandings> teamStandings) {
+void calculateGamesBehind(List<TeamStandings> teamStandings, int wcLeaderDiff) {
   //compute games back from Subleague leader
-  //TODO compute games back from Wild Card spot
-  //TODO handle actual tiebreakers
   var subLeaderDiff = teamStandings[0].wins - 
       (teamStandings[0].gamesPlayed - teamStandings[0].wins);
-  
+
   for (var i = 1; i < teamStandings.length; i++){
     var teamDiff = teamStandings[i].wins - 
       (teamStandings[i].gamesPlayed - teamStandings[i].wins);
     num gbSubLeader = ( subLeaderDiff - teamDiff ) / 2;
+    num gbWildCard = ( wcLeaderDiff - teamDiff ) / 2;
     teamStandings[i].gbDiv = formatGamesBehind(gbSubLeader);
+    if (gbWildCard > 0) {
+      teamStandings[i].gbWc = formatGamesBehind(gbWildCard);
+    }
+    
     
     print('GbDiv ${teamStandings[i].gbDiv} GbWc ${teamStandings[i].gbWc}');
   }  
+}
+
+int getWildCardDiff(List<List<Team>> teams) {
+  //compute games back from Wild Card leader
+  List<Team> league1Teams = teams[0].toList();
+  List<Team> league2Teams = teams[1].toList();
+
+  league1Teams.sort();
+  league2Teams.sort();
+
+  // remove first two teams from standings
+  league1Teams.removeRange(0, 2);
+  league2Teams.removeRange(0, 2);
+
+  // merge the two lists
+  league1Teams.addAll(league2Teams);
+
+  // sort all teams
+  league1Teams.sort();
+
+  // calculate the wild card leader difference of the second team
+  int wcLeaderGamesPlayed = league1Teams[1].wins + league1Teams[1].losses;
+  var wcLeaderDiff = league1Teams[1].wins - 
+      (wcLeaderGamesPlayed - league1Teams[1].wins);
+
+  print('WC Leader Diff: $wcLeaderDiff from team ${league1Teams[1].fullName}');
+  
+  return wcLeaderDiff;
 }
 
 
@@ -117,18 +150,6 @@ Future<Map<String,List<Team>>> getTeamsBySubleague(StateData stateData) async {
   }
 
   return teamMap;
-}
-
-//sort teams by wins, then full name
-void sortTeamsNotGrouped(List<TeamStandings> teams) {
-  teams.sort((a, b) {
-    if(b.wins != a.wins){
-      return b.wins.compareTo(a.wins);
-    } else {
-      return a.fullName.compareTo(b.fullName);
-    }
-  });
- 
 }
 
 String formatGamesBehind(num gb){

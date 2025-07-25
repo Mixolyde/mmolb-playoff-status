@@ -1,4 +1,4 @@
-class TeamStandings {
+class TeamStandings implements Comparable<TeamStandings> {
   final String id;
   final String fullName;
   final String nickname;
@@ -78,5 +78,16 @@ class TeamStandings {
   
   @override
   String toString() => 'Standings: $fullName:$nickname - $subleague ($wins - $losses) RunDiff: $runDifferential';
+
+  @override
+  int compareTo(TeamStandings other) {
+    if(wins != other.wins){
+      return other.wins.compareTo(wins);
+    } else if(runDifferential != other.runDifferential) {
+      return other.runDifferential.compareTo(runDifferential);
+    }{
+      return fullName.compareTo(other.fullName);
+    }
+  }
   
 }

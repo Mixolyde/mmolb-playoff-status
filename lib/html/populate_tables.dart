@@ -14,7 +14,7 @@ void populateWinsBehindTable(List<TeamStandings> subStandings, bool groupByDiv, 
     cell = trow.insertCell(3);
     cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();
     cell = trow.insertCell(4);
-    cell.innerText = row.wins.toString();
+    cell.innerText = row.runDifferential.toString();
     cell = trow.insertCell(5);
     cell.innerText = row.gbDiv;        
     cell = trow.insertCell(6);

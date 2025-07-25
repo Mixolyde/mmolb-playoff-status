@@ -9,10 +9,12 @@ void populateWinsBehindTable(List<TeamStandings> subStandings, bool groupByDiv, 
   
   for (var row in standings){
     var trow = insertCommonCells(table, row);
-    var cell = trow.insertCell(3);
+    var cell = trow.insertCell(2);
     cell.innerText = row.gamesPlayed.toString();    
+    cell = trow.insertCell(3);
+    cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();
     cell = trow.insertCell(4);
-    cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();       
+    cell.innerText = row.wins.toString();
     cell = trow.insertCell(5);
     cell.innerText = row.gbDiv;        
     cell = trow.insertCell(6);
@@ -285,10 +287,8 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
     cell.innerText = row.subleague;    
   }
 
-  cell = trow.insertCell(1 + leagueAdjust);
-  cell.innerText = row.wins.toString();
   var record = '${row.gamesPlayed - row.losses} - ${row.losses}';
-  cell = trow.insertCell(2 + leagueAdjust);
+  cell = trow.insertCell(1 + leagueAdjust);
   cell.innerText = record;   
 
   return trow;

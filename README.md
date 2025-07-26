@@ -10,7 +10,6 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 * Add unit tests
 * Create a github action for testing code
 * Peanut call with /url/ after domain
-* Replace tiebreakers
 * Get all the the previous functionality working again
 * Figure out postseason calculations
 * Setup multiple development environments for testing data/web changes
@@ -38,9 +37,9 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 - [x] Restore data update automation
 
 * v0.0.3
-- [ ] Fix Wild Card games behind
-- [ ] Fix tie breaking
-- [ ] Automate web update deployment
+- [x] Fix Wild Card games behind
+- [x] Fix tie breaking
+- [x] Automate web update deployment
 
 * v0.0.4
 - [ ] Fix Magic Number calculations

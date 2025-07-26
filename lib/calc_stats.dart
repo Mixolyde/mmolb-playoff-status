@@ -80,7 +80,7 @@ Future<List<TeamStandings>> calculateSubLeague(Subleague sub, List<Team> teams,
 
 
   calculateGamesBehind(teamStandings, wcLeaderDiff);
-  //calculateMagicNumbers(teamStandings);
+  calculateMagicNumbers(teamStandings);
   
   return teamStandings;
 
@@ -104,6 +104,107 @@ void calculateGamesBehind(List<TeamStandings> teamStandings, int wcLeaderDiff) {
     
     print('GbDiv ${teamStandings[i].gbDiv} GbWc ${teamStandings[i].gbWc}');
   }  
+}
+
+void calculateMagicNumbers(List<TeamStandings> teamStandings){
+  calculateWinningMagicNumbers(teamStandings);
+  calculateLosingMagicNumbers(teamStandings);
+}
+
+void calculateWinningMagicNumbers(List<TeamStandings> teamStandings) {
+  for (var i = 0; i < teamStandings.length; i++){
+    var maxWins = (gamesInRegularSeason - teamStandings[i].gamesPlayed) +
+      teamStandings[i].wins;
+
+    print('${teamStandings[i]} maxWins: $maxWins');
+
+    for (var j = 0; j < i && j < 4; j++){
+      teamStandings[i].winning[j] = 'DNCD';
+      if( maxWins < teamStandings[j].wins ||
+        (maxWins == teamStandings[j].wins &&
+        teamStandings[i].runDifferential < teamStandings[j].runDifferential)){
+        teamStandings[i].winning[j] = 'X';
+      }
+    }
+    
+    for (var b = i + 1; b < 5; b++){
+      setWinningMagicNumber(teamStandings[i], 
+          teamStandings[b], b - 1);
+    }
+        
+    if(teamStandings[i].winning.any((s) => s == '^')){
+      teamStandings[i].winning[4] = 'X';
+    } else {
+      teamStandings[i].winning[4] = '0';
+    }
+    
+    if(teamStandings[i].winning[0] == 'X' &&
+      teamStandings[i].winning[1] == 'X' &&
+      teamStandings[i].winning[2] == 'X' &&
+      teamStandings[i].winning[3] == 'X'){
+      teamStandings[i].winning[4] = 'PT';
+    }
+    
+  }
+}
+
+void setWinningMagicNumber(TeamStandings standing, TeamStandings target,
+  int winningIndex){
+  //Wb + GRb - Wa + 1
+  var magic = target.wins +
+    (gamesInRegularSeason - target.gamesPlayed) -
+    standing.wins;
+  if (standing.runDifferential < target.runDifferential) {
+    //team b wins ties
+    magic += 1;
+  }
+  //print('WinMN for ${teamStandings[i]} vs. ${teamStandings[b]}: $magic');
+  if (magic > 0){
+    //set magic number
+    standing.winning[winningIndex] = '$magic';
+  } else if (winningIndex > 0 && 
+    standing.winning.any((s) => s == '^')) {
+    //previous spot guaranteed, so this one can't
+    standing.winning[winningIndex] = 'X';
+  } else {
+    //this spot or better guaranteed
+    standing.winning[winningIndex] = '^';
+  }
+    
+}
+
+void calculateLosingMagicNumbers(List<TeamStandings> teamStandings) {
+    
+  for (var i = 0; i < teamStandings.length; i++){
+    var stand = teamStandings[i];
+    var maxWins = (gamesInRegularSeason - stand.gamesPlayed) + stand.wins;
+    for(var k = 0; k < 5; k++){
+      switch(stand.winning[k]){
+        case '^':
+        case 'X':
+        case 'PT':
+          stand.partytime[k] = stand.winning[k];
+          break;
+        default:
+          if(i <= k) {
+            stand.partytime[k] = 'MW';
+          } else if (k == 4) {
+            stand.partytime[k] = 'MW';
+          } else {
+            //maxWinsi - Wk
+            //print('Find Elim: $stand Berth: $k');
+            var magic = maxWins - teamStandings[k].wins;
+            //if we don't have favor, elim is one lower
+            if(stand.runDifferential > teamStandings[k].runDifferential) {
+              magic += 1;
+            }
+            stand.partytime[k] = '$magic';
+          }
+          
+          break;
+      } 
+    }
+  }
 }
 
 int getWildCardDiff(List<List<Team>> teams) {

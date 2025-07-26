@@ -81,15 +81,20 @@ Future<void> getContentPages() async {
   (document.querySelector('#pickLeague1')! as HTMLElement).innerText = sitedata.subNicknames[0];
   (document.querySelector('#pickLeague2')! as HTMLElement).innerText = sitedata.subNicknames[1];
 
-  winsbehindHTML = await read(Uri.parse('main-content/winsbehind.html'));
-  setMainContent(winsbehindHTML);
-  //magicHTML = await HttpRequest.getString('magic.html');
-  //postseasonHTML = await HttpRequest.getString('postseason.html');
+  //load content pages
   aboutHTML = await read(Uri.parse('main-content/about.html'));
-  //bracketHTML = await HttpRequest.getString('bracket.html');
-  //chancesNotesHTML = await HttpRequest.getString('chancesNotes.html');
-  //partytimeNotesHTML = await HttpRequest.getString('partytimeNotes.html');
-  //winningNotesHTML = await HttpRequest.getString('winningNotes.html');
+  //bracketHTML = await read(Uri.parse('main-content/bracket.html'));
+  magicHTML = await read(Uri.parse('main-content/magic.html'));
+  //postseasonHTML = await read(Uri.parse('main-content/postseason.html'));
+  winsbehindHTML = await read(Uri.parse('main-content/winsbehind.html'));
+
+  //load notes pages
+  //chancesNotesHTML = await read(Uri.parse('notes/chancesNotes.html'));
+  partytimeNotesHTML = await read(Uri.parse('notes/partytimeNotes.html'));
+  winningNotesHTML = await read(Uri.parse('notes/winningNotes.html'));
+
+  setMainContent(winsbehindHTML);
+
 }
 
 Future<void> refreshData() async{

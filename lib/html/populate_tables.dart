@@ -184,15 +184,13 @@ void populateWinningTable(List<TeamStandings> subStandings, bool groupByDiv, Sit
   
   for(var row in standings) {
     var trow = insertCommonCells(table, row, sitedata);
-    var cell = trow.insertCell(5);
-    cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();      
+     
     for(var i = 0; i < 5; i++){
-      cell = trow.insertCell(6 + i);
+      var cell = trow.insertCell(5 + i);
       cell.innerText = row.winning[i];
       switch (row.winning[i]){
         case 'PT':
         case 'X':
-        case 'DNCD':
           cell.classList.add('redcell');
           break;
         default:
@@ -214,10 +212,9 @@ void populatePartyTimeTable(List<TeamStandings> subStandings, bool groupByDiv, S
   
   for(var row in standings) {
     var trow = insertCommonCells(table, row, sitedata);   
-    var cell = trow.insertCell(5);
-    cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();    
+   
     for(var i = 0; i < 5; i++){
-      var cell = trow.insertCell(6 + i);
+      var cell = trow.insertCell(5 + i);
       cell.innerText = row.partytime[i];
       switch (row.partytime[i]){
         case 'PT':

@@ -8,14 +8,8 @@ void populateWinsBehindTable(List<TeamStandings> subStandings, bool groupByDiv, 
   var standings = subStandings.toList();
   
   for (var row in standings){
-    var trow = insertCommonCells(table, row);
-    var cell = trow.insertCell(2);
-    cell.innerText = row.gamesPlayed.toString();    
-    cell = trow.insertCell(3);
-    cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();
-    cell = trow.insertCell(4);
-    cell.innerText = row.runDifferential.toString();
-    cell = trow.insertCell(5);
+    var trow = insertCommonCells(table, row, sitedata);
+    var cell = trow.insertCell(5);
     cell.innerText = row.gbDiv;        
     cell = trow.insertCell(6);
     cell.innerText = row.gbWc;
@@ -111,7 +105,7 @@ void populateChancesTable(List<TeamStandings> subStandings, bool groupByDiv, Sit
   var standings = subStandings.toList();
   
   for(var row in standings) {
-    var trow = insertCommonCells(table, row);
+    var trow = insertCommonCells(table, row, sitedata);
     var cell = trow.insertCell(5);
     cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();  
     for(var i = 0; i < 5; i++){
@@ -160,7 +154,7 @@ void populatePostseasonTable(List<List<TeamStandings>> allStandings, bool groupB
   });
   
   for(var row in standings) {
-    var trow = insertCommonCells(table, row, showLeague: true);
+    var trow = insertCommonCells(table, row, sitedata, showLeague: true);
     var psRounds = 4;
     if(sitedata.leagueWildCards || sitedata.leagueMildCards){
       psRounds = 5;
@@ -189,7 +183,7 @@ void populateWinningTable(List<TeamStandings> subStandings, bool groupByDiv, Sit
   var standings = subStandings.toList();
   
   for(var row in standings) {
-    var trow = insertCommonCells(table, row);
+    var trow = insertCommonCells(table, row, sitedata);
     var cell = trow.insertCell(5);
     cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();      
     for(var i = 0; i < 5; i++){
@@ -219,7 +213,7 @@ void populatePartyTimeTable(List<TeamStandings> subStandings, bool groupByDiv, S
   var standings = subStandings.toList();
   
   for(var row in standings) {
-    var trow = insertCommonCells(table, row);   
+    var trow = insertCommonCells(table, row, sitedata);   
     var cell = trow.insertCell(5);
     cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();    
     for(var i = 0; i < 5; i++){
@@ -246,7 +240,7 @@ void populateAboutPageData(List<List<TeamStandings>> subStandings){
 }
 
 HTMLTableRowElement insertCommonCells(HTMLTableElement table, 
-  TeamStandings row, {showLeague = false} ){
+  TeamStandings row, SiteData sitedata, {showLeague = false} ){
   //print('Inserting TeamStandings for $row');
   var trow = table.insertRow();
 
@@ -289,7 +283,13 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
 
   var record = '${row.gamesPlayed - row.losses} - ${row.losses}';
   cell = trow.insertCell(1 + leagueAdjust);
-  cell.innerText = record;   
+  cell.innerText = record;
+  cell = trow.insertCell(2 + leagueAdjust);
+  cell.innerText = row.gamesPlayed.toString();    
+  cell = trow.insertCell(3 + leagueAdjust);
+  cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();
+  cell = trow.insertCell(4 + leagueAdjust);
+  cell.innerText = row.runDifferential.toString();
 
   return trow;
 

@@ -3325,17 +3325,13 @@ this.b=b},
 bZ:function bZ(a,b,c){this.a=a
 this.b=b
 this.c=c},
-mL(a,b,c){var s,r,q,p,o,n,m,l=t.m,k=t.z.a(l.a(v.G.document).querySelector("#standingsTable"))
-k.toString
+mL(a,b,c){var s,r,q,p,o,n=t.m,m=t.z.a(n.a(v.G.document).querySelector("#standingsTable"))
+m.toString
 s=J.dY(a)
-for(r=s.length,q=c.y,p=0;p<s.length;s.length===r||(0,A.aI)(s),++p){o=s[p]
-n=A.fq(k,o,!1)
-m=o.x
-l.a(n.insertCell(2)).innerText=B.c.i(m)
-l.a(n.insertCell(3)).innerText=B.c.i(q-m)
-l.a(n.insertCell(4)).innerText=B.c.i(o.w)
-l.a(n.insertCell(5)).innerText=o.y
-l.a(n.insertCell(6)).innerText=o.z}},
+for(r=s.length,q=0;q<s.length;s.length===r||(0,A.aI)(s),++q){p=s[q]
+o=A.fq(m,p,c,!1)
+n.a(o.insertCell(5)).innerText=p.y
+n.a(o.insertCell(6)).innerText=p.z}},
 mI(a){var s,r,q,p,o,n,m,l,k,j,i,h,g,f
 if(0>=0)return A.c(a,0)
 A.S("Bracket 0: "+A.k(a[0]))
@@ -3380,7 +3376,7 @@ mG(a,b,c){var s,r,q,p,o,n,m,l,k,j,i=t.m,h=t.z.a(i.a(v.G.document).querySelector(
 if(h==null){A.S("ERROR: #standingsTable is null")
 return}s=J.dY(a)
 for(r=s.length,q=c.y,p=0;p<s.length;s.length===r||(0,A.aI)(s),++p){o=s[p]
-n=A.fq(h,o,!1)
+n=A.fq(h,o,c,!1)
 i.a(n.insertCell(5)).innerText=B.c.i(q-o.x)
 for(m=o.as,l=o.Q,k=0;k<5;++k){j=i.a(n.insertCell(6+k))
 if(!(k<l.length))return A.c(l,k)
@@ -3400,7 +3396,7 @@ B.b.ac(s,r.j(a,0))
 B.b.ac(s,r.j(a,1))
 B.b.aG(s,new A.jE())
 for(r=s.length,q=c.w,p=0;p<s.length;s.length===r||(0,A.aI)(s),++p){o=s[p]
-n=A.fq(f,o,!0)
+n=A.fq(f,o,c,!0)
 m=B.b.N(q,"WILD_CARDS")||B.b.N(q,"MILD_CARDS")?5:4
 for(l=o.as,k=o.ax,j=0;j<m;++j){i=g.a(n.insertCell(6+j))
 if(!(j<k.length))return A.c(k,j)
@@ -3414,7 +3410,7 @@ mK(a,b,c){var s,r,q,p,o,n,m,l,k,j=t.m,i=t.z.a(j.a(v.G.document).querySelector("#
 if(i==null){A.S("ERROR: #standingsTable is null")
 return}s=J.dY(a)
 for(r=s.length,q=c.y,p=0;p<s.length;s.length===r||(0,A.aI)(s),++p){o=s[p]
-n=A.fq(i,o,!1)
+n=A.fq(i,o,c,!1)
 j.a(n.insertCell(5)).innerText=B.c.i(q-o.x)
 for(m=o.as,l=0;l<5;++l){k=j.a(n.insertCell(6+l))
 if(!(l<m.length))return A.c(m,l)
@@ -3428,7 +3424,7 @@ mH(a,b,c){var s,r,q,p,o,n,m,l,k,j=t.m,i=t.z.a(j.a(v.G.document).querySelector("#
 if(i==null){A.S("ERROR: #standingsTable is null")
 return}s=J.dY(a)
 for(r=s.length,q=c.y,p=0;p<s.length;s.length===r||(0,A.aI)(s),++p){o=s[p]
-n=A.fq(i,o,!1)
+n=A.fq(i,o,c,!1)
 j.a(n.insertCell(5)).innerText=B.c.i(q-o.x)
 for(m=o.at,l=0;l<5;++l){k=j.a(n.insertCell(6+l))
 if(!(l<m.length))return A.c(m,l)
@@ -3438,7 +3434,7 @@ switch(m[l]){case"PT":case"X":j.a(k.classList).add("redcell")
 break
 default:j.a(k.classList).add("greencell")
 break}}}},
-fq(a,b,c){var s,r,q,p,o,n,m=t.m,l=m.a(a.insertRow()),k=v.G,j=m.a(m.a(k.document).createElement("a")),i="https://mmolb.com/team/"+b.a
+fq(a,b,c,d){var s,r,q,p,o,n,m=t.m,l=m.a(a.insertRow()),k=v.G,j=m.a(m.a(k.document).createElement("a")),i="https://mmolb.com/team/"+b.a
 j.href=i
 j.innerText=b.c
 j.target="_new"
@@ -3461,10 +3457,14 @@ m.a(o.appendChild(j))
 m.a(q.appendChild(p))
 m.a(q.appendChild(o))
 m.a(q.appendChild(r))
-if(c){m.a(l.insertCell(1)).innerText=b.e
+if(d){m.a(l.insertCell(1)).innerText=b.e
 n=1}else n=0
-k=b.r
-m.a(l.insertCell(1+n)).innerText=""+(b.x-k)+" - "+k
+k=b.x
+i=b.r
+m.a(l.insertCell(1+n)).innerText=""+(k-i)+" - "+i
+m.a(l.insertCell(2+n)).innerText=B.c.i(k)
+m.a(l.insertCell(3+n)).innerText=B.c.i(c.y-k)
+m.a(l.insertCell(4+n)).innerText=B.c.i(b.w)
 return l},
 mA(a){if(a==="X")return-10
 else if(a==="<1%")return 0

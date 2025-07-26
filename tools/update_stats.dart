@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:mmolb_playoff_status/calc_stats.dart';
+import 'package:mmolb_playoff_status/stats/calc_stats.dart';
 import 'package:mmolb_playoff_status/database_api.dart' as db;
 
 Future<void> main(List<String> args) async {  

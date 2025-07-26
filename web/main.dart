@@ -117,19 +117,19 @@ Future<void> refreshData() async{
   
   switch(currentView.activeView){
   case View.winsbehind:
-    populateWinsBehindTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
+    populateWinsBehindTable(subStandings[currentView.activeLeague], sitedata);
     break;
   case View.winningmagic:
-    populateWinningTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
+    populateWinningTable(subStandings[currentView.activeLeague], sitedata);
     break;
   case View.partytimemagic:
-    populatePartyTimeTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
+    populatePartyTimeTable(subStandings[currentView.activeLeague], sitedata);
     break;
   case View.chances:
-    populateChancesTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
+    populateChancesTable(subStandings[currentView.activeLeague], sitedata);
     break;    
   case View.postseason:
-    populatePostseasonTable(subStandings, currentView.groupByDiv, sitedata);
+    populatePostseasonTable(subStandings, sitedata);
     break; 
   case View.bracket:
     populatePlayoffBracket(entries);
@@ -400,34 +400,34 @@ void redisplayData(){
     setMainContent(winsbehindHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
       sitedata.subNicknames[currentView.activeLeague]; 
-    populateWinsBehindTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
+    populateWinsBehindTable(subStandings[currentView.activeLeague], sitedata);
     break;
   case View.chances:
     setMainContent(magicHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
       '${sitedata.subNicknames[currentView.activeLeague]} League Playoff Chances';
-    populateChancesTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
+    populateChancesTable(subStandings[currentView.activeLeague], sitedata);
     setNotes(chancesNotesHTML);
     break;    
   case View.winningmagic:
     setMainContent(magicHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
       '${sitedata.subNicknames[currentView.activeLeague]} League Winning Magic Numbers';
-    populateWinningTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
+    populateWinningTable(subStandings[currentView.activeLeague], sitedata);
     setNotes(winningNotesHTML);
     break;
   case View.partytimemagic:
     setMainContent(magicHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
       '${sitedata.subNicknames[currentView.activeLeague]} League Party Time Magic Numbers';
-    populatePartyTimeTable(subStandings[currentView.activeLeague], currentView.groupByDiv, sitedata);
+    populatePartyTimeTable(subStandings[currentView.activeLeague], sitedata);
     setNotes(partytimeNotesHTML);
     break;
   case View.postseason:
     setMainContent(postseasonHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
       'MMOLB Post Season Chances';
-    populatePostseasonTable(subStandings, currentView.groupByDiv, sitedata);
+    populatePostseasonTable(subStandings, sitedata);
     break;  
   case View.bracket:
     setMainContent(bracketHTML);
@@ -476,7 +476,6 @@ CurrentView loadCurrentView(){
     var view = CurrentView();
     view.activeLeague = 0;
     view.activeView = View.winsbehind;
-    view.groupByDiv = false;
     return view;
   }
 }

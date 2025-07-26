@@ -3,7 +3,7 @@ import 'dart:js_interop';
 import 'package:web/web.dart';
 import 'package:mmolb_playoff_status/site_objects.dart';
 
-void populateWinsBehindTable(List<TeamStandings> subStandings, bool groupByDiv, SiteData sitedata){
+void populateWinsBehindTable(List<TeamStandings> subStandings, SiteData sitedata){
   var table = document.querySelector('#standingsTable')! as HTMLTableElement;
   var standings = subStandings.toList();
   
@@ -96,7 +96,7 @@ void assignBracketClass(HTMLSpanElement span, PlayoffBracketEntry entry){
   }
 }
 
-void populateChancesTable(List<TeamStandings> subStandings, bool groupByDiv, SiteData sitedata){
+void populateChancesTable(List<TeamStandings> subStandings, SiteData sitedata){
   var table = document.querySelector('#standingsTable') as HTMLTableElement?;
   if(table == null){
     print('ERROR: #standingsTable is null');
@@ -129,7 +129,7 @@ void populateChancesTable(List<TeamStandings> subStandings, bool groupByDiv, Sit
   
 }
 
-void populatePostseasonTable(List<List<TeamStandings>> allStandings, bool groupByDiv,
+void populatePostseasonTable(List<List<TeamStandings>> allStandings,
   SiteData sitedata){
   var table = document.querySelector('#standingsTable') as HTMLTableElement?;
   if(table == null){
@@ -174,7 +174,7 @@ void populatePostseasonTable(List<List<TeamStandings>> allStandings, bool groupB
   
 }
 
-void populateWinningTable(List<TeamStandings> subStandings, bool groupByDiv, SiteData sitedata){
+void populateWinningTable(List<TeamStandings> subStandings, SiteData sitedata){
   var table = document.querySelector('#standingsTable') as  HTMLTableElement?;
   if(table == null){
     print('ERROR: #standingsTable is null');
@@ -202,7 +202,7 @@ void populateWinningTable(List<TeamStandings> subStandings, bool groupByDiv, Sit
   
 }
 
-void populatePartyTimeTable(List<TeamStandings> subStandings, bool groupByDiv, SiteData sitedata){
+void populatePartyTimeTable(List<TeamStandings> subStandings, SiteData sitedata){
   var table = document.querySelector('#standingsTable') as  HTMLTableElement?;
   if(table == null){
     print('ERROR: #standingsTable is null');

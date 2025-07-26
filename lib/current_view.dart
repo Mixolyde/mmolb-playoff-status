@@ -4,26 +4,24 @@ class CurrentView {
   // 0 or 1
   int activeLeague = 0;
   View activeView  = View.winsbehind;
-  bool groupByDiv = false;
   
-  CurrentView({this.activeLeague = 0, this.activeView = View.winsbehind,
-    this.groupByDiv = false});
+  CurrentView({this.activeLeague = 0, 
+  this.activeView = View.winsbehind,
+});
   
   CurrentView.fromHash(String hash){
     print('Restoring view from hash: $hash');
-    //#activeLeague=0&activeView=0&groupByDiv=false
-    var exp = RegExp(r'#activeLeague=([0|1])&activeView=(\w+)&groupByDiv=(\w+)');
+    //#activeLeague=0&activeView=0
+    var exp = RegExp(r'#activeLeague=([0|1])&activeView=(\w+)');
     var match = exp.firstMatch(hash);
     if(match != null){
       //print(match.groups([1, 2, 3]));
       activeLeague = int.parse(match.group(1) ?? '0');
       activeView = View.values[int.parse(match.group(2) ?? '1')];
-      groupByDiv = match.group(3) == 'true' ? true : false;
     } else {
       print('$hash did not match regex');
       activeLeague = 0;
       activeView = View.values[1];
-      groupByDiv = false;
     }
   }
 
@@ -32,19 +30,16 @@ class CurrentView {
     return CurrentView(
       activeLeague: json['activeLeague'] as int,
       activeView: View.values[json['activeView']],
-      groupByDiv: json['groupByDiv'] == null ? false : 
-        json['groupByDiv'] as bool,
     );
   }
 
   Map toJson() => {
     'activeLeague': activeLeague,
     'activeView': activeView.index,
-    'groupByDiv': groupByDiv,
   };
   
-  String toHash() => '#activeLeague=$activeLeague&activeView=${activeView.index}&groupByDiv=$groupByDiv';
+  String toHash() => '#activeLeague=$activeLeague&activeView=${activeView.index}';
   
   @override
-  String toString() => 'League: $activeLeague View: $activeView GroupByDiv: $groupByDiv';
+  String toString() => 'League: $activeLeague View: $activeView';
 }

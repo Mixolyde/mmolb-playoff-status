@@ -7,7 +7,7 @@ void simulateUnstartedPostSeason(List<List<TeamSim>> simsByLeague){
   var leagueChampSims = <TeamSim>[];
   
   for (var simLeague in simsByLeague) {
-    sortTeamSims(simLeague);
+    simLeague.sort();
     
     var round1Sims = <TeamSim>[];
     round1Sims.add(simLeague[0]);

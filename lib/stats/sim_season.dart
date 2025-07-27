@@ -19,7 +19,7 @@ Future<void> calculateChances(List<List<TeamStandings>> subStandings,
 
   //print(games[0]);
 
-  //runSimulations(games, subStandings, numSims);
+  runSimulations(games, subStandings, numSims);
   
 }
 
@@ -36,7 +36,7 @@ Future<Set<Game>> getAllGames(List<List<TeamStandings>> subStandings) async{
 
 }
 
-void runSimulations(List<Game> games, List<List<TeamStandings>> standings, 
+void runSimulations(Set<Game> games, List<List<TeamStandings>> standings, 
   int numSims) async {
   var sims = mapTeamSims(standings, games);
   
@@ -85,7 +85,7 @@ void runSimulations(List<Game> games, List<List<TeamStandings>> standings,
     
     //sort and count positions
     for (var simLeague in simsByLeague) {
-      sortTeamSims(simLeague);
+      simLeague.sort();
       TeamSim sim;
       //print('Sorted simleague: $simLeague');
       for (var i = 0; i < simLeague.length; i++){
@@ -136,10 +136,13 @@ void runSimulations(List<Game> games, List<List<TeamStandings>> standings,
           break;
       }
       
+
+    }
+
+    //only three rounds of post season percents to format
+    for(var i = 0; i < 3; i++){
       //postseason percents
       standing.post[i] = formatPercent(postCounts[standing.id]![i] / numSims);
-
-
     }
     print('$standing Po ${standing.po} Post ${standing.post} Winning ${standing.winning}');
   }
@@ -147,7 +150,7 @@ void runSimulations(List<Game> games, List<List<TeamStandings>> standings,
   
 }
 
-void simulateSeason(List<Game> games, Map<String, TeamSim> sims){
+void simulateSeason(Set<Game> games, Map<String, TeamSim> sims){
   //print('SimulateSeason with TeamSim keys:');
   //print(sims.keys.join(' '));
   //print(sims);
@@ -260,7 +263,7 @@ TeamSim simulateSeries(TeamSim awaySim, TeamSim homeSim, int winsNeeded, int tea
   
 }
 
-Map<String, TeamSim> mapTeamSims(List<List<TeamStandings>> standings, List<Game> games){
+Map<String, TeamSim> mapTeamSims(List<List<TeamStandings>> standings, Set<Game> games){
   var sims = <String, TeamSim>{};
   for (var standingsList in standings) {
     for (var standing in standingsList) {
@@ -273,19 +276,6 @@ Map<String, TeamSim> mapTeamSims(List<List<TeamStandings>> standings, List<Game>
     }
   }
   return sims;
-}
-
-//sort teams by wins, divine favor
-//TODO handle sorting the teams with wild cards
-void sortTeamSims(List<TeamSim> teams) {
-  teams.sort((a, b) {
-    if(b.wins != a.wins){
-      return b.wins.compareTo(a.wins);
-    } else {
-      return b.runDifferential.compareTo(a.runDifferential);
-    }
-  });
-
 }
 
 String formatPercent(num perc){

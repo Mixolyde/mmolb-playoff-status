@@ -89,7 +89,7 @@ Future<void> getContentPages() async {
   winsbehindHTML = await read(Uri.parse('main-content/winsbehind.html'));
 
   //load notes pages
-  //chancesNotesHTML = await read(Uri.parse('notes/chancesNotes.html'));
+  chancesNotesHTML = await read(Uri.parse('notes/chancesNotes.html'));
   partytimeNotesHTML = await read(Uri.parse('notes/partytimeNotes.html'));
   winningNotesHTML = await read(Uri.parse('notes/winningNotes.html'));
 

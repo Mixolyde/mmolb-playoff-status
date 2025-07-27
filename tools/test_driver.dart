@@ -1,4 +1,4 @@
-import 'package:mmolb_playoff_status/calc_stats.dart';
+import 'package:mmolb_playoff_status/stats/calc_stats.dart';
 import 'package:mmolb_playoff_status/database_api.dart';
 
 /// Test script used for manually executing methods and testing functionality.

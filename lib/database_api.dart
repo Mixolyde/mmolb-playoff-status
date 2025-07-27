@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart';
-//import 'eventsource/eventsource.dart';
+
+import 'package:mmolb_playoff_status/src/game.dart';
 import 'package:mmolb_playoff_status/src/league.dart';
 import 'package:mmolb_playoff_status/src/playoffs.dart';
 import 'package:mmolb_playoff_status/src/simulationdata.dart';
@@ -24,6 +25,7 @@ String mmolbApiUrl = 'https://mmolb.com/api/';
 final String _stateUrl = '${mmolbApiUrl}state';
 final String _timeUrl = '${mmolbApiUrl}time';
 final String _subleagueUrl = '${mmolbApiUrl}league/';
+final String _teamScheduleUrl = '${mmolbApiUrl}team-schedule/';
 final String _teamUrl = '${mmolbApiUrl}team/';
 
 // Old Blaseball URLs
@@ -89,6 +91,29 @@ Future<Team> getTeam(String id) async {
     throw Exception('Failed to load team');
   }
 }
+
+//https://mmolb.com/api/team-schedule/6805db0cac48194de3cd407c
+Future<List<Game>> getAllRegularSeasonGamesByTeamId(String teamId) async {
+  var response = await get(Uri.parse(_teamScheduleUrl + teamId));
+  //print('Team Response body: ${response.body}');
+  
+  List<dynamic> entities = json.decode(response.body)['games'];
+  print("Entity count: ${entities.length}");
+  
+  var games = entities.expand((json) {
+   try {
+      return [Game.fromJson(json)];
+    } catch (e) {
+      print('Bad game json: $json');
+      print(e);
+      throw e;
+      //return <Game>[];
+    }
+  }).toList();
+
+  return games;
+}
+
 
 /*
 Future<Standings> getStandings() async {

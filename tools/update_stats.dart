@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:mmolb_playoff_status/stats/calc_stats.dart';
 import 'package:mmolb_playoff_status/database_api.dart' as db;
+import 'package:mmolb_playoff_status/stats/calc_stats.dart';
+import 'package:mmolb_playoff_status/stats/sim_season.dart';
+
 
 Future<void> main(List<String> args) async {  
   var stateData = await db.getStateData();
@@ -21,6 +23,12 @@ Future<void> main(List<String> args) async {
   //print out data
   print(subStandings[0]);
   print(subStandings[1]);
+
+  int numSims = 101;
+
+  await calculateChances(subStandings, numSims, timeData);
+
+  
 
   var temp = Directory.systemTemp;
   print(temp);

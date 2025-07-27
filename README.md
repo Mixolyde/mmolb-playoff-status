@@ -7,10 +7,10 @@ An attempt to replicate [Playoff Status](http://playoffstatus.com)
 Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 
 ## TODO
+* Get all the the previous functionality working again
 * Add unit tests
 * Create a github action for testing code
 * Peanut call with /url/ after domain
-* Get all the the previous functionality working again
 * Figure out postseason calculations
 * Setup multiple development environments for testing data/web changes
 * Figure out what's up with tied records getting weird sim results
@@ -42,10 +42,19 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 - [x] Automate web update deployment
 
 * v0.0.4
-- [ ] Fix Magic Number calculations
+- [x] Fix Magic Number calculations
 
 * v0.0.5
-- [ ] Fix simulations and postseason chances
+- [ ] Fix season and postseason simulations
+- [ ] Fix chances pages
+
+* v0.0.6
+- [ ] Add unit tests back in
+- [ ] Create a github action for testing code
+
+* v0.0.7
+- [ ] Get a new domain off github
+- [ ] Setup multiple development environments for testing data/web changes
 
 
 ## Contributing

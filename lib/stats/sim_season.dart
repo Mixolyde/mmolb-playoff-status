@@ -46,8 +46,8 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
   // initialize counts for each league playoff berth and no playoffs
   for (var key in sims.keys) {
     poCounts[key] = [0, 0, 0, 0, 0]; 
-    // counts for ILB champ, League series, WC Round
-    postCounts[key] = [0, 0, 0];
+    // counts for MMOLB champ, MMOLB series, League series, WC Round
+    postCounts[key] = [0, 0, 0, 0];
   }
 
   var simsByLeague = <List<TeamSim>>[];
@@ -104,11 +104,14 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
         if(sim.ilbChamp){
           postCounts[sim.id]![0]++;
         }
-        if(sim.slSeries){
+        if(sim.ilbSeries){
           postCounts[sim.id]![1]++;
+        }
+        if(sim.slSeries){
+          postCounts[sim.id]![2]++;
         }     
         if(sim.wcSeries){
-          postCounts[sim.id]![2]++;
+          postCounts[sim.id]![3]++;
         }        
       }
     }
@@ -139,8 +142,8 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
 
     }
 
-    //only three rounds of post season percents to format
-    for(var i = 0; i < 3; i++){
+    //only three rounds and champ of post season percents to format
+    for(var i = 0; i < 4; i++){
       //postseason percents
       standing.post[i] = formatPercent(postCounts[standing.id]![i] / numSims);
     }
@@ -301,6 +304,7 @@ class TeamSim implements Comparable<TeamSim> {
   
   bool wcSeries = false;
   bool slSeries = false;
+  bool ilbSeries = false;
   bool ilbChamp = false;
   
   TeamSim(this.id, this.wins, this.losses,
@@ -316,6 +320,7 @@ class TeamSim implements Comparable<TeamSim> {
     losses = lossesSave;
     wcSeries = false;
     slSeries = false;
+    ilbSeries = false;
     ilbChamp = false;
   }
   

@@ -29,8 +29,6 @@ void simulateUnstartedPostSeason(List<List<TeamSim>> simsByLeague){
       round1Sims.add(wildSeriesWinner);
       //print('WildCard pick $wildCardIndex $wildCard WildSeriesWinner $wildSeriesWinner');
       
-    } else {
-      round1Sims.add(simLeague[3]);
     }
     
     //round1Sims.forEach((sim) => sim.r1Series = true);

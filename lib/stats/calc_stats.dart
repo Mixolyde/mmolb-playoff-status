@@ -119,7 +119,7 @@ void calculateWinningMagicNumbers(List<TeamStandings> teamStandings) {
     print('${teamStandings[i]} maxWins: $maxWins');
 
     for (var j = 0; j < i && j < 4; j++){
-      teamStandings[i].winning[j] = 'DNCD';
+      teamStandings[i].winning[j] = 'MW';
       if( maxWins < teamStandings[j].wins ||
         (maxWins == teamStandings[j].wins &&
         teamStandings[i].runDifferential < teamStandings[j].runDifferential)){

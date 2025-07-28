@@ -116,7 +116,7 @@ void populateChancesTable(List<TeamStandings> subStandings, SiteData sitedata){
           cell.classList.add('redcell');
           break;
         default:
-          if(row.winning[i] == 'DNCD') {
+          if(row.winning[i] == 'MW') {
             cell.classList.add('redcell');
           } else {
             cell.classList.add('greencell');
@@ -162,7 +162,7 @@ void populatePostseasonTable(List<List<TeamStandings>> allStandings,
       var cell = trow.insertCell(6 + i);
       cell.innerText = row.post[i];
       if(row.winning[4] == 'PT' || 
-          (row.winning[2] == 'DNCD' && row.winning[3] == 'DNCD') ){
+          (row.winning[2] == 'MW' && row.winning[3] == 'MW') ){
         cell.classList.add('redcell');
       } else {
         cell.classList.add('greencell');

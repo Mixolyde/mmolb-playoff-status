@@ -3382,7 +3382,7 @@ if(!(l<m.length))return A.c(m,l)
 switch(m[l]){case"PT":case"X":j.a(k.classList).add("redcell")
 break
 default:if(!(l<n.length))return A.c(n,l)
-if(n[l]==="DNCD")j.a(k.classList).add("redcell")
+if(n[l]==="MW")j.a(k.classList).add("redcell")
 else j.a(k.classList).add("greencell")
 break}}}},
 mN(a,b){var s,r,q,p,o,n,m,l,k,j,i,h,g=t.m,f=t.z.a(g.a(v.G.document).querySelector("#standingsTable"))
@@ -3399,7 +3399,7 @@ for(l=o.as,k=o.ax,j=0;j<m;++j){i=g.a(n.insertCell(6+j))
 if(!(j<k.length))return A.c(k,j)
 i.innerText=k[j]
 if(4>=l.length)return A.c(l,4)
-if(l[4]!=="PT")h=l[2]==="DNCD"&&l[3]==="DNCD"
+if(l[4]!=="PT")h=l[2]==="MW"&&l[3]==="MW"
 else h=!0
 if(h)g.a(i.classList).add("redcell")
 else g.a(i.classList).add("greencell")}}},

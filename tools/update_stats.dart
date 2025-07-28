@@ -26,7 +26,8 @@ Future<void> main(List<String> args) async {
 
   int numSims = 101;
 
-  await calculateChances(subStandings, numSims, timeData);
+  //TODO fix calculate chances
+  //await calculateChances(subStandings, numSims, timeData);
 
   
 

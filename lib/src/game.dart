@@ -25,6 +25,18 @@
           }
       },
     ]
+
+    {away_team_color: de0000, 
+    away_team_emoji: 🐞, 
+    away_team_id: 6805db0cac48194de3cd407c, 
+    away_team_name: Baltimore Lady Beetles, 
+    day: 3, 
+    home_team_color: 068200, 
+    home_team_emoji: 🐸, 
+    home_team_id: 6805db0cac48194de3cd40ee, 
+    home_team_name: Atlanta Tree Frogs, 
+    state: Scheduled, 
+    weather: {Emoji: 🌧️, Name: Rain Showers, Tooltip: It is Raining.}}
 */
   
 class Game {
@@ -52,7 +64,7 @@ class Game {
 
     num awayScore = json['away_score'] as num? ?? 0;
     num homeScore = json['home_score'] as num? ?? 0;
-    String gameWinnerId = "";;
+    String gameWinnerId = "";
 
     if (json['state'] as String == "Complete"){
       if (awayScore > homeScore) {
@@ -61,9 +73,11 @@ class Game {
         gameWinnerId = json['home_team_id'];
       }
     } 
+
+    String gameId = json['game_id'] as String? ?? '${json['day']}_${json['away_team_id']}_${json['home_team_id']}';
     
     return Game(
-      id: json['game_id'] as String,
+      id: gameId,
       awayTeam: json['away_team_id'] as String,
       awayTeamNickname: json['away_team_name'] as String,
       awayScore: awayScore,

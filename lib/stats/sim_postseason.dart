@@ -5,8 +5,12 @@ void simulateUnstartedPostSeason(List<List<TeamSim>> simsByLeague){
   
   //simulate complete playoff run
   var leagueChampSims = <TeamSim>[];
+
+  // figure out the wild cards from both leagues
   
   for (var simLeague in simsByLeague) {
+
+    //TODO remove postseason games from win-loss record
     simLeague.sort();
     
     var round1Sims = <TeamSim>[];

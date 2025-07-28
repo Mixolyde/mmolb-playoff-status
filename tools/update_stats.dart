@@ -26,10 +26,7 @@ Future<void> main(List<String> args) async {
 
   int numSims = 101;
 
-  //TODO fix calculate chances
-  //await calculateChances(subStandings, numSims, timeData);
-
-  
+  await calculateChances(subStandings, numSims, timeData);
 
   var temp = Directory.systemTemp;
   print(temp);

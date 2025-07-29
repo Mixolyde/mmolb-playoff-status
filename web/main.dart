@@ -419,7 +419,7 @@ void redisplayData(){
   case View.partytimemagic:
     setMainContent(magicHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
-      '${sitedata.subNicknames[currentView.activeLeague]} League Party Time Magic Numbers';
+      '${sitedata.subNicknames[currentView.activeLeague]} League Elimination Magic Numbers';
     populatePartyTimeTable(subStandings[currentView.activeLeague], sitedata);
     setNotes(partytimeNotesHTML);
     break;

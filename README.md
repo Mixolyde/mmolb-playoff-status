@@ -7,7 +7,6 @@ An attempt to replicate [Playoff Status](http://playoffstatus.com)
 Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 
 ## TODO
-* Replace references to party time with elimination
 * Get all the the previous functionality working again
 * Group by League on some pages
 * Better wild card playoff spot handling
@@ -47,9 +46,11 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 - [x] Fix Magic Number calculations
 
 * v0.0.5
-- [ ] Fix season and postseason simulations
-- [ ] Fix chances pages
-- [ ] Replace references to "Party Time" with "Elimination"
+- [x] Fix mid-season simulations
+- [ ] Fix postseason simulations
+- [ ] Fix mid-season chances pages
+- [ ] Fix postseason chances pages
+- [x] Replace references to "Party Time" with "Elimination"
 
 * v0.0.6
 - [ ] Add unit tests back in

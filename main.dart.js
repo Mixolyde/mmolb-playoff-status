@@ -4094,7 +4094,7 @@ r=$.J.A()
 r=[r.e,r.r]
 q=$.S().a
 if(!(q>=0&&q<2))return A.c(r,q)
-s.innerText=r[q]+" League Party Time Magic Numbers"
+s.innerText=r[q]+" League Elimination Magic Numbers"
 A.mL(J.bs($.aI,$.S().a),$.J.A())
 A.kL($.m0.A())
 break

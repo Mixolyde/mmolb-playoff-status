@@ -7,21 +7,21 @@ An attempt to replicate [Playoff Status](http://playoffstatus.com)
 Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 
 ## TODO
+* Replace rederences to party time with elimination
 * Get all the the previous functionality working again
 * Add unit tests
 * Create a github action for testing code
-* Peanut call with /url/ after domain
-* Figure out postseason calculations
 * Setup multiple development environments for testing data/web changes
 * Figure out what's up with tied records getting weird sim results
-* Postseason schedule
+* Display Postseason bracket schedule
 * Handle postseason data live
-* Team rank history over season chart
-* Schedule pages
+* Team schedule pages
+* Something for Lesser Leagues
 * Get a Bluesky account and button
 * Factor future schedule into magic numbers
 * Move project to a MMOLB-specific account on github
 * Reduce API calls during breaks
+* Get a real domain name and move off Github Pages
 
 ## Planned release schedule
 * v0.0.1 

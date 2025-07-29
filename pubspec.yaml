@@ -12,6 +12,7 @@ dependencies:
   cron: ^0.6.2
   intl: ^0.20.2
   http: ^1.4.0
+  args: ^2.7.0
 
 dev_dependencies:
   build_runner: ^2.4.8

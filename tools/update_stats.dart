@@ -1,12 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:args/args.dart';
 
 import 'package:mmolb_playoff_status/database_api.dart' as db;
 import 'package:mmolb_playoff_status/stats/calc_stats.dart';
 import 'package:mmolb_playoff_status/stats/sim_season.dart';
 
+const simCount = '103';
 
-Future<void> main(List<String> args) async {  
+Future<void> main(List<String> args) async {
+  var parser = ArgParser();
+  parser.addOption(simCount, abbr: 'c',  defaultsTo: '103');
+  var results = parser.parse(args);
+  var numSims = int.parse(results[simCount]);
+
   var stateData = await db.getStateData();
   //print(stateData);
 
@@ -23,8 +30,6 @@ Future<void> main(List<String> args) async {
   //print out data
   print(subStandings[0]);
   print(subStandings[1]);
-
-  int numSims = 101;
 
   await calculateChances(subStandings, numSims, timeData);
 

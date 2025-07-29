@@ -131,7 +131,7 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
       switch(standing.winning[i]){
         case '^':
         case 'X':
-        case 'PT':
+        case 'E':
           standing.po[i] = standing.winning[i];
           break;
         default:

@@ -49,6 +49,7 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 * v0.0.5
 - [ ] Fix season and postseason simulations
 - [ ] Fix chances pages
+- [ ] Replace references to "Party Time" with "Elimination"
 
 * v0.0.6
 - [ ] Add unit tests back in

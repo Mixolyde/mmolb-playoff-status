@@ -17,7 +17,7 @@ late String bracketHTML;
 late String chancesNotesHTML;
 late String winsbehindHTML;
 late String magicHTML;
-late String partytimeNotesHTML;
+late String eliminationNotesHTML;
 late String postseasonHTML;
 late String winningNotesHTML;
 late SiteData sitedata;
@@ -90,7 +90,7 @@ Future<void> getContentPages() async {
 
   //load notes pages
   chancesNotesHTML = await read(Uri.parse('notes/chancesNotes.html'));
-  partytimeNotesHTML = await read(Uri.parse('notes/partytimeNotes.html'));
+  eliminationNotesHTML = await read(Uri.parse('notes/eliminationNotes.html'));
   winningNotesHTML = await read(Uri.parse('notes/winningNotes.html'));
 
   setMainContent(winsbehindHTML);
@@ -122,8 +122,8 @@ Future<void> refreshData() async{
   case View.winningmagic:
     populateWinningTable(subStandings[currentView.activeLeague], sitedata);
     break;
-  case View.partytimemagic:
-    populatePartyTimeTable(subStandings[currentView.activeLeague], sitedata);
+  case View.eliminationmagic:
+    populateEliminationTable(subStandings[currentView.activeLeague], sitedata);
     break;
   case View.chances:
     populateChancesTable(subStandings[currentView.activeLeague], sitedata);
@@ -192,7 +192,7 @@ void addListeners(){
   document.querySelector('#viewWinsBehind')!.onClick.listen(selectViewGB);
   document.querySelector('#viewChances')!.onClick.listen(selectViewC);  
   document.querySelector('#viewWinningNumbers')!.onClick.listen(selectViewW);
-  document.querySelector('#viewPartyTimeNumbers')!.onClick.listen(selectViewPT);
+  document.querySelector('#viewEliminationNumbers')!.onClick.listen(selectViewE);
   document.querySelector('#viewAbout')!.onClick.listen(selectViewAbout);
   document.querySelector('#viewPostseasonChances')!.onClick.listen(selectViewPost);
   //document.querySelector('#viewPlayoffBracket')!.onClick.listen(selectViewBracket);
@@ -247,7 +247,7 @@ void selectLeagueButton() {
 void selectViewAbout(MouseEvent event) => clickView(View.about);
 void selectViewC(MouseEvent event) => clickView(View.chances);
 void selectViewGB(MouseEvent event) => clickView(View.winsbehind);
-void selectViewPT(MouseEvent event) => clickView(View.partytimemagic);
+void selectViewE(MouseEvent event) => clickView(View.eliminationmagic);
 void selectViewPost(MouseEvent event) => clickView(View.postseason);
 void selectViewW(MouseEvent event) => clickView(View.winningmagic);
 void selectViewBracket(MouseEvent event) => clickView(View.bracket);
@@ -276,7 +276,7 @@ void selectViewButton(){
         .remove('nav-button-active');
       document.querySelector('#viewWinningNumbers')!.classList
         .remove('nav-button-active');
-      document.querySelector('#viewPartyTimeNumbers')!.classList
+      document.querySelector('#viewEliminationNumbers')!.classList
         .remove('nav-button-active');
       document.querySelector('#viewPostseasonChances')!.classList
         .remove('nav-button-active');        
@@ -293,7 +293,7 @@ void selectViewButton(){
         .remove('nav-button-active');
       document.querySelector('#viewWinningNumbers')!.classList
         .remove('nav-button-active');
-      document.querySelector('#viewPartyTimeNumbers')!.classList
+      document.querySelector('#viewEliminationNumbers')!.classList
         .remove('nav-button-active');
       document.querySelector('#viewPostseasonChances')!.classList
         .remove('nav-button-active');        
@@ -310,7 +310,7 @@ void selectViewButton(){
         .add('nav-button-active');
       document.querySelector('#viewWinningNumbers')!.classList
         .remove('nav-button-active');
-      document.querySelector('#viewPartyTimeNumbers')!.classList
+      document.querySelector('#viewEliminationNumbers')!.classList
         .remove('nav-button-active');
       document.querySelector('#viewPostseasonChances')!.classList
         .remove('nav-button-active');        
@@ -327,7 +327,7 @@ void selectViewButton(){
         .remove('nav-button-active');
       document.querySelector('#viewWinningNumbers')!.classList
         .add('nav-button-active');
-      document.querySelector('#viewPartyTimeNumbers')!.classList
+      document.querySelector('#viewEliminationNumbers')!.classList
         .remove('nav-button-active');      
       document.querySelector('#viewPostseasonChances')!.classList
         .remove('nav-button-active');        
@@ -335,7 +335,7 @@ void selectViewButton(){
       //  .remove('nav-button-active');
       
       break;
-    case View.partytimemagic:
+    case View.eliminationmagic:
       document.querySelector('#viewAbout')!.classList
         .remove('nav-button-active');
       document.querySelector('#viewChances')!.classList
@@ -344,7 +344,7 @@ void selectViewButton(){
         .remove('nav-button-active');
       document.querySelector('#viewWinningNumbers')!.classList
         .remove('nav-button-active');
-      document.querySelector('#viewPartyTimeNumbers')!.classList
+      document.querySelector('#viewEliminationNumbers')!.classList
         .add('nav-button-active');
       document.querySelector('#viewPostseasonChances')!.classList
         .remove('nav-button-active');        
@@ -361,7 +361,7 @@ void selectViewButton(){
         .remove('nav-button-active');
       document.querySelector('#viewWinningNumbers')!.classList
         .remove('nav-button-active');
-      document.querySelector('#viewPartyTimeNumbers')!.classList
+      document.querySelector('#viewEliminationNumbers')!.classList
         .remove('nav-button-active');
       document.querySelector('#viewPostseasonChances')!.classList
         .add('nav-button-active');
@@ -378,7 +378,7 @@ void selectViewButton(){
         .remove('nav-button-active');
       document.querySelector('#viewWinningNumbers')!.classList
         .remove('nav-button-active');
-      document.querySelector('#viewPartyTimeNumbers')!.classList
+      document.querySelector('#viewEliminationNumbers')!.classList
         .remove('nav-button-active');
       document.querySelector('#viewPostseasonChances')!.classList
         .remove('nav-button-active');
@@ -416,12 +416,12 @@ void redisplayData(){
     populateWinningTable(subStandings[currentView.activeLeague], sitedata);
     setNotes(winningNotesHTML);
     break;
-  case View.partytimemagic:
+  case View.eliminationmagic:
     setMainContent(magicHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
       '${sitedata.subNicknames[currentView.activeLeague]} League Elimination Magic Numbers';
-    populatePartyTimeTable(subStandings[currentView.activeLeague], sitedata);
-    setNotes(partytimeNotesHTML);
+    populateEliminationTable(subStandings[currentView.activeLeague], sitedata);
+    setNotes(eliminationNotesHTML);
     break;
   case View.postseason:
     setMainContent(postseasonHTML);

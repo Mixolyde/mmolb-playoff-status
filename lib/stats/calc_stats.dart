@@ -142,7 +142,7 @@ void calculateWinningMagicNumbers(List<TeamStandings> teamStandings) {
       teamStandings[i].winning[1] == 'X' &&
       teamStandings[i].winning[2] == 'X' &&
       teamStandings[i].winning[3] == 'X'){
-      teamStandings[i].winning[4] = 'PT';
+      teamStandings[i].winning[4] = 'E';
     }
     
   }
@@ -182,14 +182,14 @@ void calculateLosingMagicNumbers(List<TeamStandings> teamStandings) {
       switch(stand.winning[k]){
         case '^':
         case 'X':
-        case 'PT':
-          stand.partytime[k] = stand.winning[k];
+        case 'E':
+          stand.elimination[k] = stand.winning[k];
           break;
         default:
           if(i <= k) {
-            stand.partytime[k] = 'MW';
+            stand.elimination[k] = 'MW';
           } else if (k == 4) {
-            stand.partytime[k] = 'MW';
+            stand.elimination[k] = 'MW';
           } else {
             //maxWinsi - Wk
             //print('Find Elim: $stand Berth: $k');
@@ -198,7 +198,7 @@ void calculateLosingMagicNumbers(List<TeamStandings> teamStandings) {
             if(stand.runDifferential > teamStandings[k].runDifferential) {
               magic += 1;
             }
-            stand.partytime[k] = '$magic';
+            stand.elimination[k] = '$magic';
           }
           
           break;

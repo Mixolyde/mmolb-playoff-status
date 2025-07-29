@@ -13,7 +13,7 @@ class TeamStandings implements Comparable<TeamStandings> {
   String gbWc = '-';
   final List<String> po = ['-', '-', '-', '-', '-'];
   final List<String> winning = ['-', '-', '-', '-', '-'];
-  final List<String> partytime = ['-', '-', '-', '-', '-'];
+  final List<String> elimination = ['-', '-', '-', '-', '-'];
   final List<String> post = ['-', '-', '-', '-', '-'];  
   
   TeamStandings(this.id, 
@@ -29,11 +29,11 @@ class TeamStandings implements Comparable<TeamStandings> {
     this.runDifferential = 0,
     this.gamesPlayed = 0,
     this.gbDiv = '-', this.gbWc = '-',
-    po, winning, partytime, post}){
+    po, winning, elimination, post}){
     for(var i = 0; i < 5; i++){
       this.po[i] = po[i].toString();
       this.winning[i] = winning[i].toString();
-      this.partytime[i] = partytime[i].toString();
+      this.elimination[i] = elimination[i].toString();
       this.post[i] = post[i].toString();
     }
   }
@@ -53,7 +53,7 @@ class TeamStandings implements Comparable<TeamStandings> {
       gbWc: json['gbWc'] as String,
       po: json['po'] as List<dynamic>,
       winning: json['winning'] as List<dynamic>,
-      partytime: json['partytime'] as List<dynamic>,
+      elimination: json['elimination'] as List<dynamic>,
       post: json['post'] as List<dynamic>,
     );
   }
@@ -72,7 +72,7 @@ class TeamStandings implements Comparable<TeamStandings> {
     'gbWc': gbWc,
     'po': po,
     'winning': winning,
-    'partytime': partytime,
+    'elimination': elimination,
     'post': post,
   };
   

@@ -1,4 +1,4 @@
-enum View {about, winsbehind, winningmagic, partytimemagic, chances, postseason, bracket}
+enum View {about, winsbehind, winningmagic, eliminationmagic, chances, postseason, bracket}
 
 class CurrentView {
   // 0 or 1

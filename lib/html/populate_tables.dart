@@ -111,7 +111,7 @@ void populateChancesTable(List<TeamStandings> subStandings, SiteData sitedata){
       var cell = trow.insertCell(5 + i);
       cell.innerText = row.po[i];
       switch (row.po[i]){
-        case 'PT':
+        case 'E':
         case 'X':
           cell.classList.add('redcell');
           break;
@@ -161,7 +161,7 @@ void populatePostseasonTable(List<List<TeamStandings>> allStandings,
     for(var i = 0; i < psRounds; i++){
       var cell = trow.insertCell(6 + i);
       cell.innerText = row.post[i];
-      if(row.winning[4] == 'PT' || 
+      if(row.winning[4] == 'E' || 
           (row.winning[2] == 'MW' && row.winning[3] == 'MW') ){
         cell.classList.add('redcell');
       } else {
@@ -188,7 +188,7 @@ void populateWinningTable(List<TeamStandings> subStandings, SiteData sitedata){
       var cell = trow.insertCell(5 + i);
       cell.innerText = row.winning[i];
       switch (row.winning[i]){
-        case 'PT':
+        case 'E':
         case 'X':
           cell.classList.add('redcell');
           break;
@@ -201,7 +201,7 @@ void populateWinningTable(List<TeamStandings> subStandings, SiteData sitedata){
   
 }
 
-void populatePartyTimeTable(List<TeamStandings> subStandings, SiteData sitedata){
+void populateEliminationTable(List<TeamStandings> subStandings, SiteData sitedata){
   var table = document.querySelector('#standingsTable') as  HTMLTableElement?;
   if(table == null){
     print('ERROR: #standingsTable is null');
@@ -214,9 +214,9 @@ void populatePartyTimeTable(List<TeamStandings> subStandings, SiteData sitedata)
    
     for(var i = 0; i < 5; i++){
       var cell = trow.insertCell(5 + i);
-      cell.innerText = row.partytime[i];
-      switch (row.partytime[i]){
-        case 'PT':
+      cell.innerText = row.elimination[i];
+      switch (row.elimination[i]){
+        case 'E':
         case 'X':
           cell.classList.add('redcell');
           break;

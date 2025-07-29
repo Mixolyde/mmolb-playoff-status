@@ -19,7 +19,7 @@ class Standings {
             fullName: stand['fullName'] as String,
             wins: stand['wins'] as int,
             losses: stand['losses'] as int,
-            partyTime: stand['partyTime'] as bool,
+            elimination: stand['elimination'] as bool,
             deceased: stand['deceased'] as bool,
             scattered: stand['scattered'] as bool,
           );
@@ -38,7 +38,7 @@ class Standings {
             fullName: stand['fullName'] as String,
             wins: stand['wins'] as int,
             losses: stand['losses'] as int,
-            partyTime: stand['partyTime'] as bool,
+            elimination: stand['elimination'] as bool,
             deceased: stand['deceased'] as bool,
             scattered: stand['scattered'] as bool,
           );
@@ -60,7 +60,7 @@ class Standings {
   "secondaryColor":"#178f55",
   "fullName":"Kansas City Breath Mints",
   "wins":49,"losses":35,
-  "partyTime":false,
+  "elimination":false,
   "deceased":false,
   "scattered":false},
 */
@@ -73,14 +73,14 @@ class Standing {
   final String fullName;
   final int wins;
   final int losses;
-  final bool partyTime;
+  final bool elimination;
   final bool deceased;
   final bool scattered; 
   
   Standing({required this.id, required this.emoji, required this.mainColor,
     required this.secondaryColor, required this.fullName,
     required this.wins, required this.losses,
-    required this.partyTime, required this.deceased,
+    required this.elimination, required this.deceased,
     required this.scattered});
     
   @override

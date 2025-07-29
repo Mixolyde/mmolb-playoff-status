@@ -7,7 +7,7 @@ An attempt to replicate [Playoff Status](http://playoffstatus.com)
 Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 
 ## TODO
-* Replace rederences to party time with elimination
+* Replace references to party time with elimination
 * Get all the the previous functionality working again
 * Group by League on some pages
 * Better wild card playoff spot handling

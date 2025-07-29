@@ -3379,7 +3379,7 @@ for(n=p.as,m=p.Q,l=0;l<5;++l){k=j.a(o.insertCell(5+l))
 if(!(l<m.length))return A.c(m,l)
 k.innerText=m[l]
 if(!(l<m.length))return A.c(m,l)
-switch(m[l]){case"PT":case"X":j.a(k.classList).add("redcell")
+switch(m[l]){case"E":case"X":j.a(k.classList).add("redcell")
 break
 default:if(!(l<n.length))return A.c(n,l)
 if(n[l]==="MW")j.a(k.classList).add("redcell")
@@ -3399,7 +3399,7 @@ for(l=o.as,k=o.ax,j=0;j<m;++j){i=g.a(n.insertCell(6+j))
 if(!(j<k.length))return A.c(k,j)
 i.innerText=k[j]
 if(4>=l.length)return A.c(l,4)
-if(l[4]!=="PT")h=l[2]==="MW"&&l[3]==="MW"
+if(l[4]!=="E")h=l[2]==="MW"&&l[3]==="MW"
 else h=!0
 if(h)g.a(i.classList).add("redcell")
 else g.a(i.classList).add("greencell")}}},
@@ -3412,7 +3412,7 @@ for(n=p.as,m=0;m<5;++m){l=k.a(o.insertCell(5+m))
 if(!(m<n.length))return A.c(n,m)
 l.innerText=n[m]
 if(!(m<n.length))return A.c(n,m)
-switch(n[m]){case"PT":case"X":k.a(l.classList).add("redcell")
+switch(n[m]){case"E":case"X":k.a(l.classList).add("redcell")
 break
 default:k.a(l.classList).add("greencell")
 break}}}},
@@ -3425,7 +3425,7 @@ for(n=p.at,m=0;m<5;++m){l=k.a(o.insertCell(5+m))
 if(!(m<n.length))return A.c(n,m)
 l.innerText=n[m]
 if(!(m<n.length))return A.c(n,m)
-switch(n[m]){case"PT":case"X":k.a(l.classList).add("redcell")
+switch(n[m]){case"E":case"X":k.a(l.classList).add("redcell")
 break
 default:k.a(l.classList).add("greencell")
 break}}}},
@@ -3866,7 +3866,7 @@ return A.a0(A.dW(A.au("notes/chancesNotes.html")),$async$aV)
 case 7:l.b=b
 l=$.m0
 s=8
-return A.a0(A.dW(A.au("notes/partytimeNotes.html")),$async$aV)
+return A.a0(A.dW(A.au("notes/eliminationNotes.html")),$async$aV)
 case 8:l.b=b
 l=$.m1
 s=9
@@ -3969,8 +3969,8 @@ r.a(q.a(r.a(s.document).querySelector("#pickLeague2")).classList).remove("nav-bu
 r.a(q.a(r.a(s.document).querySelector("#pickLeague2")).classList).add("nav-button-active")}},
 r1(a){return A.dS(B.r)},
 r2(a){return A.dS(B.G)},
-r3(a){return A.dS(B.j)},
-r4(a){return A.dS(B.F)},
+r4(a){return A.dS(B.j)},
+r3(a){return A.dS(B.F)},
 r5(a){return A.dS(B.H)},
 r6(a){return A.dS(B.E)},
 dS(a){var s=$.S()
@@ -3988,7 +3988,7 @@ r.a(q.a(r.a(s.document).querySelector("#viewAbout")).classList).add("nav-button-
 r.a(q.a(r.a(s.document).querySelector("#viewChances")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinsBehind")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinningNumbers")).classList).remove("nav-button-active")
-r.a(q.a(r.a(s.document).querySelector("#viewPartyTimeNumbers")).classList).remove("nav-button-active")
+r.a(q.a(r.a(s.document).querySelector("#viewEliminationNumbers")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewPostseasonChances")).classList).remove("nav-button-active")
 break
 case 4:s=v.G
@@ -3998,7 +3998,7 @@ r.a(q.a(r.a(s.document).querySelector("#viewAbout")).classList).remove("nav-butt
 r.a(q.a(r.a(s.document).querySelector("#viewChances")).classList).add("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinsBehind")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinningNumbers")).classList).remove("nav-button-active")
-r.a(q.a(r.a(s.document).querySelector("#viewPartyTimeNumbers")).classList).remove("nav-button-active")
+r.a(q.a(r.a(s.document).querySelector("#viewEliminationNumbers")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewPostseasonChances")).classList).remove("nav-button-active")
 break
 case 1:s=v.G
@@ -4008,7 +4008,7 @@ r.a(q.a(r.a(s.document).querySelector("#viewAbout")).classList).remove("nav-butt
 r.a(q.a(r.a(s.document).querySelector("#viewChances")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinsBehind")).classList).add("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinningNumbers")).classList).remove("nav-button-active")
-r.a(q.a(r.a(s.document).querySelector("#viewPartyTimeNumbers")).classList).remove("nav-button-active")
+r.a(q.a(r.a(s.document).querySelector("#viewEliminationNumbers")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewPostseasonChances")).classList).remove("nav-button-active")
 break
 case 2:s=v.G
@@ -4018,7 +4018,7 @@ r.a(q.a(r.a(s.document).querySelector("#viewAbout")).classList).remove("nav-butt
 r.a(q.a(r.a(s.document).querySelector("#viewChances")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinsBehind")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinningNumbers")).classList).add("nav-button-active")
-r.a(q.a(r.a(s.document).querySelector("#viewPartyTimeNumbers")).classList).remove("nav-button-active")
+r.a(q.a(r.a(s.document).querySelector("#viewEliminationNumbers")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewPostseasonChances")).classList).remove("nav-button-active")
 break
 case 3:s=v.G
@@ -4028,7 +4028,7 @@ r.a(q.a(r.a(s.document).querySelector("#viewAbout")).classList).remove("nav-butt
 r.a(q.a(r.a(s.document).querySelector("#viewChances")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinsBehind")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinningNumbers")).classList).remove("nav-button-active")
-r.a(q.a(r.a(s.document).querySelector("#viewPartyTimeNumbers")).classList).add("nav-button-active")
+r.a(q.a(r.a(s.document).querySelector("#viewEliminationNumbers")).classList).add("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewPostseasonChances")).classList).remove("nav-button-active")
 break
 case 5:s=v.G
@@ -4038,7 +4038,7 @@ r.a(q.a(r.a(s.document).querySelector("#viewAbout")).classList).remove("nav-butt
 r.a(q.a(r.a(s.document).querySelector("#viewChances")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinsBehind")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinningNumbers")).classList).remove("nav-button-active")
-r.a(q.a(r.a(s.document).querySelector("#viewPartyTimeNumbers")).classList).remove("nav-button-active")
+r.a(q.a(r.a(s.document).querySelector("#viewEliminationNumbers")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewPostseasonChances")).classList).add("nav-button-active")
 break
 case 6:s=v.G
@@ -4048,7 +4048,7 @@ r.a(q.a(r.a(s.document).querySelector("#viewAbout")).classList).remove("nav-butt
 r.a(q.a(r.a(s.document).querySelector("#viewChances")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinsBehind")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewWinningNumbers")).classList).remove("nav-button-active")
-r.a(q.a(r.a(s.document).querySelector("#viewPartyTimeNumbers")).classList).remove("nav-button-active")
+r.a(q.a(r.a(s.document).querySelector("#viewEliminationNumbers")).classList).remove("nav-button-active")
 r.a(q.a(r.a(s.document).querySelector("#viewPostseasonChances")).classList).remove("nav-button-active")
 break}},
 jK(){var s,r,q
@@ -7872,11 +7872,11 @@ i=A.p(a.j(0,"gbWc"))
 h=t.j
 g=h.a(a.j(0,"po"))
 f=h.a(a.j(0,"winning"))
-e=h.a(a.j(0,"partytime"))
+e=h.a(a.j(0,"elimination"))
 h=h.a(a.j(0,"post"))
 d=t.s
 c=new A.ao(s,r,q,p,o,n,m,l,k,j,i,A.j(["-","-","-","-","-"],d),A.j(["-","-","-","-","-"],d),A.j(["-","-","-","-","-"],d),A.j(["-","-","-","-","-"],d))
-c.e7(p,r,k,j,i,s,m,q,e,g,h,l,o,f,n)
+c.e7(e,p,r,k,j,i,s,m,q,g,h,l,o,f,n)
 B.b.n(this.a,c)},
 $S:4}
 A.eG.prototype={
@@ -7886,12 +7886,12 @@ i(a){var s=this
 return s.a+" Season:"+s.b+" Day:"+s.c+" "+s.e+" "+s.r+" "+A.k(s.w)}}
 A.ao.prototype={
 e7(a,b,c,d,e,f,g,h,i,a0,a1,a2,a3,a4,a5){var s,r,q,p,o,n,m,l,k,j=this
-for(s=j.Q,r=J.a9(a0),q=j.as,p=J.a9(a4),o=j.at,n=J.a9(i),m=j.ax,l=J.a9(a1),k=0;k<5;++k){B.b.m(s,k,J.ax(r.j(a0,k)))
+for(s=j.Q,r=J.a9(a0),q=j.as,p=J.a9(a4),o=j.at,n=J.a9(a),m=j.ax,l=J.a9(a1),k=0;k<5;++k){B.b.m(s,k,J.ax(r.j(a0,k)))
 B.b.m(q,k,J.ax(p.j(a4,k)))
-B.b.m(o,k,J.ax(n.j(i,k)))
+B.b.m(o,k,J.ax(n.j(a,k)))
 B.b.m(m,k,J.ax(l.j(a1,k)))}},
 aD(){var s=this,r=t.A
-return A.hr(["id",s.a,"fullName",s.b,"nickname",s.c,"emoji",s.d,"subleague",s.e,"wins",s.f,"losses",s.r,"runDifferential",s.w,"gamesPlayed",s.x,"gbDiv",s.y,"gbWc",s.z,"po",s.Q,"winning",s.as,"partytime",s.at,"post",s.ax],r,r)},
+return A.hr(["id",s.a,"fullName",s.b,"nickname",s.c,"emoji",s.d,"subleague",s.e,"wins",s.f,"losses",s.r,"runDifferential",s.w,"gamesPlayed",s.x,"gbDiv",s.y,"gbWc",s.z,"po",s.Q,"winning",s.as,"elimination",s.at,"post",s.ax],r,r)},
 i(a){var s=this
 return"Standings: "+s.b+":"+s.c+" - "+s.e+" ("+s.f+" - "+s.r+") RunDiff: "+s.w},
 K(a,b){var s,r
@@ -8703,16 +8703,16 @@ p.toString
 A.b4(p,l,m.a(A.qQ()),!1,n)
 p=q.a(r.a(s.document).querySelector("#viewWinsBehind"))
 p.toString
-A.b4(p,l,m.a(A.qT()),!1,n)
+A.b4(p,l,m.a(A.qU()),!1,n)
 p=q.a(r.a(s.document).querySelector("#viewChances"))
 p.toString
 A.b4(p,l,m.a(A.qS()),!1,n)
 p=q.a(r.a(s.document).querySelector("#viewWinningNumbers"))
 p.toString
 A.b4(p,l,m.a(A.qW()),!1,n)
-p=q.a(r.a(s.document).querySelector("#viewPartyTimeNumbers"))
+p=q.a(r.a(s.document).querySelector("#viewEliminationNumbers"))
 p.toString
-A.b4(p,l,m.a(A.qU()),!1,n)
+A.b4(p,l,m.a(A.qT()),!1,n)
 p=q.a(r.a(s.document).querySelector("#viewAbout"))
 p.toString
 A.b4(p,l,m.a(A.qR()),!1,n)
@@ -8798,8 +8798,8 @@ r(A,"qP","r_",2)
 r(A,"qQ","r0",2)
 r(A,"qR","r1",2)
 r(A,"qS","r2",2)
-r(A,"qT","r3",2)
 r(A,"qU","r4",2)
+r(A,"qT","r3",2)
 r(A,"qV","r5",2)
 r(A,"qW","r6",2)
 k(A,"qY",2,null,["$1$2","$2"],["mI",function(a,b){a.toString
@@ -9049,20 +9049,20 @@ B.Z=new A.hm(null)
 B.a_=new A.hn(null)
 B.a0=new A.ho(!1,255)
 B.x=A.j(s(["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]),t.s)
-B.r=new A.aS(0,"about")
-B.j=new A.aS(1,"winsbehind")
-B.E=new A.aS(2,"winningmagic")
-B.F=new A.aS(3,"partytimemagic")
-B.G=new A.aS(4,"chances")
-B.H=new A.aS(5,"postseason")
-B.an=new A.aS(6,"bracket")
-B.m=A.j(s([B.r,B.j,B.E,B.F,B.G,B.H,B.an]),A.aw("w<aS>"))
 B.y=A.j(s(["January","February","March","April","May","June","July","August","September","October","November","December"]),t.s)
 B.a1=A.j(s(["AM","PM"]),t.s)
 B.z=A.j(s(["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]),t.s)
 B.a2=A.j(s(["BC","AD"]),t.s)
 B.A=A.j(s(["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]),t.s)
 B.a3=A.j(s(["Q1","Q2","Q3","Q4"]),t.s)
+B.r=new A.aS(0,"about")
+B.j=new A.aS(1,"winsbehind")
+B.E=new A.aS(2,"winningmagic")
+B.F=new A.aS(3,"eliminationmagic")
+B.G=new A.aS(4,"chances")
+B.H=new A.aS(5,"postseason")
+B.an=new A.aS(6,"bracket")
+B.m=A.j(s([B.r,B.j,B.E,B.F,B.G,B.H,B.an]),A.aw("w<aS>"))
 B.a4=A.j(s([]),t.s)
 B.B=A.j(s(["S","M","T","W","T","F","S"]),t.s)
 B.C=A.j(s(["J","F","M","A","M","J","J","A","S","O","N","D"]),t.s)
@@ -9115,7 +9115,7 @@ $.pf=A.bn("bracketHTML")
 $.m_=A.bn("chancesNotesHTML")
 $.kp=A.bn("winsbehindHTML")
 $.j3=A.bn("magicHTML")
-$.m0=A.bn("partytimeNotesHTML")
+$.m0=A.bn("eliminationNotesHTML")
 $.pg=A.bn("postseasonHTML")
 $.m1=A.bn("winningNotesHTML")
 $.J=A.bn("sitedata")

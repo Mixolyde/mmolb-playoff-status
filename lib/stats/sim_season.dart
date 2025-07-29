@@ -335,7 +335,7 @@ class TeamSim implements Comparable<TeamSim> {
     } else if(runDifferential != other.runDifferential) {
       return other.runDifferential.compareTo(runDifferential);
     } else {
-      return fullName.compareTo(other.fullName);
+      return id.compareTo(other.id);
     }
   }
   

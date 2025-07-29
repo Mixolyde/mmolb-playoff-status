@@ -147,8 +147,10 @@ void populatePostseasonTable(List<List<TeamStandings>> allStandings,
     }
     if(a.wins != b.wins){
       return b.wins.compareTo(a.wins);
-    } else {
-      return a.fullName.compareTo(b.fullName);
+    } else if(a.runDifferential != b.runDifferential){
+      return b.runDifferential.compareTo(a.runDifferential);
+    } {
+      return a.id.compareTo(b.id);
     }
   });
   

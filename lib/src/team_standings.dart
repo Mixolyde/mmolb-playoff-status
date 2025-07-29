@@ -86,7 +86,7 @@ class TeamStandings implements Comparable<TeamStandings> {
     } else if(runDifferential != other.runDifferential) {
       return other.runDifferential.compareTo(runDifferential);
     }else {
-      return fullName.compareTo(other.fullName);
+      return id.compareTo(other.id);
     }
   }
   

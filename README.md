@@ -94,7 +94,7 @@ a specific test with `dart test\test-file.dart`.
 To serve up the app and test it in your browser run
 ```
 pub.bat global activate webdev
-webdev.bat serve
+webdev.bat serve [--debug]
 ```
 And go to `http://localhost:8080/`.
 

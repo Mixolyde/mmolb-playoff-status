@@ -81,10 +81,10 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
             poCounts[sim.id]![4]++;
             break;
         }
-        if(sim.ilbChamp){
+        if(sim.mmolbChamp){
           postCounts[sim.id]![0]++;
         }
-        if(sim.ilbSeries){
+        if(sim.mmolbSeries){
           postCounts[sim.id]![1]++;
         }
         if(sim.slSeries){

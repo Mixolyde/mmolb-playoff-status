@@ -1,59 +1,74 @@
 import 'package:mmolb_playoff_status/stats/sim_utils.dart';
 
+//simulate complete playoff run
 void simulateUnstartedPostSeason(List<List<TeamSim>> simsByLeague){
-  int teamCount = simsByLeague.fold(0, (sum, sub) => sum + sub.length);
-  
-  //simulate complete playoff run
-  var leagueChampSims = <TeamSim>[];
+  print("Simulating unstarted postseason for ${simsByLeague.length} leagues");
+  int teamCount = simsByLeague.expand((simList) => simList).length;
+  print("Simulating unstarted postseason for $teamCount teams");
 
   // figure out the wild cards from both leagues
-  
-  for (var simLeague in simsByLeague) {
+  simsByLeague[0].sort();
+  simsByLeague[1].sort();
 
-    //TODO remove postseason games from win-loss record
-    simLeague.sort();
-    
-    var round1Sims = <TeamSim>[];
-    round1Sims.add(simLeague[0]);
-    round1Sims.add(simLeague[1]);
-    round1Sims.add(simLeague[2]);
-    
-    if (true){
-    
-      // wild card round
-      // pick a random team not in playoffs and simulate
-      var nonPlayoffCount = simLeague.length - 4;
-      var wildCardIndex = rand.nextInt(nonPlayoffCount) + 4;
-      var wildCard = simLeague[wildCardIndex];
-      simLeague.take(4).forEach((sim) => sim.wcSeries = true);
-      wildCard.wcSeries = true;
-      //print('WildCard pick $wildCardIndex $wildCard');
-      //simulate 3 win series with wild card pic
-      var wildSeriesWinner = simulateSeries(simLeague[3], wildCard, 2, teamCount);
-      round1Sims.add(wildSeriesWinner);
-      //print('WildCard pick $wildCardIndex $wildCard WildSeriesWinner $wildSeriesWinner');
-      
-    }
-    
-    //round1Sims.forEach((sim) => sim.r1Series = true);
-    
-    // round 1
-    var r1SeriesWinnerA = simulateSeries(round1Sims[0], round1Sims[3], 3, teamCount);
-    var r1SeriesWinnerB = simulateSeries(round1Sims[1], round1Sims[2], 3, teamCount);
-    
-    // subleague round
-    var slRoundSims = [r1SeriesWinnerA, r1SeriesWinnerB];
-    for(var sim in slRoundSims) {
-      sim.slSeries = true;
-    }
-    
-    var slWinner = simulateSeries(slRoundSims[0], slRoundSims[1], 3, teamCount);
-    leagueChampSims.add(slWinner);
+  var wildCardRoundSims = <TeamSim>[];
+
+  wildCardRoundSims.add(simsByLeague[0][0]);
+  wildCardRoundSims.add(simsByLeague[0][1]);
+  wildCardRoundSims.add(simsByLeague[1][0]);
+  wildCardRoundSims.add(simsByLeague[1][1]);
+
+  print("WildCardRoundSims from top 2 of each league: ${wildCardRoundSims.join('\n')}");
+
+  //join all leagues into one league to find wild card teams
+  var allWildSims = <TeamSim>[];
+  allWildSims.addAll(simsByLeague.expand((simList) => simList));
+  allWildSims.removeWhere((sim) => wildCardRoundSims.contains(sim));
+  allWildSims.sort();
+
+  print("Selecting wild card teams from: ${allWildSims.length} teams");
+  wildCardRoundSims.addAll(allWildSims.take(2));
+
+  for(var sim in wildCardRoundSims) {
+    sim.wcSeries = true;
   }
-  // ilb round
-  //leagueChampSims.forEach((sim) => sim.ilbSeries = true);
-  var ilbWinner = simulateSeries(leagueChampSims[0], leagueChampSims[1], 3, teamCount);
-  print('ILBWinner: $ilbWinner');
-  ilbWinner.ilbChamp = true;
+
+  print("WildCardRoundSims after adding top 2 wild cards: ${wildCardRoundSims.join('\n')}");
+  
+  //TODO remove postseason games from win-loss record
+  
+  // wild card round
+
+  // simulate 2 win series with 2nd place league team and a wild card team
+  // TODO flip a coin for wild card selection
+  var wildSeriesWinner1 = simulateSeries(wildCardRoundSims[1], wildCardRoundSims[4], 2, teamCount);
+  var wildSeriesWinner2 = simulateSeries(wildCardRoundSims[3], wildCardRoundSims[5], 2, teamCount);
+  
+  // subleague round
+  // add 1st place teams to subleague series sims
+  var slRoundSims = [wildCardRoundSims[0], wildCardRoundSims[2]];
+  slRoundSims.add(wildSeriesWinner1);
+  slRoundSims.add(wildSeriesWinner2);
+  for(var sim in slRoundSims) {
+    sim.slSeries = true;
+  }
+  print('slRoundSims: ${slRoundSims.join('\n')}');
+  
+  //simulate 3 win series with 1st place league team and wild card round winner
+  var slWinner1 = simulateSeries(slRoundSims[0], slRoundSims[2], 3, teamCount);
+  var slWinner2 = simulateSeries(slRoundSims[1], slRoundSims[3], 3, teamCount);
+
+  var leagueChampSims = <TeamSim>[];
+  leagueChampSims.add(slWinner1);
+  leagueChampSims.add(slWinner2);
+  print('leagueChampSims: ${leagueChampSims.join('\n')}');
+  for (var sim in leagueChampSims) {
+    sim.mmolbSeries = true;
+  }
+
+  // mmolb champ round
+  //simulate 4 win series with subleague winners
+  var mmolbWinner = simulateSeries(leagueChampSims[0], leagueChampSims[1], 4, teamCount);
+  mmolbWinner.mmolbChamp = true;
+  print('mmolbWinner: $mmolbWinner');
   
 }

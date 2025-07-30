@@ -33,7 +33,7 @@ Future<void> main() async {
 
   //get subleague standings and calculate stats
   var subStandings = await calcStats(stateData, timeData);
-  calculateChances(subStandings, 3, timeData);
+  calculateChances(subStandings, 101, timeData);
 
 
 }

@@ -105,8 +105,8 @@ class TeamSim implements Comparable<TeamSim> {
   
   bool wcSeries = false;
   bool slSeries = false;
-  bool ilbSeries = false;
-  bool ilbChamp = false;
+  bool mmolbSeries = false;
+  bool mmolbChamp = false;
   
   TeamSim(this.id, this.wins, this.losses,
     this.runDifferential, this.fullName);
@@ -121,13 +121,13 @@ class TeamSim implements Comparable<TeamSim> {
     losses = lossesSave;
     wcSeries = false;
     slSeries = false;
-    ilbSeries = false;
-    ilbChamp = false;
+    mmolbSeries = false;
+    mmolbChamp = false;
   }
   
   @override
-  String toString() => '$id Wins $wins Record: ($wins - $losses) '
-    'Saved: $winsSave $lossesSave';
+  String toString() => '$id Record: ($wins - $losses) '
+    'Saved: $winsSave $lossesSave [$wcSeries, $slSeries, $mmolbSeries, $mmolbChamp]';
 
   @override
   int compareTo(TeamSim other) {

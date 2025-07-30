@@ -32,7 +32,7 @@ void simulateUnstartedPostSeason(List<List<TeamSim>> simsByLeague){
     sim.wcSeries = true;
   }
 
-  print("WildCardRoundSims after adding top 2 wild cards: ${wildCardRoundSims.join('\n')}");
+  //print("WildCardRoundSims after adding top 2 wild cards: ${wildCardRoundSims.join('\n')}");
   
   //TODO remove postseason games from win-loss record
   

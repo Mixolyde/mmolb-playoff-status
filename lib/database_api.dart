@@ -106,8 +106,7 @@ Future<List<Game>> getAllRegularSeasonGamesByTeamId(String teamId) async {
     } catch (e) {
       print('Bad game json: $json');
       print(e);
-      throw e;
-      //return <Game>[];
+      rethrow;
     }
   }).toList();
 

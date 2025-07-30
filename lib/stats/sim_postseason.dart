@@ -1,4 +1,4 @@
-import 'package:mmolb_playoff_status/stats/sim_season.dart';
+import 'package:mmolb_playoff_status/stats/sim_utils.dart';
 
 void simulateUnstartedPostSeason(List<List<TeamSim>> simsByLeague){
   int teamCount = simsByLeague.fold(0, (sum, sub) => sum + sub.length);
@@ -43,7 +43,9 @@ void simulateUnstartedPostSeason(List<List<TeamSim>> simsByLeague){
     
     // subleague round
     var slRoundSims = [r1SeriesWinnerA, r1SeriesWinnerB];
-    slRoundSims.forEach((sim) => sim.slSeries = true);
+    for(var sim in slRoundSims) {
+      sim.slSeries = true;
+    }
     
     var slWinner = simulateSeries(slRoundSims[0], slRoundSims[1], 3, teamCount);
     leagueChampSims.add(slWinner);
@@ -51,28 +53,7 @@ void simulateUnstartedPostSeason(List<List<TeamSim>> simsByLeague){
   // ilb round
   //leagueChampSims.forEach((sim) => sim.ilbSeries = true);
   var ilbWinner = simulateSeries(leagueChampSims[0], leagueChampSims[1], 3, teamCount);
-  //print('ILBWinner: $ilbWinner');
+  print('ILBWinner: $ilbWinner');
   ilbWinner.ilbChamp = true;
-  
-}
-
-
-TeamSim simulateSeries(TeamSim awaySim, TeamSim homeSim, int winsNeeded, int teamCount){
-  var awayWins = 0;
-  var homeWins = 0;
-  TeamSim winner;
-  while(awayWins < winsNeeded && homeWins < winsNeeded){
-    winner = simulateGame(awaySim, homeSim, teamCount);
-    if(winner == awaySim){
-      awayWins++;
-    } else {
-      homeWins++;
-    }
-  }
-  if(awayWins >= winsNeeded){
-    return awaySim;
-  } else {
-    return homeSim;
-  }
   
 }

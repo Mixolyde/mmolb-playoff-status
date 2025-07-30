@@ -1,5 +1,6 @@
-import 'package:mmolb_playoff_status/stats/calc_stats.dart';
 import 'package:mmolb_playoff_status/database_api.dart';
+import 'package:mmolb_playoff_status/stats/calc_stats.dart';
+import 'package:mmolb_playoff_status/stats/sim_season.dart';
 
 /// Test script used for manually executing methods and testing functionality.
 Future<void> main() async { 
@@ -25,9 +26,14 @@ Future<void> main() async {
   //var teamsBySubleague = await getTeamsBySubleague(stateData);
   //print('Teams by Subleague: $teamsBySubleague');
 
-  var shineGames = await getAllRegularSeasonGamesByTeamId('6805db0cac48194de3cd407c');
-  for (var game in shineGames) {
-    print(game);
-  }
+  //var shineGames = await getAllRegularSeasonGamesByTeamId('6805db0cac48194de3cd407c');
+  //for (var game in shineGames) {
+  //  print(game);
+  //}
+
+  //get subleague standings and calculate stats
+  var subStandings = await calcStats(stateData, timeData);
+  calculateChances(subStandings, 3, timeData);
+
 
 }

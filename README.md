@@ -20,7 +20,6 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 * Something for Lesser Leagues
 * Get a Bluesky account and button
 * Factor future schedule into magic numbers
-* Move project to a MMOLB-specific account on github
 * Reduce API calls during breaks
 * Get a real domain name and move off Github Pages
 
@@ -47,8 +46,8 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 
 * v0.0.5
 - [x] Fix mid-season simulations
-- [ ] Fix postseason simulations
-- [ ] Fix mid-season chances pages
+- [x] Fix postseason simulations
+- [x] Fix mid-season chances pages
 - [ ] Fix postseason chances pages
 - [x] Replace references to "Party Time" with "Elimination"
 
@@ -57,7 +56,7 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 - [ ] Create a github action for testing code
 
 * v0.0.7
-- [ ] Get a new domain off github
+- [ ] Get a new domain and off github pages
 - [ ] Setup multiple development environments for testing data/web changes
 
 

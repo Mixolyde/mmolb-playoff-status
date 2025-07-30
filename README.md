@@ -7,7 +7,6 @@ An attempt to replicate [Playoff Status](http://playoffstatus.com)
 Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 
 ## TODO
-* Get all the the previous functionality working again
 * Group by League on some pages
 * Better wild card playoff spot handling
 * Add unit tests
@@ -44,18 +43,19 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 * v0.0.4
 - [x] Fix Magic Number calculations
 
-* v0.0.5
+* v0.1.0
 - [x] Fix mid-season simulations
 - [x] Fix postseason simulations
 - [x] Fix mid-season chances pages
-- [ ] Fix postseason chances pages
+- [x] Fix postseason chances pages
 - [x] Replace references to "Party Time" with "Elimination"
 
-* v0.0.6
+* v0.1.1
+- [ ] Cleanup small TODO items
 - [ ] Add unit tests back in
 - [ ] Create a github action for testing code
 
-* v0.0.7
+* v0.1.2
 - [ ] Get a new domain and off github pages
 - [ ] Setup multiple development environments for testing data/web changes
 

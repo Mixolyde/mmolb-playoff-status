@@ -85,7 +85,7 @@ Future<void> getContentPages() async {
   aboutHTML = await read(Uri.parse('main-content/about.html'));
   //bracketHTML = await read(Uri.parse('main-content/bracket.html'));
   magicHTML = await read(Uri.parse('main-content/magic.html'));
-  //postseasonHTML = await read(Uri.parse('main-content/postseason.html'));
+  postseasonHTML = await read(Uri.parse('main-content/postseason.html'));
   winsbehindHTML = await read(Uri.parse('main-content/winsbehind.html'));
 
   //load notes pages

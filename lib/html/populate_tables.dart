@@ -140,7 +140,7 @@ void populatePostseasonTable(List<List<TeamStandings>> allStandings,
   standings.addAll(allStandings[1]);
 
   standings.sort((a, b) {
-    for(var i = 0; i < 5; i++){
+    for(var i = 0; i < 4; i++){
       if(b.post[i] != a.post[i]){
         return getOrderValue(b.post[i]).compareTo(getOrderValue(a.post[i]));
       }
@@ -157,18 +157,15 @@ void populatePostseasonTable(List<List<TeamStandings>> allStandings,
   for(var row in standings) {
     var trow = insertCommonCells(table, row, sitedata, showLeague: true);
     var psRounds = 4;
-    if(sitedata.leagueWildCards || sitedata.leagueMildCards){
-      psRounds = 5;
-    }
+
     for(var i = 0; i < psRounds; i++){
-      var cell = trow.insertCell(6 + i);
+      var cell = trow.insertCell(4 + i);
       cell.innerText = row.post[i];
-      if(row.winning[4] == 'E' || 
-          (row.winning[2] == 'MW' && row.winning[3] == 'MW') ){
+      if(row.winning[4] == 'E' ){
         cell.classList.add('redcell');
-      } else {
+      } else if (row.winning[4] == '^') {
         cell.classList.add('greencell');
-      }
+      } 
 
     }
   }
@@ -282,12 +279,19 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
   var record = '${row.gamesPlayed - row.losses} - ${row.losses}';
   cell = trow.insertCell(1 + leagueAdjust);
   cell.innerText = record;
-  cell = trow.insertCell(2 + leagueAdjust);
-  cell.innerText = row.gamesPlayed.toString();    
-  cell = trow.insertCell(3 + leagueAdjust);
-  cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();
-  cell = trow.insertCell(4 + leagueAdjust);
-  cell.innerText = row.runDifferential.toString();
+
+  if(showLeague){
+    cell = trow.insertCell(3);
+    cell.innerText = row.runDifferential.toString();
+  } else {
+    cell = trow.insertCell(2);
+    cell.innerText = row.gamesPlayed.toString();    
+    cell = trow.insertCell(3);
+    cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();
+    cell = trow.insertCell(4);
+    cell.innerText = row.runDifferential.toString();
+  }
+
 
   return trow;
 

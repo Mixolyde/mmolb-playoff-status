@@ -4,7 +4,7 @@
 An attempt to replicate [Playoff Status](http://playoffstatus.com)
  behavior, but for [MMOLB](https://mmolb.com).
  
-Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
+Currently published at https://mixolyde.net/mmolb-playoff-status/
 
 ## TODO
 * Group by League on some pages

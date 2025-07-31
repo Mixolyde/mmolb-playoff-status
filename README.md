@@ -4,7 +4,7 @@
 An attempt to replicate [Playoff Status](http://playoffstatus.com)
  behavior, but for [MMOLB](https://mmolb.com).
  
-Currently published at https://mixolyde.net/mmolb-playoff-status/
+Published at https://mmolbplayofstat.us
 
 ## TODO
 * Group by League on some pages
@@ -20,7 +20,6 @@ Currently published at https://mixolyde.net/mmolb-playoff-status/
 * Get a Bluesky account and button
 * Factor future schedule into magic numbers
 * Reduce API calls during breaks
-* Get a real domain name and move off Github Pages
 
 ## Planned release schedule
 * v0.0.1 
@@ -51,14 +50,17 @@ Currently published at https://mixolyde.net/mmolb-playoff-status/
 - [x] Replace references to "Party Time" with "Elimination"
 
 * v0.1.1
+- [x] Get a new domain and off github pages
 - [ ] Cleanup small TODO items
 - [ ] Add unit tests back in
 - [ ] Create a github action for testing code
 
 * v0.1.2
-- [ ] Get a new domain and off github pages
 - [ ] Setup multiple development environments for testing data/web changes
+- [ ] Single league view on end of season chances
 
+* v0.1.3
+- [ ] Lesser League stats
 
 ## Contributing
 

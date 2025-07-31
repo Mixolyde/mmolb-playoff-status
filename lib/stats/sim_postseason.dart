@@ -1,4 +1,7 @@
+import 'dart:math';
 import 'package:mmolb_playoff_status/stats/sim_utils.dart';
+
+Random rand = Random(0);
 
 //simulate complete playoff run
 void simulateUnstartedPostSeason(List<List<TeamSim>> simsByLeague){
@@ -37,11 +40,16 @@ void simulateUnstartedPostSeason(List<List<TeamSim>> simsByLeague){
   //TODO remove postseason games from win-loss record
   
   // wild card round
-
   // simulate 2 win series with 2nd place league team and a wild card team
-  // TODO flip a coin for wild card selection
-  var wildSeriesWinner1 = simulateSeries(wildCardRoundSims[1], wildCardRoundSims[4], 2, teamCount);
-  var wildSeriesWinner2 = simulateSeries(wildCardRoundSims[3], wildCardRoundSims[5], 2, teamCount);
+  TeamSim wildSeriesWinner1;
+  TeamSim wildSeriesWinner2;
+  if(rand.nextDouble() < .5){
+    wildSeriesWinner1 = simulateSeries(wildCardRoundSims[1], wildCardRoundSims[4], 2, teamCount);
+    wildSeriesWinner2 = simulateSeries(wildCardRoundSims[3], wildCardRoundSims[5], 2, teamCount);
+  } else {
+    wildSeriesWinner1 = simulateSeries(wildCardRoundSims[1], wildCardRoundSims[5], 2, teamCount);
+    wildSeriesWinner2 = simulateSeries(wildCardRoundSims[3], wildCardRoundSims[4], 2, teamCount);
+  }
   
   // subleague round
   // add 1st place teams to subleague series sims

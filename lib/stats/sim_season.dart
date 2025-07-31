@@ -40,21 +40,6 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
   }
   
   for (var count = 0; count < numSims; count++){
-    /* TODO fix live postseason simulations
-    if(simData.inPostSeason) {
-      // set completed round/matchup standings
-      print("Simulation is in PostSeason: $currentPostSeason");
-      setCompletedPostSeasonStandings(standings, currentPostSeason);
-
-      // simulate unfinished rounds
-      simulateStartedPostSeason(simsByLeague, currentPostSeason);
-      
-    } else {
-      //simulate the rest of the regular season and unstarted post season
-      simulateSeason(games, sims);
-      simulateUnstartedPostSeason(simsByLeague);
-    }
-    */
     
     simulateRegularSeason(games, sims);
     simulateUnstartedPostSeason(simsByLeague);

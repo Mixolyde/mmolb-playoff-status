@@ -9,6 +9,7 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 ## TODO
 * Group by League on some pages
 * Better wild card playoff spot handling
+* Lesser League stat pages
 * Add unit tests
 * Create a github action for testing code
 * Setup multiple development environments for testing data/web changes
@@ -16,7 +17,6 @@ Eventually will be published at https://mixolyde.net/mmolb-playoff-status/
 * Display Postseason bracket schedule
 * Handle postseason data live
 * Team schedule pages
-* Something for Lesser Leagues
 * Get a Bluesky account and button
 * Factor future schedule into magic numbers
 * Reduce API calls during breaks

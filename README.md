@@ -17,7 +17,6 @@ Published at https://mmolbplayofstat.us
 * Display Postseason bracket schedule
 * Handle postseason data live
 * Team schedule pages
-* Get a Bluesky account and button
 * Factor future schedule into magic numbers
 * Reduce API calls during breaks
 
@@ -51,16 +50,18 @@ Published at https://mmolbplayofstat.us
 
 * v0.1.1
 - [x] Get a new domain and off github pages
-- [ ] Cleanup small TODO items
-- [ ] Add unit tests back in
-- [ ] Create a github action for testing code
+- [ ] Single league view on end of season chances
+- [ ] Add Group By League button for postseason pages
 
 * v0.1.2
 - [ ] Setup multiple development environments for testing data/web changes
-- [ ] Single league view on end of season chances
+- [ ] Add unit tests back in
+- [ ] Create a github action for testing code
+
 
 * v0.1.3
 - [ ] Lesser League stats
+- [ ] Cleanup small TODO items
 
 ## Contributing
 

@@ -153,7 +153,11 @@ void setNavButtonStates(){
   case View.about:
     (document.querySelector('#pickLeague1')! as HTMLButtonElement).disabled = true;
     (document.querySelector('#pickLeague2')! as HTMLButtonElement).disabled = true;
-    break;    
+    break;
+  case View.chances:
+    (document.querySelector('#pickLeague1')! as HTMLButtonElement).disabled = true;
+    (document.querySelector('#pickLeague2')! as HTMLButtonElement).disabled = true;  
+    break; 
   case View.postseason:
     (document.querySelector('#pickLeague1')! as HTMLButtonElement).disabled = true;
     (document.querySelector('#pickLeague2')! as HTMLButtonElement).disabled = true;  
@@ -404,7 +408,7 @@ void redisplayData(){
   case View.chances:
     setMainContent(chancesHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
-      '${sitedata.subNicknames[currentView.activeLeague]} League Playoff Chances';
+      'MMOLB Playoff Chances';
     populateChancesTable(subStandings[currentView.activeLeague], sitedata);
     setNotes(chancesNotesHTML);
     break;    

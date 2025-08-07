@@ -105,10 +105,10 @@ void populateChancesTable(List<TeamStandings> subStandings, SiteData sitedata){
   var standings = subStandings.toList();
   
   for(var row in standings) {
-    var trow = insertCommonCells(table, row, sitedata);
+    var trow = insertCommonCells(table, row, sitedata, showLeague: true);
 
     for(var i = 0; i < 5; i++){
-      var cell = trow.insertCell(5 + i);
+      var cell = trow.insertCell(4 + i);
       cell.innerText = row.po[i];
       switch (row.po[i]){
         case 'E':

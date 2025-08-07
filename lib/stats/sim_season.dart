@@ -24,7 +24,7 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
   var postCounts = <String, List<num>>{};
   // initialize counts for each league playoff berth and no playoffs
   for (var key in sims.keys) {
-    poCounts[key] = [0, 0, 0, 0, 0]; 
+    poCounts[key] = [0, 0, 0, 0, 0, 0, 0]; 
     // counts for MMOLB champ, MMOLB series, League series, WC Round
     postCounts[key] = [0, 0, 0, 0];
   }
@@ -49,36 +49,40 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
     }
     
     //sort and count positions
-    for (var simLeague in simsByLeague) {
-      simLeague.sort();
-      TeamSim sim;
-      //print('Sorted simleague: $simLeague');
-      for (var i = 0; i < simLeague.length; i++){
-        sim = simLeague[i];
-        switch(i){
-          case 0:
-          case 1:
-          case 2:
-          case 3:
-            poCounts[sim.id]![i]++;
-            break;
-          default:
-            poCounts[sim.id]![4]++;
-            break;
-        }
-        if(sim.mmolbChamp){
-          postCounts[sim.id]![0]++;
-        }
-        if(sim.mmolbSeries){
-          postCounts[sim.id]![1]++;
-        }
-        if(sim.slSeries){
-          postCounts[sim.id]![2]++;
-        }     
-        if(sim.wcSeries){
-          postCounts[sim.id]![3]++;
-        }        
+    List<TeamSim> allSims = [];
+    allSims.addAll(simsByLeague.expand((x) => x));
+    allSims.sort();
+
+    TeamSim sim;
+    //print('Sorted simleague: $simLeague');
+    for (var i = 0; i < allSims.length; i++){
+      sim = allSims[i];
+      switch(i){
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+          poCounts[sim.id]![i]++;
+          break;
+        default:
+          poCounts[sim.id]![6]++;
+          break;
       }
+
+      if(sim.mmolbChamp){
+        postCounts[sim.id]![0]++;
+      }
+      if(sim.mmolbSeries){
+        postCounts[sim.id]![1]++;
+      }
+      if(sim.slSeries){
+        postCounts[sim.id]![2]++;
+      }     
+      if(sim.wcSeries){
+        postCounts[sim.id]![3]++;
+      }        
     }
     
     for (var sim in sims.values) { sim.load(); }
@@ -92,7 +96,16 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
   for(var standingList in standings){
     for(var standing in standingList){
     
-    for(var i = 0; i < 5; i++){
+    for(var i = 0; i < 7; i++){
+      if (standing.winning[4] == 'E' && i < 6){
+        standing.po[i] = 'X';
+      } else if (standing.winning[4] == 'E' && i == 6) {
+        standing.po[i] = 'E';
+      } else {
+        standing.po[i] = formatPercent(poCounts[standing.id]![i] / numSims);
+      }
+
+      /* TODO re enable when .winning converted to single league
       switch(standing.winning[i]){
         case '^':
         case 'X':
@@ -103,6 +116,7 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
           standing.po[i] = formatPercent(poCounts[standing.id]![i] / numSims);
           break;
       }
+      */
       
 
     }

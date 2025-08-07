@@ -14,6 +14,7 @@ import 'package:mmolb_playoff_status/html/populate_tables.dart';
 
 late String aboutHTML;
 late String bracketHTML;
+late String chancesHTML;
 late String chancesNotesHTML;
 late String winsbehindHTML;
 late String magicHTML;
@@ -81,6 +82,7 @@ Future<void> getContentPages() async {
   //load content pages
   aboutHTML = await read(Uri.parse('main-content/about.html'));
   //bracketHTML = await read(Uri.parse('main-content/bracket.html'));
+  chancesHTML = await read(Uri.parse('main-content/chances.html'));
   magicHTML = await read(Uri.parse('main-content/magic.html'));
   postseasonHTML = await read(Uri.parse('main-content/postseason.html'));
   winsbehindHTML = await read(Uri.parse('main-content/winsbehind.html'));
@@ -400,7 +402,7 @@ void redisplayData(){
     populateWinsBehindTable(subStandings[currentView.activeLeague], sitedata);
     break;
   case View.chances:
-    setMainContent(magicHTML);
+    setMainContent(chancesHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
       '${sitedata.subNicknames[currentView.activeLeague]} League Playoff Chances';
     populateChancesTable(subStandings[currentView.activeLeague], sitedata);

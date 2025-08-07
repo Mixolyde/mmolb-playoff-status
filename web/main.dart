@@ -28,12 +28,9 @@ List<PlayoffBracketEntry> entries = [];
 List<List<TeamStandings>> subStandings = [];
 
 void main() {
-
-  //String envBucket = js.globalContext.getProperty('envBucket'.toJS) ?? "";
-  String envBucket = "prod";
-  s3.envBucket = envBucket;
+  s3.envBucket = const String.fromEnvironment("bucket", defaultValue: "prod");
   
-  print ("EnvBucket: $envBucket");
+  print ("EnvBucket: ${s3.envBucket}");
 
   getContentPages().then((v) {
     print('Retrieved content pages and data');

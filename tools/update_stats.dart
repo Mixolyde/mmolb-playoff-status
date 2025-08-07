@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:args/args.dart';
+import 'package:dotenv/dotenv.dart';
+
 
 import 'package:mmolb_playoff_status/database_api.dart' as db;
 import 'package:mmolb_playoff_status/stats/calc_stats.dart';
 import 'package:mmolb_playoff_status/stats/sim_season.dart';
 
+String envBucket = "prod";
 const simCount = '103';
 
 Future<void> main(List<String> args) async {
@@ -13,6 +16,19 @@ Future<void> main(List<String> args) async {
   parser.addOption(simCount, abbr: 'c',  defaultsTo: '103');
   var results = parser.parse(args);
   var numSims = int.parse(results[simCount]);
+
+  var env = DotEnv(includePlatformEnvironment: true)
+    ..load();
+
+  print('Read all vars? ${env.isEveryDefined(['bucket'])}');
+  print('bucket=${env['bucket']}');
+  if (env.isDefined('bucket') ) {
+    envBucket = env['bucket']!;
+  } else {
+    print('No bucket defined, using default prod');
+  }
+
+
 
   var stateData = await db.getStateData();
   //print(stateData);
@@ -65,8 +81,6 @@ Future<void> main(List<String> args) async {
 }
 
 void uploadFiles() {
-  Map<String, String> envVars = Platform.environment;
-  String envBucket = envVars['BUCKET'] ?? "prod/";
   print("Environment Bucket: $envBucket");
   Process.run('/usr/bin/aws', [
       's3', 'cp', '/tmp/data/',

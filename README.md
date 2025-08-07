@@ -8,6 +8,7 @@ Published at https://mmolbplayofstat.us
 
 ## TODO
 * Fix 2nd place team bug on GB page
+* Fix postseason chances if team has been eliminated 
 * Group by League on some pages
 * Better wild card playoff spot handling
 * Lesser League stat pages

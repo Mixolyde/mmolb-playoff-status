@@ -97,10 +97,9 @@ void calculateGamesBehind(List<TeamStandings> teamStandings, int wcLeaderDiff) {
     num gbSubLeader = ( subLeaderDiff - teamDiff ) / 2;
     num gbWildCard = ( wcLeaderDiff - teamDiff ) / 2;
     teamStandings[i].gbDiv = formatGamesBehind(gbSubLeader);
-    if (gbWildCard > 0) {
+    if (gbWildCard > 0 && i > 1) {
       teamStandings[i].gbWc = formatGamesBehind(gbWildCard);
     }
-    
     
     print('GbDiv ${teamStandings[i].gbDiv} GbWc ${teamStandings[i].gbWc}');
   }  

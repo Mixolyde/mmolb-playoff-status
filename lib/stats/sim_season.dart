@@ -110,7 +110,11 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
     //only three rounds and champ of post season percents to format
     for(var i = 0; i < 4; i++){
       //postseason percents
-      standing.post[i] = formatPercent(postCounts[standing.id]![i] / numSims);
+      if (standing.winning[4] == 'E' && i < 4){
+        standing.post[i] = 'X';
+      } else {
+        standing.post[i] = formatPercent(postCounts[standing.id]![i] / numSims);
+      }
     }
     print('$standing Po ${standing.po} Post ${standing.post} Winning ${standing.winning}');
   }

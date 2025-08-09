@@ -116,7 +116,7 @@ Future<void> refreshData() async{
   
   switch(currentView.activeView){
   case View.winsbehind:
-    populateWinsBehindTable(subStandings[currentView.activeLeague], sitedata);
+    populateGamesBehindTable(subStandings[currentView.activeLeague], sitedata);
     break;
   case View.winningmagic:
     populateWinningTable(subStandings[currentView.activeLeague], sitedata);
@@ -403,7 +403,7 @@ void redisplayData(){
     setMainContent(winsbehindHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
       sitedata.subNicknames[currentView.activeLeague]; 
-    populateWinsBehindTable(subStandings[currentView.activeLeague], sitedata);
+    populateGamesBehindTable(subStandings[currentView.activeLeague], sitedata);
     break;
   case View.chances:
     setMainContent(chancesHTML);

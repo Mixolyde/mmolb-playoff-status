@@ -3,15 +3,15 @@ import 'dart:js_interop';
 import 'package:web/web.dart';
 import 'package:mmolb_playoff_status/site_objects.dart';
 
-void populateWinsBehindTable(List<TeamStandings> subStandings, SiteData sitedata){
+void populateGamesBehindTable(List<TeamStandings> subStandings, SiteData sitedata){
   var table = document.querySelector('#standingsTable')! as HTMLTableElement;
   var standings = subStandings.toList();
   
   for (var row in standings){
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);
-    var cell = trow.insertCell(5);
+    var cell = trow.insertCell(6);
     cell.innerText = row.gbDiv;        
-    cell = trow.insertCell(6);
+    cell = trow.insertCell(7);
     cell.innerText = row.gbWc;
   }
   

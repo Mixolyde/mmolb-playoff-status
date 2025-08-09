@@ -30,8 +30,10 @@ class TeamStandings implements Comparable<TeamStandings> {
     this.gamesPlayed = 0,
     this.gbDiv = '-', this.gbWc = '-',
     po, winning, elimination, post}){
-    for(var i = 0; i < 5; i++){
+    for(var i = 0; i < 7; i++){
       this.po[i] = po[i].toString();
+    }
+    for(var i = 0; i < 5; i++){
       this.winning[i] = winning[i].toString();
       this.elimination[i] = elimination[i].toString();
       this.post[i] = post[i].toString();

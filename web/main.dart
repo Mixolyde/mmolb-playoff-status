@@ -29,7 +29,7 @@ List<PlayoffBracketEntry> entries = [];
 List<List<TeamStandings>> subStandings = [];
 
 void main() {
-  s3.envBucket = const String.fromEnvironment("bucket", defaultValue: "prod");
+  s3.envBucket = const String.fromEnvironment("bucket", defaultValue: "dev");
   
   print ("EnvBucket: ${s3.envBucket}");
 
@@ -125,7 +125,7 @@ Future<void> refreshData() async{
     populateEliminationTable(subStandings[currentView.activeLeague], sitedata);
     break;
   case View.chances:
-    populateChancesTable(subStandings[currentView.activeLeague], sitedata);
+    populateChancesTable(subStandings, sitedata);
     break;    
   case View.postseason:
     populatePostseasonTable(subStandings, sitedata);
@@ -409,7 +409,7 @@ void redisplayData(){
     setMainContent(chancesHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
       'MMOLB Playoff Chances';
-    populateChancesTable(subStandings[currentView.activeLeague], sitedata);
+    populateChancesTable(subStandings, sitedata);
     setNotes(chancesNotesHTML);
     break;    
   case View.winningmagic:

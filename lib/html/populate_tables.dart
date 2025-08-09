@@ -8,7 +8,7 @@ void populateWinsBehindTable(List<TeamStandings> subStandings, SiteData sitedata
   var standings = subStandings.toList();
   
   for (var row in standings){
-    var trow = insertCommonCells(table, row, sitedata);
+    var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);
     var cell = trow.insertCell(5);
     cell.innerText = row.gbDiv;        
     cell = trow.insertCell(6);
@@ -96,18 +96,24 @@ void assignBracketClass(HTMLSpanElement span, PlayoffBracketEntry entry){
   }
 }
 
-void populateChancesTable(List<TeamStandings> subStandings, SiteData sitedata){
+void populateChancesTable(List<List<TeamStandings>> allStandings, SiteData sitedata){
   var table = document.querySelector('#standingsTable') as HTMLTableElement?;
   if(table == null){
     print('ERROR: #standingsTable is null');
     return;
   }
-  var standings = subStandings.toList();
+
+  var standings = <TeamStandings>[];
+  standings.addAll(allStandings[0]);
+  standings.addAll(allStandings[1]);
+
+  standings.sort();
   
   for(var row in standings) {
-    var trow = insertCommonCells(table, row, sitedata, showLeague: true);
+    var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: false);
+    //print('Displaying playoff chances for ${row.fullName} ${row.po}');
 
-    for(var i = 0; i < 5; i++){
+    for(var i = 0; i < 7; i++){
       var cell = trow.insertCell(4 + i);
       cell.innerText = row.po[i];
       switch (row.po[i]){
@@ -116,11 +122,7 @@ void populateChancesTable(List<TeamStandings> subStandings, SiteData sitedata){
           cell.classList.add('redcell');
           break;
         default:
-          if(row.winning[i] == 'MW') {
-            cell.classList.add('redcell');
-          } else {
-            cell.classList.add('greencell');
-          }
+          // TODO figure out red/green cell logic from winning table
           break;
       }
     }
@@ -155,7 +157,7 @@ void populatePostseasonTable(List<List<TeamStandings>> allStandings,
   });
   
   for(var row in standings) {
-    var trow = insertCommonCells(table, row, sitedata, showLeague: true);
+    var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: false);
     var psRounds = 4;
 
     for(var i = 0; i < psRounds; i++){
@@ -181,10 +183,10 @@ void populateWinningTable(List<TeamStandings> subStandings, SiteData sitedata){
   var standings = subStandings.toList();
   
   for(var row in standings) {
-    var trow = insertCommonCells(table, row, sitedata);
+    var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);
      
     for(var i = 0; i < 5; i++){
-      var cell = trow.insertCell(5 + i);
+      var cell = trow.insertCell(6 + i);
       cell.innerText = row.winning[i];
       switch (row.winning[i]){
         case 'E':
@@ -209,10 +211,10 @@ void populateEliminationTable(List<TeamStandings> subStandings, SiteData sitedat
   var standings = subStandings.toList();
   
   for(var row in standings) {
-    var trow = insertCommonCells(table, row, sitedata);   
+    var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);   
    
     for(var i = 0; i < 5; i++){
-      var cell = trow.insertCell(5 + i);
+      var cell = trow.insertCell(6 + i);
       cell.innerText = row.elimination[i];
       switch (row.elimination[i]){
         case 'E':
@@ -235,7 +237,7 @@ void populateAboutPageData(List<List<TeamStandings>> subStandings){
 }
 
 HTMLTableRowElement insertCommonCells(HTMLTableElement table, 
-  TeamStandings row, SiteData sitedata, {showLeague = false} ){
+  TeamStandings row, SiteData sitedata, {showPlayedAndLeft = true} ){
   //print('Inserting TeamStandings for $row');
   var trow = table.insertRow();
 
@@ -269,26 +271,22 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
   cell.appendChild(narrowSpan);
   cell.appendChild(emojiSpan);
   
-  var leagueAdjust = 0;
-  if(showLeague){
-    leagueAdjust = 1;
-    var cell = trow.insertCell(1);
-    cell.innerText = row.subleague;    
-  }
+  cell = trow.insertCell(1);
+  cell.innerText = row.subleague;    
 
   var record = '${row.gamesPlayed - row.losses} - ${row.losses}';
-  cell = trow.insertCell(1 + leagueAdjust);
+  cell = trow.insertCell(2);
   cell.innerText = record;
 
-  if(showLeague){
+  if(showPlayedAndLeft){
     cell = trow.insertCell(3);
+    cell.innerText = row.gamesPlayed.toString();    
+    cell = trow.insertCell(4);
+    cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();
+    cell = trow.insertCell(5);
     cell.innerText = row.runDifferential.toString();
   } else {
-    cell = trow.insertCell(2);
-    cell.innerText = row.gamesPlayed.toString();    
     cell = trow.insertCell(3);
-    cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();
-    cell = trow.insertCell(4);
     cell.innerText = row.runDifferential.toString();
   }
 

@@ -16,7 +16,7 @@ late String aboutHTML;
 late String bracketHTML;
 late String chancesHTML;
 late String chancesNotesHTML;
-late String winsbehindHTML;
+late String gamesbehindHTML;
 late String magicHTML;
 late String eliminationNotesHTML;
 late String postseasonHTML;
@@ -27,6 +27,7 @@ CurrentView currentView = CurrentView();
 List<PlayoffBracketEntry> entries = [];
 
 List<List<TeamStandings>> subStandings = [];
+List<TeamStandings> allStandings = [];
 
 void main() {
   s3.envBucket = const String.fromEnvironment("bucket", defaultValue: "dev");
@@ -47,7 +48,6 @@ void main() {
       replaceViewState();
     }
 
-    selectLeagueButton();
     selectViewButton();
     redisplayData();
     
@@ -72,12 +72,13 @@ Future<void> getContentPages() async {
   setSeasonDay(sitedata);
   subStandings = await s3.getSubStandings(sitedata);
 
+  allStandings.clear();
+  allStandings.addAll(subStandings[0]);
+  allStandings.addAll(subStandings[1]);
+
   //entries = await s3.getPlayoffBracketEntries();
   
   setUpdateTime(sitedata);
-  
-  (document.querySelector('#pickLeague1')! as HTMLElement).innerText = sitedata.subNicknames[0];
-  (document.querySelector('#pickLeague2')! as HTMLElement).innerText = sitedata.subNicknames[1];
 
   //load content pages
   aboutHTML = await read(Uri.parse('main-content/about.html'));
@@ -85,14 +86,14 @@ Future<void> getContentPages() async {
   chancesHTML = await read(Uri.parse('main-content/chances.html'));
   magicHTML = await read(Uri.parse('main-content/magic.html'));
   postseasonHTML = await read(Uri.parse('main-content/postseason.html'));
-  winsbehindHTML = await read(Uri.parse('main-content/winsbehind.html'));
+  gamesbehindHTML = await read(Uri.parse('main-content/gamesbehind.html'));
 
   //load notes pages
   chancesNotesHTML = await read(Uri.parse('notes/chancesNotes.html'));
   eliminationNotesHTML = await read(Uri.parse('notes/eliminationNotes.html'));
   winningNotesHTML = await read(Uri.parse('notes/winningNotes.html'));
 
-  setMainContent(winsbehindHTML);
+  setMainContent(gamesbehindHTML);
 
 }
 
@@ -105,6 +106,10 @@ Future<void> refreshData() async{
   setSeasonDay(sitedata);
   subStandings = await s3.getSubStandings(sitedata);
   
+  allStandings.clear();
+  allStandings.addAll(subStandings[0]);
+  allStandings.addAll(subStandings[1]);
+
   //entries = await s3.getPlayoffBracketEntries();
   
   var standingsTable = document.querySelector('#standingsTable') as HTMLTableElement?;
@@ -116,19 +121,19 @@ Future<void> refreshData() async{
   
   switch(currentView.activeView){
   case View.winsbehind:
-    populateGamesBehindTable(subStandings[currentView.activeLeague], sitedata);
+    populateGamesBehindTable(allStandings, sitedata);
     break;
   case View.winningmagic:
-    populateWinningTable(subStandings[currentView.activeLeague], sitedata);
+    populateWinningTable(allStandings, sitedata);
     break;
   case View.eliminationmagic:
-    populateEliminationTable(subStandings[currentView.activeLeague], sitedata);
+    populateEliminationTable(allStandings, sitedata);
     break;
   case View.chances:
-    populateChancesTable(subStandings, sitedata);
+    populateChancesTable(allStandings, sitedata);
     break;    
   case View.postseason:
-    populatePostseasonTable(subStandings, sitedata);
+    populatePostseasonTable(allStandings, sitedata);
     break; 
   case View.bracket:
     populatePlayoffBracket(entries);
@@ -148,32 +153,6 @@ void setUpdateTime(SiteData sitedata){
     DateFormat("MMMM d, h:mm a").format(local);
 }
 
-void setNavButtonStates(){
- switch(currentView.activeView){
-  case View.about:
-    (document.querySelector('#pickLeague1')! as HTMLButtonElement).disabled = true;
-    (document.querySelector('#pickLeague2')! as HTMLButtonElement).disabled = true;
-    break;
-  case View.chances:
-    (document.querySelector('#pickLeague1')! as HTMLButtonElement).disabled = true;
-    (document.querySelector('#pickLeague2')! as HTMLButtonElement).disabled = true;  
-    break; 
-  case View.postseason:
-    (document.querySelector('#pickLeague1')! as HTMLButtonElement).disabled = true;
-    (document.querySelector('#pickLeague2')! as HTMLButtonElement).disabled = true;  
-    break; 
-  case View.bracket:
-    (document.querySelector('#pickLeague1')! as HTMLButtonElement).disabled = true;
-    (document.querySelector('#pickLeague2')! as HTMLButtonElement).disabled = true; 
-    break;    
-  default:
-    (document.querySelector('#pickLeague1')! as HTMLButtonElement).disabled = false;
-    (document.querySelector('#pickLeague2')! as HTMLButtonElement).disabled = false;
-    break;
-  }  
-  
-}
-
 void setSeasonDay(SiteData sitedata){
   var season = sitedata.season;
   var day = sitedata.day;
@@ -188,9 +167,6 @@ void setSeasonDay(SiteData sitedata){
 
 void addListeners(){
   window.onPopState.listen(handlePopState);
-  
-  document.querySelector('#pickLeague1')!.onClick.listen(selectLeague1);
-  document.querySelector('#pickLeague2')!.onClick.listen(selectLeague2);
   
   document.querySelector('#viewWinsBehind')!.onClick.listen(selectViewGB);
   document.querySelector('#viewChances')!.onClick.listen(selectViewC);  
@@ -210,7 +186,6 @@ void handlePopState(PopStateEvent event){
     var jsonState = Map.from( (event.state as js.JSBoxedDartObject).toDart as Map<String, dynamic>
       ).map((k, v) => MapEntry<String, dynamic>(k.toString(), v));
     currentView = CurrentView.fromJson(jsonState);
-    selectLeagueButton();
     selectViewButton();
     redisplayData();
   }
@@ -224,28 +199,12 @@ void clickLeague(int league){
     return;
   }
   currentView.activeLeague = league;
-  selectLeagueButton();
 
   saveCurrentView();
   pushViewState();
   redisplayData();
   
 }
-
-void selectLeagueButton() {
-  if(currentView.activeLeague == 0){
-    document.querySelector('#pickLeague1')!.classList
-      .add('nav-button-active');
-    document.querySelector('#pickLeague2')!.classList
-      .remove('nav-button-active');
-  } else {
-    document.querySelector('#pickLeague1')!.classList
-      .remove('nav-button-active');
-    document.querySelector('#pickLeague2')!.classList
-      .add('nav-button-active');
-  }
-}
-
 
 void selectViewAbout(MouseEvent event) => clickView(View.about);
 void selectViewC(MouseEvent event) => clickView(View.chances);
@@ -397,40 +356,39 @@ void redisplayData(){
   switch(currentView.activeView){
   case View.about:
     setMainContent(aboutHTML); 
-    populateAboutPageData(subStandings);
     break;
   case View.winsbehind:
-    setMainContent(winsbehindHTML);
+    setMainContent(gamesbehindHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
-      sitedata.subNicknames[currentView.activeLeague]; 
-    populateGamesBehindTable(subStandings[currentView.activeLeague], sitedata);
+      'MMOLB Games Behind'; 
+    populateGamesBehindTable(allStandings, sitedata);
     break;
   case View.chances:
     setMainContent(chancesHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
       'MMOLB Playoff Chances';
-    populateChancesTable(subStandings, sitedata);
+    populateChancesTable(allStandings, sitedata);
     setNotes(chancesNotesHTML);
     break;    
   case View.winningmagic:
     setMainContent(magicHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
-      '${sitedata.subNicknames[currentView.activeLeague]} League Winning Magic Numbers';
-    populateWinningTable(subStandings[currentView.activeLeague], sitedata);
+      'MMOLB Winning Magic Numbers';
+    populateWinningTable(allStandings, sitedata);
     setNotes(winningNotesHTML);
     break;
   case View.eliminationmagic:
     setMainContent(magicHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
-      '${sitedata.subNicknames[currentView.activeLeague]} League Elimination Magic Numbers';
-    populateEliminationTable(subStandings[currentView.activeLeague], sitedata);
+      'MMOLB Elimination Magic Numbers';
+    populateEliminationTable(allStandings, sitedata);
     setNotes(eliminationNotesHTML);
     break;
   case View.postseason:
     setMainContent(postseasonHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
       'MMOLB Post Season Chances';
-    populatePostseasonTable(subStandings, sitedata);
+    populatePostseasonTable(allStandings, sitedata);
     break;  
   case View.bracket:
     setMainContent(bracketHTML);
@@ -438,7 +396,6 @@ void redisplayData(){
     break;
   }
   
-  setNavButtonStates();
 }
 
 void pushViewState(){

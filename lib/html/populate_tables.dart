@@ -96,20 +96,24 @@ void assignBracketClass(HTMLSpanElement span, PlayoffBracketEntry entry){
   }
 }
 
-void populateChancesTable(List<List<TeamStandings>> allStandings, SiteData sitedata){
+void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata){
   var table = document.querySelector('#standingsTable') as HTMLTableElement?;
   if(table == null){
     print('ERROR: #standingsTable is null');
     return;
   }
 
-  var standings = <TeamStandings>[];
-  standings.addAll(allStandings[0]);
-  standings.addAll(allStandings[1]);
+  allStandings.sort((a, b) {
+    for(var i = 0; i < a.po.length; i++){
+      if(b.po[i] != a.po[i]){
+        return getOrderValue(b.po[i]).compareTo(getOrderValue(a.po[i]));
+      }
+    }
+    return a.compareTo(b);
+  });
 
-  standings.sort();
   
-  for(var row in standings) {
+  for(var row in allStandings) {
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: false);
     //print('Displaying playoff chances for ${row.fullName} ${row.po}');
 
@@ -130,33 +134,24 @@ void populateChancesTable(List<List<TeamStandings>> allStandings, SiteData sited
   
 }
 
-void populatePostseasonTable(List<List<TeamStandings>> allStandings,
+void populatePostseasonTable(List<TeamStandings> allStandings,
   SiteData sitedata){
   var table = document.querySelector('#standingsTable') as HTMLTableElement?;
   if(table == null){
     print('ERROR: #standingsTable is null');
     return;
   }
-  var standings = <TeamStandings>[];
-  standings.addAll(allStandings[0]);
-  standings.addAll(allStandings[1]);
 
-  standings.sort((a, b) {
-    for(var i = 0; i < 4; i++){
+  allStandings.sort((a, b) {
+    for(var i = 0; i < a.post.length; i++){
       if(b.post[i] != a.post[i]){
         return getOrderValue(b.post[i]).compareTo(getOrderValue(a.post[i]));
       }
     }
-    if(a.wins != b.wins){
-      return b.wins.compareTo(a.wins);
-    } else if(a.runDifferential != b.runDifferential){
-      return b.runDifferential.compareTo(a.runDifferential);
-    } {
-      return a.id.compareTo(b.id);
-    }
+    return a.compareTo(b);
   });
   
-  for(var row in standings) {
+  for(var row in allStandings) {
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: false);
     var psRounds = 4;
 
@@ -228,12 +223,6 @@ void populateEliminationTable(List<TeamStandings> subStandings, SiteData sitedat
     }
   }
   
-}
-
-void populateAboutPageData(List<List<TeamStandings>> subStandings){
-
-  print('Populating about page data');
-      
 }
 
 HTMLTableRowElement insertCommonCells(HTMLTableElement table, 

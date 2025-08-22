@@ -7,6 +7,7 @@ An attempt to replicate [Playoff Status](http://playoffstatus.com)
 Published at https://mmolbplayofstat.us
 
 ## TODO
+* Fix dev/prod environment switching in web app
 * Bring back Group by League on all pages
 * Better wild card playoff spot handling
 * Lesser League stat pages

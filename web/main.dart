@@ -30,7 +30,7 @@ List<List<TeamStandings>> subStandings = [];
 List<TeamStandings> allStandings = [];
 
 void main() {
-  s3.envBucket = const String.fromEnvironment("bucket", defaultValue: "dev");
+  s3.envBucket = const String.fromEnvironment("bucket", defaultValue: "prod");
   
   print ("EnvBucket: ${s3.envBucket}");
 

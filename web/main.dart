@@ -136,7 +136,7 @@ Future<void> refreshData() async{
     populatePostseasonTable(allStandings, sitedata);
     break; 
   case View.bracket:
-    populatePlayoffBracket(entries);
+    //populatePlayoffBracket(entries);
     break;    
   default:
     break;
@@ -392,7 +392,7 @@ void redisplayData(){
     break;  
   case View.bracket:
     setMainContent(bracketHTML);
-    populatePlayoffBracket(entries);
+    //populatePlayoffBracket(entries);
     break;
   }
   

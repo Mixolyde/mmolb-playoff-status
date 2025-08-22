@@ -3,77 +3,16 @@ import 'dart:js_interop';
 import 'package:web/web.dart';
 import 'package:mmolb_playoff_status/site_objects.dart';
 
-void populateGamesBehindTable(List<TeamStandings> subStandings, SiteData sitedata){
+void populateGamesBehindTable(List<TeamStandings> allStandings, SiteData sitedata){
   var table = document.querySelector('#standingsTable')! as HTMLTableElement;
-  var standings = subStandings.toList();
+  allStandings.sort();
   
-  for (var row in standings){
+  for (var row in allStandings){
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);
     var cell = trow.insertCell(6);
     cell.innerText = row.gbDiv;        
     cell = trow.insertCell(7);
     cell.innerText = row.gbWc;
-  }
-  
-}
-
-void populatePlayoffBracket(List<PlayoffBracketEntry> entries){
-
-  print('Bracket 0: ${entries[0]}');
-  
-  // Set Leagues
-  for (var s in ['brk-mu_1_2', 'brk-mu_2_1', 'brk-mu_2_2', 'brk-mu_3_1']) {
-    document.querySelector('#$s .brk-date')?.textContent = '${entries[0].subleague} League';
-  }
-  
-  for (var s in ['brk-mu_1_7', 'brk-mu_2_3', 'brk-mu_2_4', 'brk-mu_3_2']) {
-    document.querySelector('#$s .brk-date')?.textContent = '${entries[2].subleague} League';
-  }
-  
-  // Set Entries
-  var matchupIDs = [
-    'brk-mu_1_2', 'brk-mu_1_7', 
-    'brk-mu_2_1', 'brk-mu_2_2', 
-    'brk-mu_2_3', 'brk-mu_2_4',
-    'brk-mu_3_1', 'brk-mu_3_2',
-    'brk-mu_4_1'
-  ];
-  
-  HTMLSpanElement? span;
-  
-  for(var index = 0; index < matchupIDs.length; index++){
-    //print('Matchup $index');
-    var top = entries[index * 2];
-    var bottom = entries[index * 2 + 1];
-    
-    span = document.querySelector('#${matchupIDs[index]} .brk-tteam .brk-tseed') as HTMLSpanElement?;
-    if (span == null){
-      print('ERROR: span #${matchupIDs[index]} .brk-tteam .brk-tseed is null');
-    } else {
-      span.innerText = getEntryText(top);
-      assignBracketClass(span, top);
-    }
-    
-    span = document.querySelector('#${matchupIDs[index]} .brk-bteam .brk-tseed') as HTMLSpanElement?;
-    if (span == null){
-      print('ERROR: span #${matchupIDs[index]} .brk-bteam .brk-tseed is null');
-    } else {
-      span.innerText = getEntryText(bottom);
-      assignBracketClass(span, bottom);
-    }
-    
-  }
-  
-  var winner = entries[18];
-  span = document.querySelector('#brk-final-box .brk-tseed') as HTMLSpanElement?;
-  if (span == null){
-    print('ERROR: span #brk-final-box .brk-tseed is null');
-  } else {
-    if (winner.teamNickname == 'TBD'){
-      span.innerText = 'TBD';
-    } else {
-      span.innerText = '(${winner.seed}) ${winner.teamNickname}';
-    }
   }
   
 }
@@ -97,11 +36,7 @@ void assignBracketClass(HTMLSpanElement span, PlayoffBracketEntry entry){
 }
 
 void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata){
-  var table = document.querySelector('#standingsTable') as HTMLTableElement?;
-  if(table == null){
-    print('ERROR: #standingsTable is null');
-    return;
-  }
+  var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
   allStandings.sort((a, b) {
     for(var i = 0; i < a.po.length; i++){
@@ -136,11 +71,7 @@ void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata){
 
 void populatePostseasonTable(List<TeamStandings> allStandings,
   SiteData sitedata){
-  var table = document.querySelector('#standingsTable') as HTMLTableElement?;
-  if(table == null){
-    print('ERROR: #standingsTable is null');
-    return;
-  }
+  var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
   allStandings.sort((a, b) {
     for(var i = 0; i < a.post.length; i++){
@@ -169,15 +100,12 @@ void populatePostseasonTable(List<TeamStandings> allStandings,
   
 }
 
-void populateWinningTable(List<TeamStandings> subStandings, SiteData sitedata){
-  var table = document.querySelector('#standingsTable') as  HTMLTableElement?;
-  if(table == null){
-    print('ERROR: #standingsTable is null');
-    return;
-  }
-  var standings = subStandings.toList();
+void populateWinningTable(List<TeamStandings> allStandings, SiteData sitedata){
+  var table = document.querySelector('#standingsTable') as  HTMLTableElement;
+
+  allStandings.sort();
   
-  for(var row in standings) {
+  for(var row in allStandings) {
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);
      
     for(var i = 0; i < 5; i++){
@@ -197,15 +125,11 @@ void populateWinningTable(List<TeamStandings> subStandings, SiteData sitedata){
   
 }
 
-void populateEliminationTable(List<TeamStandings> subStandings, SiteData sitedata){
-  var table = document.querySelector('#standingsTable') as  HTMLTableElement?;
-  if(table == null){
-    print('ERROR: #standingsTable is null');
-    return;
-  }
-  var standings = subStandings.toList();
+void populateEliminationTable(List<TeamStandings> allStandings, SiteData sitedata){
+  var table = document.querySelector('#standingsTable') as  HTMLTableElement;
+  allStandings.sort();
   
-  for(var row in standings) {
+  for(var row in allStandings) {
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);   
    
     for(var i = 0; i < 5; i++){

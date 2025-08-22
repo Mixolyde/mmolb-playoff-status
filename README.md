@@ -10,6 +10,7 @@ Published at https://mmolbplayofstat.us
 * Fix dev/prod environment switching in web app
 * Bring back Group by League on all pages
 * Better wild card playoff spot handling
+* Add Dark Mode support
 * Lesser League stat pages
 * Add unit tests
 * Create a github action for testing code

@@ -3,16 +3,31 @@ import 'dart:js_interop';
 import 'package:web/web.dart';
 import 'package:mmolb_playoff_status/site_objects.dart';
 
-void populateGamesBehindTable(List<TeamStandings> allStandings, SiteData sitedata){
+void populateGamesBehindTable(List<TeamStandings> allStandings, SiteData sitedata, bool groupBySubLeague){
   var table = document.querySelector('#standingsTable')! as HTMLTableElement;
-  allStandings.sort();
+  var standings = allStandings.toList();
+
+  standings.sort();
+
+  if(groupBySubLeague == true){
+    var firstDiv = allStandings[0].subleague;
+    standings = allStandings.where((t) => t.subleague == firstDiv).toList();
+    standings.addAll(allStandings.where((t) => 
+      t.subleague != firstDiv).toList());
+  }
   
-  for (var row in allStandings){
+  for (var row in standings){
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);
     var cell = trow.insertCell(6);
     cell.innerText = row.gbDiv;        
     cell = trow.insertCell(7);
     cell.innerText = row.gbWc;
+  }
+
+  if(groupBySubLeague == true){
+    insertSeparatorRow(table, 10, 8); 
+  } else {
+    insertSeparatorRow(table, 8, 8); 
   }
   
 }
@@ -35,7 +50,7 @@ void assignBracketClass(HTMLSpanElement span, PlayoffBracketEntry entry){
   }
 }
 
-void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata){
+void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata, bool groupBySubLeague){
   var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
   allStandings.sort((a, b) {
@@ -47,8 +62,16 @@ void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata){
     return a.compareTo(b);
   });
 
+  var standings = allStandings.toList();
+  if(groupBySubLeague == true){
+    var firstDiv = allStandings[0].subleague;
+    standings = allStandings.where((t) => t.subleague == firstDiv).toList();
+    standings.addAll(allStandings.where((t) => 
+      t.subleague != firstDiv).toList());
+  }
+
   
-  for(var row in allStandings) {
+  for(var row in standings) {
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: false);
     //print('Displaying playoff chances for ${row.fullName} ${row.po}');
 
@@ -66,11 +89,17 @@ void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata){
       }
     }
   }
+
+  if(groupBySubLeague == true){
+    insertSeparatorRow(table, 10, 11); 
+  } else {
+    insertSeparatorRow(table, 8, 11); 
+  }
   
 }
 
 void populatePostseasonTable(List<TeamStandings> allStandings,
-  SiteData sitedata){
+  SiteData sitedata, bool groupBySubLeague){
   var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
   allStandings.sort((a, b) {
@@ -81,8 +110,16 @@ void populatePostseasonTable(List<TeamStandings> allStandings,
     }
     return a.compareTo(b);
   });
+
+  var standings = allStandings.toList();
+  if(groupBySubLeague == true){
+    var firstDiv = allStandings[0].subleague;
+    standings = allStandings.where((t) => t.subleague == firstDiv).toList();
+    standings.addAll(allStandings.where((t) => 
+      t.subleague != firstDiv).toList());
+  }
   
-  for(var row in allStandings) {
+  for(var row in standings) {
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: false);
     var psRounds = 4;
 
@@ -97,15 +134,29 @@ void populatePostseasonTable(List<TeamStandings> allStandings,
 
     }
   }
+
+  if(groupBySubLeague == true){
+    insertSeparatorRow(table, 10, 8); 
+  } else {
+    insertSeparatorRow(table, 8, 8); 
+  }
   
 }
 
-void populateWinningTable(List<TeamStandings> allStandings, SiteData sitedata){
+void populateWinningTable(List<TeamStandings> allStandings, SiteData sitedata, bool groupBySubLeague){
   var table = document.querySelector('#standingsTable') as  HTMLTableElement;
 
-  allStandings.sort();
+  var standings = allStandings.toList();
+  standings.sort();
+
+  if(groupBySubLeague == true){
+    var firstDiv = allStandings[0].subleague;
+    standings = allStandings.where((t) => t.subleague == firstDiv).toList();
+    standings.addAll(allStandings.where((t) => 
+      t.subleague != firstDiv).toList());
+  }
   
-  for(var row in allStandings) {
+  for(var row in standings) {
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);
      
     for(var i = 0; i < 5; i++){
@@ -122,14 +173,29 @@ void populateWinningTable(List<TeamStandings> allStandings, SiteData sitedata){
       }
     }
   }
+
+  if(groupBySubLeague == true){
+    insertSeparatorRow(table, 10, 11); 
+  } else {
+    insertSeparatorRow(table, 8, 11); 
+  }
   
 }
 
-void populateEliminationTable(List<TeamStandings> allStandings, SiteData sitedata){
+void populateEliminationTable(List<TeamStandings> allStandings, SiteData sitedata, bool groupBySubLeague){
   var table = document.querySelector('#standingsTable') as  HTMLTableElement;
-  allStandings.sort();
+
+  var standings = allStandings.toList();
+  standings.sort();
+
+  if(groupBySubLeague == true){
+    var firstDiv = allStandings[0].subleague;
+    standings = allStandings.where((t) => t.subleague == firstDiv).toList();
+    standings.addAll(allStandings.where((t) => 
+      t.subleague != firstDiv).toList());
+  }
   
-  for(var row in allStandings) {
+  for(var row in standings) {
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);   
    
     for(var i = 0; i < 5; i++){
@@ -145,6 +211,12 @@ void populateEliminationTable(List<TeamStandings> allStandings, SiteData sitedat
           break;
       }
     }
+  }
+
+  if(groupBySubLeague == true){
+    insertSeparatorRow(table, 10, 11); 
+  } else {
+    insertSeparatorRow(table, 8, 11); 
   }
   
 }

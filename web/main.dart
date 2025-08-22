@@ -48,6 +48,7 @@ void main() {
       replaceViewState();
     }
 
+    selectGroupBySubLeague();
     selectViewButton();
     redisplayData();
     
@@ -121,19 +122,19 @@ Future<void> refreshData() async{
   
   switch(currentView.activeView){
   case View.winsbehind:
-    populateGamesBehindTable(allStandings, sitedata);
+    populateGamesBehindTable(allStandings, sitedata, currentView.groupBySubLeague);
     break;
   case View.winningmagic:
-    populateWinningTable(allStandings, sitedata);
+    populateWinningTable(allStandings, sitedata, currentView.groupBySubLeague);
     break;
   case View.eliminationmagic:
-    populateEliminationTable(allStandings, sitedata);
+    populateEliminationTable(allStandings, sitedata, currentView.groupBySubLeague);
     break;
   case View.chances:
-    populateChancesTable(allStandings, sitedata);
+    populateChancesTable(allStandings, sitedata, currentView.groupBySubLeague);
     break;    
   case View.postseason:
-    populatePostseasonTable(allStandings, sitedata);
+    populatePostseasonTable(allStandings, sitedata, currentView.groupBySubLeague);
     break; 
   case View.bracket:
     //populatePlayoffBracket(entries);
@@ -175,6 +176,8 @@ void addListeners(){
   document.querySelector('#viewAbout')!.onClick.listen(selectViewAbout);
   document.querySelector('#viewPostseasonChances')!.onClick.listen(selectViewPost);
   //document.querySelector('#viewPlayoffBracket')!.onClick.listen(selectViewBracket);
+
+  document.querySelector('#doGroup')!.onClick.listen(clickGroupBySubLeague);
   
 }
 
@@ -186,6 +189,8 @@ void handlePopState(PopStateEvent event){
     var jsonState = Map.from( (event.state as js.JSBoxedDartObject).toDart as Map<String, dynamic>
       ).map((k, v) => MapEntry<String, dynamic>(k.toString(), v));
     currentView = CurrentView.fromJson(jsonState);
+
+    selectGroupBySubLeague();
     selectViewButton();
     redisplayData();
   }
@@ -352,6 +357,30 @@ void selectViewButton(){
 
 }
 
+void clickGroupBySubLeague(MouseEvent event) {
+
+  if(currentView.groupBySubLeague){
+    currentView.groupBySubLeague = false;
+    selectGroupBySubLeague();
+  } else {
+    currentView.groupBySubLeague = true;
+    selectGroupBySubLeague();
+  }
+  
+  saveCurrentView();
+  pushViewState();
+  redisplayData();
+}
+
+void selectGroupBySubLeague(){
+  var groupButton = document.querySelector('#doGroup')!;
+  if(currentView.groupBySubLeague){
+    groupButton.classList.add('nav-button-active');
+  } else {
+    groupButton.classList.remove('nav-button-active');
+  }
+}
+
 void redisplayData(){
   switch(currentView.activeView){
   case View.about:
@@ -361,34 +390,34 @@ void redisplayData(){
     setMainContent(gamesbehindHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
       'MMOLB Games Behind'; 
-    populateGamesBehindTable(allStandings, sitedata);
+    populateGamesBehindTable(allStandings, sitedata, currentView.groupBySubLeague);
     break;
   case View.chances:
     setMainContent(chancesHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText = 
       'MMOLB Playoff Chances';
-    populateChancesTable(allStandings, sitedata);
+    populateChancesTable(allStandings, sitedata, currentView.groupBySubLeague);
     setNotes(chancesNotesHTML);
     break;    
   case View.winningmagic:
     setMainContent(magicHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
       'MMOLB Winning Magic Numbers';
-    populateWinningTable(allStandings, sitedata);
+    populateWinningTable(allStandings, sitedata, currentView.groupBySubLeague);
     setNotes(winningNotesHTML);
     break;
   case View.eliminationmagic:
     setMainContent(magicHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
       'MMOLB Elimination Magic Numbers';
-    populateEliminationTable(allStandings, sitedata);
+    populateEliminationTable(allStandings, sitedata, currentView.groupBySubLeague);
     setNotes(eliminationNotesHTML);
     break;
   case View.postseason:
     setMainContent(postseasonHTML);
     (document.querySelector('#leagueTitle')! as HTMLElement).innerText =
       'MMOLB Post Season Chances';
-    populatePostseasonTable(allStandings, sitedata);
+    populatePostseasonTable(allStandings, sitedata, currentView.groupBySubLeague);
     break;  
   case View.bracket:
     setMainContent(bracketHTML);
@@ -436,6 +465,7 @@ CurrentView loadCurrentView(){
     var view = CurrentView();
     view.activeLeague = 0;
     view.activeView = View.winsbehind;
+    view.groupBySubLeague = false;
     return view;
   }
 }

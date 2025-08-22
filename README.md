@@ -7,8 +7,7 @@ An attempt to replicate [Playoff Status](http://playoffstatus.com)
 Published at https://mmolbplayofstat.us
 
 ## TODO
-* Convert Playoff Chances page to a single league view and calc wild card
-* Group by League on some pages
+* Bring back Group by League on all pages
 * Better wild card playoff spot handling
 * Lesser League stat pages
 * Add unit tests
@@ -51,14 +50,15 @@ Published at https://mmolbplayofstat.us
 
 * v0.1.1
 - [x] Get a new domain and off github pages
-- [ ] Single league view on end of season chances
-- [ ] Add Group By League button for postseason pages
+- [x] Single league view on end of season chances
+- [x] Setup multiple development environments for testing data/web changes
+
 
 * v0.1.2
-- [ ] Setup multiple development environments for testing data/web changes
+- [ ] Add Group By League button for all pages
+- [ ] Handle wild card positioning better
 - [ ] Add unit tests back in
 - [ ] Create a github action for testing code
-
 
 * v0.1.3
 - [ ] Lesser League stats

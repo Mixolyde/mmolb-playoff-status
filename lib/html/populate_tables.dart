@@ -5,14 +5,13 @@ import 'package:mmolb_playoff_status/site_objects.dart';
 
 void populateGamesBehindTable(List<TeamStandings> allStandings, SiteData sitedata, bool groupBySubLeague){
   var table = document.querySelector('#standingsTable')! as HTMLTableElement;
+  allStandings.sort();
   var standings = allStandings.toList();
 
-  standings.sort();
-
   if(groupBySubLeague == true){
-    var firstDiv = standings[0].subleague;
-    standings = standings.where((t) => t.subleague == firstDiv).toList();
-    standings.addAll(standings.where((t) => 
+    var firstDiv = allStandings[0].subleague;
+    standings = allStandings.where((t) => t.subleague == firstDiv).toList();
+    standings.addAll(allStandings.where((t) => 
       t.subleague != firstDiv).toList());
   }
   
@@ -64,9 +63,9 @@ void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata, b
 
   var standings = allStandings.toList();
   if(groupBySubLeague == true){
-    var firstDiv = standings[0].subleague;
-    standings = standings.where((t) => t.subleague == firstDiv).toList();
-    standings.addAll(standings.where((t) => 
+    var firstDiv = allStandings[0].subleague;
+    standings = allStandings.where((t) => t.subleague == firstDiv).toList();
+    standings.addAll(allStandings.where((t) => 
       t.subleague != firstDiv).toList());
   }
 
@@ -113,9 +112,9 @@ void populatePostseasonTable(List<TeamStandings> allStandings,
 
   var standings = allStandings.toList();
   if(groupBySubLeague == true){
-    var firstDiv = standings[0].subleague;
-    standings = standings.where((t) => t.subleague == firstDiv).toList();
-    standings.addAll(standings.where((t) => 
+    var firstDiv = allStandings[0].subleague;
+    standings = allStandings.where((t) => t.subleague == firstDiv).toList();
+    standings.addAll(allStandings.where((t) => 
       t.subleague != firstDiv).toList());
   }
   
@@ -146,13 +145,13 @@ void populatePostseasonTable(List<TeamStandings> allStandings,
 void populateWinningTable(List<TeamStandings> allStandings, SiteData sitedata, bool groupBySubLeague){
   var table = document.querySelector('#standingsTable') as  HTMLTableElement;
 
+  allStandings.sort();
   var standings = allStandings.toList();
-  standings.sort();
 
   if(groupBySubLeague == true){
-    var firstDiv = standings[0].subleague;
-    standings = standings.where((t) => t.subleague == firstDiv).toList();
-    standings.addAll(standings.where((t) => 
+    var firstDiv = allStandings[0].subleague;
+    standings = allStandings.where((t) => t.subleague == firstDiv).toList();
+    standings.addAll(allStandings.where((t) => 
       t.subleague != firstDiv).toList());
   }
   
@@ -185,13 +184,13 @@ void populateWinningTable(List<TeamStandings> allStandings, SiteData sitedata, b
 void populateEliminationTable(List<TeamStandings> allStandings, SiteData sitedata, bool groupBySubLeague){
   var table = document.querySelector('#standingsTable') as  HTMLTableElement;
 
+  allStandings.sort();
   var standings = allStandings.toList();
-  standings.sort();
 
   if(groupBySubLeague == true){
-    var firstDiv = standings[0].subleague;
-    standings = standings.where((t) => t.subleague == firstDiv).toList();
-    standings.addAll(standings.where((t) => 
+    var firstDiv = allStandings[0].subleague;
+    standings = allStandings.where((t) => t.subleague == firstDiv).toList();
+    standings.addAll(allStandings.where((t) => 
       t.subleague != firstDiv).toList());
   }
   

@@ -3368,9 +3368,9 @@ this.b=b
 this.c=c},
 mY(a,b,c){var s,r,q,p,o,n,m,l,k=A.i(A.b(v.G.document).querySelector("#standingsTable"))
 k.toString
+B.b.b3(a)
 s=A.y(a)
 r=A.l(a.slice(0),s)
-B.b.b3(r)
 if(c){if(0>=a.length)return A.d(a,0)
 q=a[0].e
 p=s.h("p(1)")
@@ -3429,9 +3429,9 @@ else if(i==="^")A.b(j.classList).add("greencell")}}if(c)A.bd(h,10,8)
 else A.bd(h,8,8)},
 n_(a,b,c){var s,r,q,p,o,n,m,l,k,j,i=A.i(A.b(v.G.document).querySelector("#standingsTable"))
 if(i==null)i=A.b(i)
+B.b.b3(a)
 s=A.y(a)
 r=A.l(a.slice(0),s)
-B.b.b3(r)
 if(c){if(0>=a.length)return A.d(a,0)
 q=a[0].e
 p=s.h("p(1)")
@@ -3452,9 +3452,9 @@ break}}}if(c)A.bd(i,10,11)
 else A.bd(i,8,11)},
 mX(a,b,c){var s,r,q,p,o,n,m,l,k,j,i=A.i(A.b(v.G.document).querySelector("#standingsTable"))
 if(i==null)i=A.b(i)
+B.b.b3(a)
 s=A.y(a)
 r=A.l(a.slice(0),s)
-B.b.b3(r)
 if(c){if(0>=a.length)return A.d(a,0)
 q=a[0].e
 p=s.h("p(1)")

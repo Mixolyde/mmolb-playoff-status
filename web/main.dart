@@ -181,21 +181,6 @@ void addListeners(){
   
 }
 
-void handlePopState(PopStateEvent event){
-  //print("PopStateEvent: ${event.toString()} ${event.type.toString()} ${event.timeStamp.toString()} ");
-  if(event.state != null){
-    print('State: ${event.state}');
-    //pushState(currentView.toJson().toJSBox
-    var jsonState = Map.from( (event.state as js.JSBoxedDartObject).toDart as Map<String, dynamic>
-      ).map((k, v) => MapEntry<String, dynamic>(k.toString(), v));
-    currentView = CurrentView.fromJson(jsonState);
-
-    selectGroupBySubLeague();
-    selectViewButton();
-    redisplayData();
-  }
-}
-
 void selectLeague1(MouseEvent event) => clickLeague(0);
 void selectLeague2(MouseEvent event) => clickLeague(1);
 
@@ -427,16 +412,30 @@ void redisplayData(){
   
 }
 
+void handlePopState(PopStateEvent event){
+  print("PopStateEvent: ${event.toString()} ${event.type.toString()} ${event.state.toString()} ${event.state.runtimeType} ");
+  if(event.state != null){
+    print('State: ${event.state} ${event.state?.runtimeType}');
+    //pushState(currentView.toJson().toJSBox
+    currentView = CurrentView.fromHash(event.state.toString());
+
+    selectGroupBySubLeague();
+    selectViewButton();
+    redisplayData();
+  }
+}
+
 void pushViewState(){
   //update URL with popstate
-  window.history.pushState(currentView.toJson().toJSBox, '', 
+   print('Pushing View State: ${currentView.toHash().toJS} ${currentView.toHash().toJS.runtimeType} ${currentView.toJson()}');
+  window.history.pushState(currentView.toHash().toJS, '', 
     currentView.toHash());
 }
 
 void replaceViewState(){
   //update URL with popstate
-  window.history.replaceState(currentView.toJson().toJSBox, '', 
-    currentView.toHash());
+  print('Replacing View State: ${currentView.toJson().toJSBox } ${currentView.toJson()}');
+  window.history.replaceState(currentView.toHash().toJS, '', currentView.toHash());
 }
   
 void setMainContent(String html){

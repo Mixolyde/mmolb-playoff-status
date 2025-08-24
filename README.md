@@ -7,9 +7,7 @@ An attempt to replicate [Playoff Status](http://playoffstatus.com)
 Published at https://mmolbplayofstat.us
 
 ## TODO
-* Fix back button state restore bug
 * Fix dev/prod environment switching in web app
-* Bring back Group by League on all pages
 * Better wild card playoff spot handling
 * Add Dark Mode support
 * Lesser League stat pages
@@ -58,7 +56,7 @@ Published at https://mmolbplayofstat.us
 
 
 * v0.1.2
-- [ ] Add Group By League button for all pages
+- [x] Add Group By League button for all pages
 - [ ] Handle wild card positioning better
 - [ ] Add unit tests back in
 - [ ] Create a github action for testing code

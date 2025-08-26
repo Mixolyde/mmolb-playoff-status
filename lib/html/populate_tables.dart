@@ -53,9 +53,11 @@ void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata, b
   var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
   allStandings.sort((a, b) {
-    for(var i = 0; i < a.po.length; i++){
+    for(var i = 0; i < a.po.length - 1 ; i++){
       if(b.po[i] != a.po[i]){
         return getOrderValue(b.po[i]).compareTo(getOrderValue(a.po[i]));
+      } else if (b.po[b.po.length - 1] != a.po[a.po.length - 1]){
+        return getOrderValue(a.po[a.po.length - 1]).compareTo(getOrderValue(b.po[b.po.length - 1]));
       }
     }
     return a.compareTo(b);
@@ -102,9 +104,11 @@ void populatePostseasonTable(List<TeamStandings> allStandings,
   var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
   allStandings.sort((a, b) {
-    for(var i = 0; i < a.post.length; i++){
+    for(var i = 0; i < a.post.length - 1; i++){
       if(b.post[i] != a.post[i]){
         return getOrderValue(b.post[i]).compareTo(getOrderValue(a.post[i]));
+      } else if (b.post[b.post.length - 1] != a.post[a.post.length - 1]){
+        return getOrderValue(a.post[a.post.length - 1]).compareTo(getOrderValue(b.post[b.post.length - 1]));
       }
     }
     return a.compareTo(b);

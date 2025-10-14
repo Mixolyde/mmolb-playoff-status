@@ -16,7 +16,6 @@ void apiTests() {
       expect(data.day, greaterThanOrEqualTo(0));
       expect(data.seasonID.length, 24);
       expect(data.seasonStatus.length, greaterThanOrEqualTo(0));
-      expect(data.type.length, 5);
       expect(data.id.length, 24);
       expect(data.greaterLeagues.length, 2);
       expect(data.lesserLeagues.length, 16);

@@ -3968,17 +3968,17 @@ return A.ba($async$fA,r)},
 n7(a){var s=A.lf("yyyy-MM-ddTHH:mm:ssZ").eL(a.a,!1,!0).fY(),r=A.i(A.b(v.G.document).querySelector("#lastUpdate"))
 r.toString
 r.innerText=A.lf("MMMM d, h:mm a").bl(s)},
-n6(a){var s,r,q=a.b,p=A.bF(a.c,null),o=p!=null
-if(o&&p<=a.x){o=A.i(A.b(v.G.document).querySelector(".wkinfo"))
-o.toString
-o.innerText="Season "+q+": Day "+A.l(p)}else{o=o&&p>a.x
+n6(a){var s,r,q=a.b,p=a.c,o=A.bF(p,null),n=o!=null
+if(n&&o<=a.x){p=A.i(A.b(v.G.document).querySelector(".wkinfo"))
+p.toString
+p.innerText="Season "+q+": Day "+A.l(o)}else{n=n&&o>a.x
 s=v.G
 r="Season "+q
-if(o){o=A.i(A.b(s.document).querySelector(".wkinfo"))
-o.toString
-o.innerText=r+": Day "+A.l(p)+" (Postseason)"}else{o=A.i(A.b(s.document).querySelector(".wkinfo"))
-o.toString
-o.innerText=r+": "+A.l(p)}}},
+if(n){p=A.i(A.b(s.document).querySelector(".wkinfo"))
+p.toString
+p.innerText=r+": Day "+A.l(o)+" (Postseason)"}else{n=A.i(A.b(s.document).querySelector(".wkinfo"))
+n.toString
+n.innerText=r+": "+p}}},
 re(a){return A.dY(B.r)},
 rf(a){return A.dY(B.G)},
 rh(a){return A.dY(B.i)},

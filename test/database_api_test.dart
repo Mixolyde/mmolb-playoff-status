@@ -8,8 +8,6 @@ void main() {
 
 void apiTests() {
   group('regular season', () {
-    var teamCount = 20;
-    var divisionCount = 1;
     test('Current State Data', () async {
       var data = await getStateData();
       print(data);
@@ -65,30 +63,6 @@ void apiTests() {
       //print('Team: $current');
     });
 
-    /* TODO Fix old api tests for api2
-    test('Current Standings', () async {
-      var current = await getStandings();
-      expect(current, isNotNull);
-      expect(current.standings.keys.length, greaterThanOrEqualTo(teamCount));
-    });    
-    test('Get Division', () async {
-      var league = await getLeague();
-      var subleague = await getSubleague(league.subleagueId1);
-      var current = await getDivision(subleague.divisionId1);
-      expect(current, isNotNull);
-      expect(current.teams, isNotNull);
-      expect(current.teams.length, greaterThanOrEqualTo(divisionCount));
-      print('Division: $current');
-    });
-    test('Get Tiebreakers', () async {
-      var league = await getLeague();
-      var current = await getTiebreakers(league.tiebreakersId);
-      expect(current, isNotNull);
-      expect(current.order, isNotNull);
-      expect(current.order.length, greaterThanOrEqualTo(teamCount));
-      print('$current');
-    });  
-    */
   });
   /* TODO postseasons
   group('postseason', () {

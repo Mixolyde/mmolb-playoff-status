@@ -165,7 +165,7 @@ void setSeasonDay(SiteData sitedata){
       'Season $season: Day $day (Postseason)';    
   } else {
     (document.querySelector('.wkinfo')! as HTMLElement).innerText = 
-      'Season $season: $day';
+      'Season $season: ${sitedata.day}';
   }
 }
 

@@ -34,6 +34,36 @@ void apiTests() {
       expect(data.seasonStatus.length, greaterThanOrEqualTo(0));
       expect(data.inPostSeason, isNotNull);
     });
+    test('Get Subleague', () async {
+      var data = await getStateData();
+      var greaterLeague1Id = data.greaterLeagues[0];
+      var current = await getSubleague(greaterLeague1Id);
+      expect(current, isNotNull);
+      expect(current.name, isNotNull);
+      expect(current.leagueType, isNotNull);
+      expect(current.teams.length, 8);
+      print('Subleague: $current');
+    });
+    test('Get Team', () async {
+      var data = await getStateData();
+      var greaterLeague1Id = data.greaterLeagues[0];
+      var greaterLeague1 = await getSubleague(greaterLeague1Id);
+      var current = await getTeam(greaterLeague1.teams[0]);
+      expect(current, isNotNull);
+      expect(current.fullName, isNotNull);
+      expect(current.shorthand, isNotNull);
+      expect(current.location, isNotNull);
+      print('Team: $current');
+    });
+    test('Get AllRegularSeasonGamesByTeamId', () async {
+      var data = await getStateData();
+      var greaterLeague1Id = data.greaterLeagues[0];
+      var greaterLeague1 = await getSubleague(greaterLeague1Id);
+      var current = await getAllRegularSeasonGamesByTeamId(greaterLeague1.teams[0]);
+      expect(current, isNotNull);
+      expect(current.length, 120);
+      //print('Team: $current');
+    });
 
     /* TODO Fix old api tests for api2
     test('Current Standings', () async {
@@ -41,14 +71,6 @@ void apiTests() {
       expect(current, isNotNull);
       expect(current.standings.keys.length, greaterThanOrEqualTo(teamCount));
     });    
-    test('Get Subleague', () async {
-      var league = await getLeague();
-      var current = await getSubleague(league.subleagueId1);
-      expect(current, isNotNull);
-      expect(current.divisionId1, isNotNull);
-      expect(current.divisionId2, isNotNull);
-      print('Subleague: $current');
-    });
     test('Get Division', () async {
       var league = await getLeague();
       var subleague = await getSubleague(league.subleagueId1);

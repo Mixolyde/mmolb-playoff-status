@@ -5,16 +5,16 @@ import 'package:mmolb_playoff_status/stats/sim_season.dart';
 /// Test script used for manually executing methods and testing functionality.
 Future<void> main() async { 
   // Example: Fetching state data
-  var stateData = await getStateData();
-  print('State Data: $stateData');
+  //var stateData = await getStateData();
+  //print('State Data: $stateData');
 
   // Example: Fetching time data
-  var timeData = await getTimeData();
-  print('Time Data: $timeData');
+  //var timeData = await getTimeData();
+  //print('Time Data: $timeData');
 
   //site data
-  var siteData = await calcSiteData(stateData, timeData);
-  print(siteData);
+  //var siteData = await calcSiteData(stateData, timeData);
+  //print(siteData);
 
   // Example: Fetching subleague data
   //var subleague = await getSubleague('6805db0cac48194de3cd3fe4');
@@ -32,8 +32,15 @@ Future<void> main() async {
   //}
 
   //get subleague standings and calculate stats
-  var subStandings = await calcStats(stateData, timeData);
-  calculateChances(subStandings, 101, timeData);
+  //var subStandings = await calcStats(stateData, timeData);
+  //calculateChances(subStandings, 101, timeData);
 
+  //get lesser league data
+  //print(stateData.lesserLeagues);
+  var lesserLeague1 = await getSubleague('6805db0cac48194de3cd3fe7');
+  print('LesserLeague1 Data: $lesserLeague1');
+  print('LesserLeague1 Teams: ${lesserLeague1.teams}');
 
+  var lesserLeague1Team1 = await getTeam(lesserLeague1.teams[0]);
+  print('LesserLeague1Team1 Data: $lesserLeague1Team1');
 }

@@ -26,7 +26,6 @@
 */
 
 class StateData {
-  final int day;
   final List<String> greaterLeagues;
   final List<String> lesserLeagues;
   final List<String> eventGameIDs;
@@ -35,7 +34,6 @@ class StateData {
   final String id;
   
   StateData({
-    required this.day,
     required this.greaterLeagues,
     required this.lesserLeagues,
     required this.eventGameIDs,
@@ -46,7 +44,6 @@ class StateData {
 
   factory StateData.fromJson(Map<String, dynamic> json) {
     return StateData(
-      day: json['Day'] as int,
       greaterLeagues: List<String>.from(json['GreaterLeagues'] ?? []),
       lesserLeagues: List<String>.from(json['LesserLeagues'] ?? []),
       eventGameIDs: List<String>.from(json['EventGameIDs'] ?? []),
@@ -57,6 +54,6 @@ class StateData {
   }
 
   @override
-  String toString() => 'StateData(day: $day, greaterLeagues: $greaterLeagues, seasonID: $seasonID, seasonStatus: $seasonStatus, id: $id)';
+  String toString() => 'StateData(greaterLeagues: $greaterLeagues, seasonID: $seasonID, seasonStatus: $seasonStatus, id: $id)';
   
 }

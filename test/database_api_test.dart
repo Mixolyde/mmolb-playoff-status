@@ -11,7 +11,6 @@ void apiTests() {
     test('Current State Data', () async {
       var data = await getStateData();
       print(data);
-      expect(data.day, greaterThanOrEqualTo(0));
       expect(data.seasonID.length, 24);
       expect(data.seasonStatus.length, greaterThanOrEqualTo(0));
       expect(data.id.length, 24);
@@ -25,7 +24,7 @@ void apiTests() {
 
       var data = await getTimeData();
       print(data);
-      expect(data.seasonDay, greaterThanOrEqualTo(0));
+      expect(data.seasonDay, isNotNull);
       expect(data.seasonNumber, greaterThanOrEqualTo(0));
 
       expect(data.phaseTimes.length, greaterThanOrEqualTo(0));

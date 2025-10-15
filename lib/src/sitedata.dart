@@ -1,7 +1,7 @@
 class SiteData {
   final String lastUpdate;
   final int season;
-  final int day;
+  final String day;
   final String sub1id;
   final String sub1name;
   final String sub2id;
@@ -15,7 +15,7 @@ class SiteData {
     [sub1name, sub2name];
   
   SiteData.fromMap({this.lastUpdate = '', 
-    this.season = 0, this.day = 0,
+    this.season = 0, this.day = "0",
     this.sub1id = '', this.sub1name = '',
     this.sub2id = '', this.sub2name = '',
     this.attributes = const [],
@@ -32,7 +32,7 @@ class SiteData {
     return SiteData.fromMap(
       lastUpdate: json['lastUpdate'] as String,
       season: json['season'] as int,
-      day: json['day'] as int,
+      day: json['day'] as String,
       sub1id: json['sub1id'] as String,
       sub1name: json['sub1name'] as String,
       sub2id: json['sub2id'] as String,

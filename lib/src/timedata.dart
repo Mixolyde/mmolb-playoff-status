@@ -23,7 +23,7 @@
 
 class TimeData {
   final Map<String, String> phaseTimes;
-  final int seasonDay;
+  final String seasonDay;
   final int seasonNumber;
   final String seasonStatus;
 
@@ -37,7 +37,7 @@ class TimeData {
   factory TimeData.fromJson(Map<String, dynamic> json) {
     return TimeData(
       phaseTimes: Map<String, String>.from(json['phase_times']),
-      seasonDay: json['season_day'] as int,
+      seasonDay: json['season_day'] as String,
       seasonNumber: json['season_number'] as int,
       seasonStatus: json['season_status'] as String,
     );
@@ -46,7 +46,7 @@ class TimeData {
   @override
   String toString() => 'Phase Times: $phaseTimes, Season Day: $seasonDay, Season Number: $seasonNumber, Season Status: $seasonStatus';
   
-  bool get inPostSeason => seasonDay >= daysInRegularSeason();
+  bool get inPostSeason => (int.tryParse(seasonDay) ?? 0 ) >= daysInRegularSeason();
   
   static int daysInRegularSeason() {
     return 239;

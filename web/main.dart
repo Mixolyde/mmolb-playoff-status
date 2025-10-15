@@ -156,13 +156,16 @@ void setUpdateTime(SiteData sitedata){
 
 void setSeasonDay(SiteData sitedata){
   var season = sitedata.season;
-  var day = sitedata.day;
-  if(day <= sitedata.daysInSeason){
+  var day = int.tryParse(sitedata.day);
+  if(day != null && day <= sitedata.daysInSeason){
     (document.querySelector('.wkinfo')! as HTMLElement).innerText = 
       'Season $season: Day $day';
-  } else {
+  } else if (day != null && day > sitedata.daysInSeason){
     (document.querySelector('.wkinfo')! as HTMLElement).innerText = 
       'Season $season: Day $day (Postseason)';    
+  } else {
+    (document.querySelector('.wkinfo')! as HTMLElement).innerText = 
+      'Season $season: $day';
   }
 }
 

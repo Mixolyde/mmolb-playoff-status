@@ -37,10 +37,15 @@ Future<void> main() async {
 
   //get lesser league data
   //print(stateData.lesserLeagues);
-  var lesserLeague1 = await getSubleague('6805db0cac48194de3cd3fe7');
-  print('LesserLeague1 Data: $lesserLeague1');
-  print('LesserLeague1 Teams: ${lesserLeague1.teams}');
+  //var lesserLeague1 = await getSubleague('6805db0cac48194de3cd3fe7');
+  //print('LesserLeague1 Data: $lesserLeague1');
+  //print('LesserLeague1 Teams: ${lesserLeague1.teams}');
 
-  var lesserLeague1Team1 = await getTeam(lesserLeague1.teams[0]);
-  print('LesserLeague1Team1 Data: $lesserLeague1Team1');
+  //var lesserLeague1Team1 = await getTeam(lesserLeague1.teams[0]);
+  //print('LesserLeague1Team1 Data: $lesserLeague1Team1');
+
+  //var teamsByLesserLeagues = await getTeamsByLesserLeagues(stateData);
+  //print('Teams by LesserLeagues: $teamsByLesserLeagues');
+  var lesserStandings = await calcLesserLeagueStats(stateData, timeData);
+  print(lesserStandings);
 }

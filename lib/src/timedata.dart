@@ -35,9 +35,15 @@ class TimeData {
   });
 
   factory TimeData.fromJson(Map<String, dynamic> json) {
+    String seasonDayStr;
+    if (json['season_day'] is int) {
+      seasonDayStr = (json['season_day'] as int).toString();
+    } else {
+      seasonDayStr = json['season_day'] as String;
+    }
     return TimeData(
       phaseTimes: Map<String, String>.from(json['phase_times']),
-      seasonDay: json['season_day'] as String,
+      seasonDay: seasonDayStr,
       seasonNumber: json['season_number'] as int,
       seasonStatus: json['season_status'] as String,
     );

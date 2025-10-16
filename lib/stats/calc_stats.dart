@@ -32,10 +32,10 @@ String getUpdateTime(){
   return now.toIso8601String();
 }
 
-Future<List<List<TeamStandings>>> calcStats(StateData stateData, TimeData timeData) async {
+Future<List<List<TeamStandings>>> calcGreaterLeagueStats(StateData stateData, TimeData timeData) async {
   print('Beginning stat calculations for current season: ${timeData.seasonNumber}');
  
-  _allTeams = await getTeamsBySubleague(stateData);
+  _allTeams = await getGreaterLeagueTeamsBySubleague(stateData);
 
   var wcLeaderDiff = getWildCardDiff([_allTeams[_sub1.id]!, _allTeams[_sub2.id]!]);
 
@@ -48,20 +48,20 @@ Future<List<List<TeamStandings>>> calcStats(StateData stateData, TimeData timeDa
     
 }
 
-Future<List<List<TeamStandings>>> calcLesserLeagueStats(StateData stateData, TimeData timeData) async {
+Future<Map<String, List<TeamStandings>>> calcLesserLeagueStats(StateData stateData, TimeData timeData) async {
   print('Beginning Lesser League stat calculations for current season: ${timeData.seasonNumber}');
  
   _allTeams = await getTeamsByLesserLeagues(stateData);
 
   var wcLeaderDiff = 0;
-  List<List<TeamStandings>> lesserStandings = [];
+  Map<String, List<TeamStandings>> lesserStandings = {};
 
   for (var subleagueId in stateData.lesserLeagues) {
     var subleague = await getLeague(subleagueId);
     print("Calculating Lesser League: ${subleague.name} (${subleague.id})");
     var subStandings = 
       await calculateSubLeague(subleague, _allTeams[subleague.id]!, timeData, wcLeaderDiff);
-    lesserStandings.add(subStandings);
+    lesserStandings[subleagueId] = subStandings;
   }
   
   return lesserStandings;
@@ -257,7 +257,7 @@ int getWildCardDiff(List<List<Team>> teams) {
 }
 
 
-Future<Map<String,List<Team>>> getTeamsBySubleague(StateData stateData) async {
+Future<Map<String,List<Team>>> getGreaterLeagueTeamsBySubleague(StateData stateData) async {
   print("Greater League subleague ids: ${stateData.greaterLeagues}");
   Map<String,List<Team>> teamMap = {};
 

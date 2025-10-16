@@ -41,13 +41,16 @@ Future<void> main(List<String> args) async {
   print(siteData);
 
   //get greater league standings and calculate stats
-  var greaterLeagueStandings = await calcStats(stateData, timeData);
+  var greaterLeagueStandings = await calcGreaterLeagueStats(stateData, timeData);
   
   //print out data
   print(greaterLeagueStandings[0]);
   print(greaterLeagueStandings[1]);
 
   await calculateChances(greaterLeagueStandings, numSims, timeData);
+
+  //get lesser league standings and calculate stats
+  var lesserLeagueStandings = await calcLesserLeagueStats(stateData, timeData);
 
   var temp = Directory.systemTemp;
   print(temp);
@@ -71,6 +74,12 @@ Future<void> main(List<String> args) async {
   sinkJSON.write(json.encode(greaterLeagueStandings[1]));
   await sinkJSON.close();
 
+  for(var lesserLeagueId in lesserLeagueStandings.keys){
+    filenameJSON = '${temp.path}/data/$lesserLeagueId.json';
+    sinkJSON = File(filenameJSON).openWrite();
+    sinkJSON.write(json.encode(lesserLeagueStandings[lesserLeagueId]));
+    await sinkJSON.close();
+  }
 
   var aws = File('/usr/bin/aws');
   var exists = await aws.exists();

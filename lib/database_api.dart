@@ -21,9 +21,10 @@ String mmolbApiUrl = 'https://mmolb.com/api/';
 
 final String _stateUrl = '${mmolbApiUrl}state';
 final String _timeUrl = '${mmolbApiUrl}time';
-final String _subleagueUrl = '${mmolbApiUrl}league/';
+final String _leagueUrl = '${mmolbApiUrl}league/';
 final String _teamScheduleUrl = '${mmolbApiUrl}team-schedule/';
 final String _teamUrl = '${mmolbApiUrl}team/';
+final String _teamsUrl = '${mmolbApiUrl}teams?ids=';
 
 Future<StateData> getStateData() async {
   //print("state url: $_stateUrl");
@@ -40,8 +41,8 @@ Future<TimeData> getTimeData() async {
 }
 
 // get subleague/division data: https://mmolb.com/api/league/6805db0cac48194de3cd3fe4
-Future<Subleague> getSubleague(String id) async {
-  var response = await get(Uri.parse(_subleagueUrl + id));
+Future<Subleague> getLeague(String id) async {
+  var response = await get(Uri.parse(_leagueUrl + id));
   print('Subleague Response body: ${response.body}');
   if (response.statusCode == 200) {
     return Subleague.fromJson(json.decode(response.body));
@@ -59,6 +60,21 @@ Future<Team> getTeam(String id) async {
   } else {
     throw Exception('Failed to load team');
   }
+}
+
+// get teams data: https://mmolb.com/api/teams?ids=6805db0cac48194de3cd4127,6806039fb57069886d0deffa
+Future<List<Team>> getTeams(List<String> teamIds) async {
+  var url = _teamsUrl + teamIds.join(',');
+  print('Teams URL: $url');
+  var response = await get(Uri.parse(_teamsUrl + teamIds.join(',')));
+  List<Team> teams = [];
+  if (response.statusCode == 200) {
+    List<dynamic> entities = json.decode(response.body)['teams'];
+    teams = entities.map((json) => Team.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load team: ${response.body}');
+  }
+  return teams;
 }
 
 //https://mmolb.com/api/team-schedule/6805db0cac48194de3cd407c

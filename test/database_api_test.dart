@@ -34,7 +34,7 @@ void apiTests() {
     test('Get Subleague', () async {
       var data = await getStateData();
       var greaterLeague1Id = data.greaterLeagues[0];
-      var current = await getSubleague(greaterLeague1Id);
+      var current = await getLeague(greaterLeague1Id);
       expect(current, isNotNull);
       expect(current.name, isNotNull);
       expect(current.leagueType, isNotNull);
@@ -44,7 +44,7 @@ void apiTests() {
     test('Get Team', () async {
       var data = await getStateData();
       var greaterLeague1Id = data.greaterLeagues[0];
-      var greaterLeague1 = await getSubleague(greaterLeague1Id);
+      var greaterLeague1 = await getLeague(greaterLeague1Id);
       var current = await getTeam(greaterLeague1.teams[0]);
       expect(current, isNotNull);
       expect(current.fullName, isNotNull);
@@ -55,7 +55,7 @@ void apiTests() {
     test('Get AllRegularSeasonGamesByTeamId', () async {
       var data = await getStateData();
       var greaterLeague1Id = data.greaterLeagues[0];
-      var greaterLeague1 = await getSubleague(greaterLeague1Id);
+      var greaterLeague1 = await getLeague(greaterLeague1Id);
       var current = await getAllRegularSeasonGamesByTeamId(greaterLeague1.teams[0]);
       expect(current, isNotNull);
       expect(current.length, 120);

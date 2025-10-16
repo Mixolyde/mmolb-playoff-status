@@ -40,14 +40,14 @@ Future<void> main(List<String> args) async {
   var siteData = await calcSiteData(stateData, timeData);
   print(siteData);
 
-  //get subleague standings and calculate stats
-  var subStandings = await calcStats(stateData, timeData);
+  //get greater league standings and calculate stats
+  var greaterLeagueStandings = await calcStats(stateData, timeData);
   
   //print out data
-  print(subStandings[0]);
-  print(subStandings[1]);
+  print(greaterLeagueStandings[0]);
+  print(greaterLeagueStandings[1]);
 
-  await calculateChances(subStandings, numSims, timeData);
+  await calculateChances(greaterLeagueStandings, numSims, timeData);
 
   var temp = Directory.systemTemp;
   print(temp);
@@ -63,12 +63,12 @@ Future<void> main(List<String> args) async {
   
   filenameJSON = '${temp.path}/data/${siteData.sub1id}.json';
   sinkJSON = File(filenameJSON).openWrite();
-  sinkJSON.write(json.encode(subStandings[0]));
+  sinkJSON.write(json.encode(greaterLeagueStandings[0]));
   await sinkJSON.close();
   
   filenameJSON = '${temp.path}/data/${siteData.sub2id}.json';
   sinkJSON = File(filenameJSON).openWrite();
-  sinkJSON.write(json.encode(subStandings[1]));
+  sinkJSON.write(json.encode(greaterLeagueStandings[1]));
   await sinkJSON.close();
 
 

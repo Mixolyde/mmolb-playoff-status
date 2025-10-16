@@ -9,8 +9,8 @@ late Subleague _sub2;
 Future<SiteData> calcSiteData(StateData stateData, TimeData timeData) async {
   print("Calculating site data for season ${timeData.seasonNumber} day ${timeData.seasonDay}");
   // get subleague data
-  _sub1 = await getSubleague(stateData.greaterLeagues[0]);
-  _sub2 = await getSubleague(stateData.greaterLeagues[1]);
+  _sub1 = await getLeague(stateData.greaterLeagues[0]);
+  _sub2 = await getLeague(stateData.greaterLeagues[1]);
   
   var lastUpdate = getUpdateTime();
   
@@ -57,7 +57,7 @@ Future<List<List<TeamStandings>>> calcLesserLeagueStats(StateData stateData, Tim
   List<List<TeamStandings>> lesserStandings = [];
 
   for (var subleagueId in stateData.lesserLeagues) {
-    var subleague = await getSubleague(subleagueId);
+    var subleague = await getLeague(subleagueId);
     print("Calculating Lesser League: ${subleague.name} (${subleague.id})");
     var subStandings = 
       await calculateSubLeague(subleague, _allTeams[subleague.id]!, timeData, wcLeaderDiff);
@@ -278,15 +278,21 @@ Future<Map<String,List<Team>>> getTeamsByLesserLeagues(StateData stateData) asyn
   print("Lesser League subleague ids: ${stateData.lesserLeagues}");
   Map<String,List<Team>> teamMap = {};
 
-  for (var subleagueId in stateData.lesserLeagues) {
-    var subleague = await getSubleague(subleagueId);
+  for (var lesserLeagueId in stateData.lesserLeagues) {
+    teamMap.putIfAbsent(lesserLeagueId, () => []);
+    var subleague = await getLeague(lesserLeagueId);
+    var lesserTeamIds = subleague.teams;
     print("Fetching Subleague: ${subleague.name} (${subleague.id})");
-    List<Team> teams = [];
-    for (var teamId in subleague.teams) {
-      var team = await getTeam(teamId);
-      teams.add(team);
+    while (lesserTeamIds.isNotEmpty) {
+      print("Warning: Too many teams fetched: ${lesserTeamIds.length}");
+      // trim the list to 100 teams (max API limit)
+      var allLesserTeamsToFetch = lesserTeamIds.take(100).toList();  
+      var teams = await getTeams(allLesserTeamsToFetch);
+      for (Team team in teams) {
+        teamMap[lesserLeagueId]!.add(team);
+      }
+      lesserTeamIds.removeRange(0, 100 > lesserTeamIds.length ? lesserTeamIds.length : 100);
     }
-    teamMap[subleague.id] = teams;
   }
 
   return teamMap;

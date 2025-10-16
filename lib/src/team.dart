@@ -44,7 +44,7 @@ class Team implements Comparable<Team>  {
     return Team(
       id: json['_id'] as String,
       fullName: json['Name'] as String,
-      shorthand: json['Abbreviation'] as String,
+      shorthand: json['Abbreviation'] as String? ?? '',
       emoji: json['Emoji'] as String,
       location: json['Location'] as String,
       wins: json['Record']['Regular Season']['Wins'] as int,

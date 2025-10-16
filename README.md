@@ -11,8 +11,6 @@ Published at https://mmolbplayoffstat.us
 * Better wild card playoff spot handling
 * Add Dark Mode support
 * Lesser League stat pages
-* Add unit tests
-* Create a github action for testing code
 * Setup multiple development environments for testing data/web changes
 * Figure out what's up with tied records getting weird sim results
 * Display Postseason bracket schedule

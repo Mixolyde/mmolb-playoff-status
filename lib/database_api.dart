@@ -66,7 +66,7 @@ Future<Team> getTeam(String id) async {
 Future<List<Team>> getTeams(List<String> teamIds) async {
   var url = _teamsUrl + teamIds.join(',');
   //print('Teams URL: $url');
-  var response = await get(Uri.parse(_teamsUrl + teamIds.join(',')));
+  var response = await get(Uri.parse(url));
   List<Team> teams = [];
   if (response.statusCode == 200) {
     List<dynamic> entities = json.decode(response.body)['teams'];

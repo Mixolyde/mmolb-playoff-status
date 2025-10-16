@@ -294,7 +294,7 @@ Future<Map<String,List<Team>>> getTeamsByLesserLeagues(StateData stateData) asyn
     var lesserTeamIds = subleague.teams;
     print("Fetching Subleague: ${subleague.name} (${subleague.id})");
     while (lesserTeamIds.isNotEmpty) {
-      print("Warning: Too many teams fetched: ${lesserTeamIds.length}");
+      print("Teams left to fetch: ${lesserTeamIds.length}");
       // trim the list to 100 teams (max API limit)
       var allLesserTeamsToFetch = lesserTeamIds.take(100).toList();  
       var teams = await getTeams(allLesserTeamsToFetch);

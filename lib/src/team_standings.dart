@@ -79,7 +79,7 @@ class TeamStandings implements Comparable<TeamStandings> {
   };
   
   @override
-  String toString() => 'Standings: $fullName:$nickname - $subleague ($wins - $losses) RunDiff: $runDifferential';
+  String toString() => 'TeamStandings: $fullName:$nickname - $subleague ($wins - $losses) RunDiff: $runDifferential';
 
   @override
   int compareTo(TeamStandings other) {

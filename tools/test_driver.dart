@@ -48,5 +48,8 @@ Future<void> main() async {
   print('Teams by LesserLeagues: $teamsByLesserLeagues');
 
   var lesserStandings = await calcLesserLeagueStats(stateData, timeData);
-  print(lesserStandings);
+  for (var entry in lesserStandings.values) {
+    print(entry.where((team) => team.wins + team.losses > 0).toList());
+  }
+  
 }

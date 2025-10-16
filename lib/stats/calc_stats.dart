@@ -116,7 +116,9 @@ void calculateGamesBehind(List<TeamStandings> teamStandings, int wcLeaderDiff) {
       (teamStandings[i].gamesPlayed - teamStandings[i].wins);
     num gbSubLeader = ( subLeaderDiff - teamDiff ) / 2;
     num gbWildCard = ( wcLeaderDiff - teamDiff ) / 2;
-    teamStandings[i].gbDiv = formatGamesBehind(gbSubLeader);
+    if (gbSubLeader > 0) {
+      teamStandings[i].gbDiv = formatGamesBehind(gbSubLeader);
+    }
     if (gbWildCard > 0 && i > 1) {
       teamStandings[i].gbWc = formatGamesBehind(gbWildCard);
     }

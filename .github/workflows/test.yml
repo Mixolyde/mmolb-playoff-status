@@ -24,9 +24,6 @@ jobs:
       # - uses: dart-lang/setup-dart@v1
       - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
 
-      - name: Install peanut
-        run: dart pub global activate peanut
-
       - name: Install dependencies
         run: dart pub get
 
@@ -34,26 +31,12 @@ jobs:
       # - name: Verify formatting
       #   run: dart format --output=none --set-exit-if-changed .
 
-      # Consider passing '--fatal-infos' for slightly stricter analysis.
-      - name: Analyze project source
-        run: dart analyze --no-fatal-warnings
-
       # Your project will need to have tests in test/ and a dependency on
       # package:test for this step to succeed. Note that Flutter projects will
       # want to change this to 'flutter test'.
-      # - name: Run tests
-      #   run: dart test
+      - name: Run tests
+        run: dart test
 
-      - name: Configure git for peanut
-        run: |
-          git config --global user.email "mixolyde@gmail.com"
-          git config --global user.name "Brian Grey"
-          git fetch --unshallow || true
-          git fetch origin "+refs/heads/*:refs/remotes/origin/*"
-          git fetch origin gh-pages:gh-pages
-      
-      - name: Run peanut
-        run: peanut
-
-      - name: Push gh-pages branch
-        run: git push origin gh-pages
+      # Consider passing '--fatal-infos' for slightly stricter analysis.
+      - name: Analyze project source
+        run: dart analyze

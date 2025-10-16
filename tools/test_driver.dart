@@ -1,6 +1,6 @@
 import 'package:mmolb_playoff_status/database_api.dart';
 import 'package:mmolb_playoff_status/stats/calc_stats.dart';
-import 'package:mmolb_playoff_status/stats/sim_season.dart';
+//import 'package:mmolb_playoff_status/stats/sim_season.dart';
 
 /// Test script used for manually executing methods and testing functionality.
 Future<void> main() async { 

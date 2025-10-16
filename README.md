@@ -4,7 +4,7 @@
 An attempt to replicate [Playoff Status](http://playoffstatus.com)
  behavior, but for [MMOLB](https://mmolb.com).
  
-Published at https://mmolbplayofstat.us
+Published at https://mmolbplayoffstat.us
 
 ## TODO
 * Fix dev/prod environment switching in web app

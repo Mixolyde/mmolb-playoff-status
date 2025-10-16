@@ -13,11 +13,20 @@ Future<SiteData> calcSiteData(StateData stateData, TimeData timeData) async {
   _sub2 = await getLeague(stateData.greaterLeagues[1]);
   
   var lastUpdate = getUpdateTime();
+
+  Map<String, String> lesserLeagueNames = {};
+  for (var lesserLeagueId in stateData.lesserLeagues) {
+    var lesserLeague = await getLeague(lesserLeagueId);
+    print("Lesser League: ${lesserLeague.name} (${lesserLeague.id})");
+    lesserLeagueNames[lesserLeagueId] = lesserLeague.name;
+
+  }
   
   var sitedata = SiteData(lastUpdate, 
     timeData.seasonNumber, timeData.seasonDay,
     _sub1.id, _sub1.name, 
     _sub2.id, _sub2.name,
+    lesserLeagueNames,
     [],
     TimeData.daysInRegularSeason(),
     TimeData.gamesInRegularSeason());
@@ -58,6 +67,7 @@ Future<Map<String, List<TeamStandings>>> calcLesserLeagueStats(StateData stateDa
 
   for (var subleagueId in stateData.lesserLeagues) {
     var subleague = await getLeague(subleagueId);
+
     print("Calculating Lesser League: ${subleague.name} (${subleague.id})");
     var subStandings = 
       await calculateSubLeague(subleague, _allTeams[subleague.id]!, timeData, wcLeaderDiff);

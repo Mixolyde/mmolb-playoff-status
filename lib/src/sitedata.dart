@@ -7,6 +7,7 @@ class SiteData {
   final String sub2id;
   final String sub2name;
   final List<String> attributes;
+  final Map<String, String> lesserLeagueIds;
   final int daysInSeason;
   final int gamesInSeason;
 
@@ -18,6 +19,7 @@ class SiteData {
     this.season = 0, this.day = "0",
     this.sub1id = '', this.sub1name = '',
     this.sub2id = '', this.sub2name = '',
+    this.lesserLeagueIds = const {},
     this.attributes = const [],
     this.daysInSeason = 99,
     this.gamesInSeason = 99});
@@ -26,6 +28,7 @@ class SiteData {
     this.season, this.day,
     this.sub1id, this.sub1name,
     this.sub2id, this.sub2name, 
+    this.lesserLeagueIds,
     this.attributes, this.daysInSeason, this.gamesInSeason);
   
   factory SiteData.fromJson(Map<String, dynamic> json){
@@ -37,6 +40,7 @@ class SiteData {
       sub1name: json['sub1name'] as String,
       sub2id: json['sub2id'] as String,
       sub2name: json['sub2name'] as String,
+      lesserLeagueIds: Map<String, String>.from(json['lesserLeagueIds'] ?? {}),
       attributes: [],      
       daysInSeason: json['daysInSeason'] as int,
       gamesInSeason: json['gamesInSeason'] ?? 99, // Default to 99 if not provided
@@ -51,13 +55,14 @@ class SiteData {
       'sub1name':      sub1name,
       'sub2id':        sub2id,
       'sub2name':      sub2name,
+      'lesserLeagueIds': lesserLeagueIds,
       'attributes':    attributes,
       'daysInSeason':  daysInSeason,
       'gamesInSeason': gamesInSeason,
   };
   
   @override
-  String toString() => '$lastUpdate Season:$season Day:$day $sub1name $sub2name $attributes';
+  String toString() => '$lastUpdate Season:$season Day:$day $sub1name $sub2name ${lesserLeagueIds.keys}';
   
   bool get leagueWildCards => attributes.contains('WILD_CARDS');
   

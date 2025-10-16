@@ -65,7 +65,7 @@ Future<Team> getTeam(String id) async {
 // get teams data: https://mmolb.com/api/teams?ids=6805db0cac48194de3cd4127,6806039fb57069886d0deffa
 Future<List<Team>> getTeams(List<String> teamIds) async {
   var url = _teamsUrl + teamIds.join(',');
-  print('Teams URL: $url');
+  //print('Teams URL: $url');
   var response = await get(Uri.parse(_teamsUrl + teamIds.join(',')));
   List<Team> teams = [];
   if (response.statusCode == 200) {

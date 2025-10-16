@@ -57,13 +57,16 @@ Published at https://mmolbplayoffstat.us
 
 * v0.1.2
 - [x] Add Group By League button for all pages
-- [ ] Handle wild card positioning better
-- [ ] Add unit tests back in
-- [ ] Create a github action for testing code
+- [x] Add unit tests back in
+- [x] Create a github action for testing code
 
 * v0.1.3
 - [ ] Lesser League stats
+- [ ] Remove broken magic number stat pages
 - [ ] Cleanup small TODO items
+
+* v0.1.4
+- [ ] Dark Mode toggle
 
 ## Contributing
 

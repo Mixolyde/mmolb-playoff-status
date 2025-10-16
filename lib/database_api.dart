@@ -43,7 +43,7 @@ Future<TimeData> getTimeData() async {
 // get subleague/division data: https://mmolb.com/api/league/6805db0cac48194de3cd3fe4
 Future<Subleague> getLeague(String id) async {
   var response = await get(Uri.parse(_leagueUrl + id));
-  print('Subleague Response body: ${response.body}');
+  //print('League Response body: ${response.body}');
   if (response.statusCode == 200) {
     return Subleague.fromJson(json.decode(response.body));
   } else {

@@ -207,6 +207,7 @@ void selectViewPost(MouseEvent event) => clickView(View.postseason);
 void selectViewW(MouseEvent event) => clickView(View.winningmagic);
 void selectViewBracket(MouseEvent event) => clickView(View.bracket);
 
+//TODO: disable group by button on about view
 void clickView(View view){
   if(view == currentView.activeView){
     return;

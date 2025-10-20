@@ -12,8 +12,8 @@ class TeamStandings implements Comparable<TeamStandings> {
   String gbDiv = '-';
   String gbWc = '-';
   final List<String> po = ['-', '-', '-', '-', '-', '-', '-'];
-  final List<String> winning = ['-', '-', '-', '-', '-'];
-  final List<String> elimination = ['-', '-', '-', '-', '-'];
+  final List<String> winning = ['-', '-', '-', '-', '-', '-', '-'];
+  final List<String> elimination = ['-', '-', '-', '-', '-', '-', '-'];
   final List<String> post = ['-', '-', '-', '-', '-'];  
   
   TeamStandings(this.id, 

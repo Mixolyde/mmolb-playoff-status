@@ -1,6 +1,6 @@
 import 'package:mmolb_playoff_status/database_api.dart';
 import 'package:mmolb_playoff_status/stats/calc_stats.dart';
-//import 'package:mmolb_playoff_status/stats/sim_season.dart';
+import 'package:mmolb_playoff_status/stats/sim_season.dart';
 
 /// Test script used for manually executing methods and testing functionality.
 Future<void> main() async { 
@@ -32,8 +32,11 @@ Future<void> main() async {
   //}
 
   //get subleague standings and calculate stats
-  //var subStandings = await calcStats(stateData, timeData);
-  //calculateChances(subStandings, 101, timeData);
+  var subStandings = await calcGreaterLeagueStats(stateData, timeData);
+  for (var entry in subStandings) {
+    print(entry.where((team) => team.wins + team.losses > 0).toList());
+  }
+  calculateChances(subStandings, 101, timeData);
 
   //get lesser league data
   //print(stateData.lesserLeagues);
@@ -44,12 +47,12 @@ Future<void> main() async {
   //var lesserLeague1Team1 = await getTeam(lesserLeague1.teams[0]);
   //print('LesserLeague1Team1 Data: $lesserLeague1Team1');
 
-  var teamsByLesserLeagues = await getTeamsByLesserLeagues(stateData);
-  print('Teams by LesserLeagues: $teamsByLesserLeagues');
+  //var teamsByLesserLeagues = await getTeamsByLesserLeagues(stateData);
+  //print('Teams by LesserLeagues: $teamsByLesserLeagues');
 
-  var lesserStandings = await calcLesserLeagueStats(stateData, timeData);
-  for (var entry in lesserStandings.values) {
-    print(entry.where((team) => team.wins + team.losses > 0).toList());
-  }
+  //var lesserStandings = await calcLesserLeagueStats(stateData, timeData);
+  //for (var entry in lesserStandings.values) {
+  //  print(entry.where((team) => team.wins + team.losses > 0).toList());
+  //}
   
 }

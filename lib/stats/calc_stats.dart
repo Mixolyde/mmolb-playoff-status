@@ -48,10 +48,9 @@ Future<List<List<TeamStandings>>> calcGreaterLeagueStats(StateData stateData, Ti
 
   var wcLeaderDiff = getWildCardDiff([_allTeams[_sub1.id]!, _allTeams[_sub2.id]!]);
 
-  var sub1Standings = 
-    await calculateSubLeague(_sub1, _allTeams[_sub1.id]!, timeData, wcLeaderDiff);
-  var sub2Standings = 
-    await calculateSubLeague(_sub2, _allTeams[_sub2.id]!, timeData, wcLeaderDiff);
+  var allStandings =  await calculateGreaterLeague(timeData, wcLeaderDiff);
+  var sub1Standings = allStandings.where((team) => team.subleague == _sub1.name).toList();
+  var sub2Standings = allStandings.where((team) => team.subleague == _sub2.name).toList();
   
   return [sub1Standings, sub2Standings];
     
@@ -70,7 +69,7 @@ Future<Map<String, List<TeamStandings>>> calcLesserLeagueStats(StateData stateDa
 
     print("Calculating Lesser League: ${subleague.name} (${subleague.id})");
     var subStandings = 
-      await calculateSubLeague(subleague, _allTeams[subleague.id]!, timeData, wcLeaderDiff);
+      await calculateLesserLeague(subleague, _allTeams[subleague.id]!, timeData, wcLeaderDiff);
     lesserStandings[subleagueId] = subStandings;
   }
   
@@ -78,11 +77,52 @@ Future<Map<String, List<TeamStandings>>> calcLesserLeagueStats(StateData stateDa
     
 }
 
-Future<List<TeamStandings>> calculateSubLeague(Subleague sub, List<Team> teams,
-    TimeData timeData, int wcLeaderDiff) async{
+
+
+Future<List<TeamStandings>> calculateGreaterLeague(TimeData timeData, int wcLeaderDiff) async{
+  print('Day ${timeData.seasonDay} ${_sub1.name} ${_sub2.name}');
+
+  var teams = <Team>[];
+  teams.addAll(_allTeams[_sub1.id]!);
+  teams.addAll(_allTeams[_sub2.id]!);
+  
+  var teamStandings = <TeamStandings>[];
+  for (var team in teams) {
+
+    var gamesPlayed = gamesInRegularSeason;
+    if (!timeData.inPostSeason){
+      gamesPlayed = team.wins + team.losses;
+    }
+    
+    var standing = 
+      TeamStandings(team.id, 
+      '${team.location} ${team.fullName}', team.shorthand, team.emoji,
+      _sub1.teams.contains(team.id) ? _sub1.name : _sub2.name,
+      team.wins, 
+      team.losses,
+      team.runDifferential,
+      gamesPlayed);
+    teamStandings.add(standing);
+  }
+  
+  print("League TeamStandings Length: ${teamStandings.length}");
+
+  //sort first then calculate
+  teamStandings.sort();
+
+
+  calculateGamesBehind(teamStandings, wcLeaderDiff);
+  calculateMagicNumbers(teamStandings);
+  
+  return teamStandings;
+
+}
+
+Future<List<TeamStandings>> calculateLesserLeague(Subleague sub, List<Team> teams, 
+  TimeData timeData, int wcLeaderDiff) async{
   print('Day ${timeData.seasonDay} ${sub.name} (${sub.id})');
 
-  print("SubLeague Teams Length: ${teams.length}");
+  print("Lesser League Teams Length: ${teams.length}");
   
   var teamStandings = <TeamStandings>[];
   for (var team in teams) {
@@ -103,7 +143,7 @@ Future<List<TeamStandings>> calculateSubLeague(Subleague sub, List<Team> teams,
     teamStandings.add(standing);
   }
   
-  print("SubLeague TeamStandings Length: ${teamStandings.length}");
+  print("Lesser League TeamStandings Length: ${teamStandings.length}");
 
   //sort first then calculate
   teamStandings.sort();
@@ -149,7 +189,7 @@ void calculateWinningMagicNumbers(List<TeamStandings> teamStandings) {
 
     print('${teamStandings[i]} maxWins: $maxWins');
 
-    for (var j = 0; j < i && j < 4; j++){
+    for (var j = 0; j < i && j < 6; j++){
       teamStandings[i].winning[j] = 'MW';
       if( maxWins < teamStandings[j].wins ||
         (maxWins == teamStandings[j].wins &&
@@ -158,22 +198,24 @@ void calculateWinningMagicNumbers(List<TeamStandings> teamStandings) {
       }
     }
     
-    for (var b = i + 1; b < 5; b++){
+    for (var b = i + 1; b < 7; b++){
       setWinningMagicNumber(teamStandings[i], 
           teamStandings[b], b - 1);
     }
         
     if(teamStandings[i].winning.any((s) => s == '^')){
-      teamStandings[i].winning[4] = 'X';
+      teamStandings[i].winning[6] = 'X';
     } else {
-      teamStandings[i].winning[4] = '0';
+      teamStandings[i].winning[6] = '0';
     }
     
     if(teamStandings[i].winning[0] == 'X' &&
       teamStandings[i].winning[1] == 'X' &&
       teamStandings[i].winning[2] == 'X' &&
-      teamStandings[i].winning[3] == 'X'){
-      teamStandings[i].winning[4] = 'E';
+      teamStandings[i].winning[3] == 'X' &&
+      teamStandings[i].winning[4] == 'X' &&
+      teamStandings[i].winning[5] == 'X'){
+      teamStandings[i].winning[6] = 'E';
     }
     
   }
@@ -209,7 +251,7 @@ void calculateLosingMagicNumbers(List<TeamStandings> teamStandings) {
   for (var i = 0; i < teamStandings.length; i++){
     var stand = teamStandings[i];
     var maxWins = (gamesInRegularSeason - stand.gamesPlayed) + stand.wins;
-    for(var k = 0; k < 5; k++){
+    for(var k = 0; k < 7; k++){
       switch(stand.winning[k]){
         case '^':
         case 'X':
@@ -219,7 +261,7 @@ void calculateLosingMagicNumbers(List<TeamStandings> teamStandings) {
         default:
           if(i <= k) {
             stand.elimination[k] = 'MW';
-          } else if (k == 4) {
+          } else if (k == 6) {
             stand.elimination[k] = 'MW';
           } else {
             //maxWinsi - Wk

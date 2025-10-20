@@ -49,6 +49,7 @@ void main() {
     }
 
     selectGroupBySubLeague();
+    selectLeagueType();
     selectViewButton();
     redisplayData();
     
@@ -181,6 +182,9 @@ void addListeners(){
   //document.querySelector('#viewPlayoffBracket')!.onClick.listen(selectViewBracket);
 
   document.querySelector('#doGroup')!.onClick.listen(clickGroupBySubLeague);
+
+  document.querySelector('#doGreater')!.onClick.listen(selectGreater);
+  document.querySelector('#doLesser')!.onClick.listen(selectLesser);
   
 }
 
@@ -347,7 +351,6 @@ void selectViewButton(){
 }
 
 void clickGroupBySubLeague(MouseEvent event) {
-
   if(currentView.groupBySubLeague){
     currentView.groupBySubLeague = false;
     selectGroupBySubLeague();
@@ -367,6 +370,39 @@ void selectGroupBySubLeague(){
     groupButton.classList.add('nav-button-active');
   } else {
     groupButton.classList.remove('nav-button-active');
+  }
+}
+
+void selectGreater(MouseEvent event) => clickLeagueType(LeagueType.greater);
+void selectLesser(MouseEvent event) => clickLeagueType(LeagueType.lesser);
+
+
+void clickLeagueType(LeagueType type) {
+  if(type == currentView.leagueType){
+    return;
+  }
+    
+  currentView.leagueType = type;
+  selectLeagueType();
+
+  
+  saveCurrentView();
+  pushViewState();
+  redisplayData();
+}
+
+void selectLeagueType(){
+  switch(currentView.leagueType){
+    case LeagueType.greater:
+      document.querySelector('#doGreater')!.classList
+        .add('nav-button-active');
+      document.querySelector('#doLesser')!.classList
+        .remove('nav-button-active'); 
+    case LeagueType.lesser:
+      document.querySelector('#doGreater')!.classList
+        .remove('nav-button-active');
+      document.querySelector('#doLesser')!.classList
+        .add('nav-button-active');
   }
 }
 
@@ -469,6 +505,7 @@ CurrentView loadCurrentView(){
     view.activeLeague = 0;
     view.activeView = View.winsbehind;
     view.groupBySubLeague = false;
+    view.leagueType = LeagueType.greater;
     return view;
   }
 }

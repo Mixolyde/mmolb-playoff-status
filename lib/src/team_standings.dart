@@ -32,10 +32,10 @@ class TeamStandings implements Comparable<TeamStandings> {
     po, winning, elimination, post}){
     for(var i = 0; i < 7; i++){
       this.po[i] = po[i].toString();
-    }
-    for(var i = 0; i < 5; i++){
       this.winning[i] = winning[i].toString();
       this.elimination[i] = elimination[i].toString();
+    }
+    for(var i = 0; i < 5; i++){
       this.post[i] = post[i].toString();
     }
   }

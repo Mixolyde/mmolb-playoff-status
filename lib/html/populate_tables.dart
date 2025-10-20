@@ -162,7 +162,7 @@ void populateWinningTable(List<TeamStandings> allStandings, SiteData sitedata, b
   for(var row in standings) {
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);
      
-    for(var i = 0; i < 5; i++){
+    for(var i = 0; i < 7; i++){
       var cell = trow.insertCell(6 + i);
       cell.innerText = row.winning[i];
       switch (row.winning[i]){
@@ -201,7 +201,7 @@ void populateEliminationTable(List<TeamStandings> allStandings, SiteData sitedat
   for(var row in standings) {
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);   
    
-    for(var i = 0; i < 5; i++){
+    for(var i = 0; i < 7; i++){
       var cell = trow.insertCell(6 + i);
       cell.innerText = row.elimination[i];
       switch (row.elimination[i]){

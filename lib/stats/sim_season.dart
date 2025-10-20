@@ -97,9 +97,9 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
     for(var standing in standingList){
     
     for(var i = 0; i < 7; i++){
-      if (standing.winning[4] == 'E' && i < 6){
+      if (standing.winning[6] == 'E' && i < 6){
         standing.po[i] = 'X';
-      } else if (standing.winning[4] == 'E' && i == 6) {
+      } else if (standing.winning[6] == 'E' && i == 6) {
         standing.po[i] = 'E';
       } else {
         standing.po[i] = formatPercent(poCounts[standing.id]![i] / numSims);
@@ -124,7 +124,7 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
     //only three rounds and champ of post season percents to format
     for(var i = 0; i < 4; i++){
       //postseason percents
-      if (standing.winning[4] == 'E' && i < 4){
+      if (standing.winning[6] == 'E' && i < 4){
         standing.post[i] = 'X';
       } else {
         standing.post[i] = formatPercent(postCounts[standing.id]![i] / numSims);

@@ -3447,7 +3447,7 @@ r=A.N(new A.E(a,p.a(new A.jV(q)),s),o)
 s=A.N(new A.E(a,p.a(new A.jW(q)),s),o)
 B.b.W(r,s)}for(s=r.length,n=0;n<r.length;r.length===s||(0,A.aG)(r),++n){m=r[n]
 l=A.fz(i,m,b,!0)
-for(p=m.as,k=0;k<5;++k){j=A.b(l.insertCell(6+k))
+for(p=m.as,k=0;k<7;++k){j=A.b(l.insertCell(6+k))
 if(!(k<p.length))return A.c(p,k)
 j.innerText=p[k]
 if(!(k<p.length))return A.c(p,k)
@@ -3470,7 +3470,7 @@ r=A.N(new A.E(a,p.a(new A.jO(q)),s),o)
 s=A.N(new A.E(a,p.a(new A.jP(q)),s),o)
 B.b.W(r,s)}for(s=r.length,n=0;n<r.length;r.length===s||(0,A.aG)(r),++n){m=r[n]
 l=A.fz(i,m,b,!0)
-for(p=m.at,k=0;k<5;++k){j=A.b(l.insertCell(6+k))
+for(p=m.at,k=0;k<7;++k){j=A.b(l.insertCell(6+k))
 if(!(k<p.length))return A.c(p,k)
 j.innerText=p[k]
 if(!(k<p.length))return A.c(p,k)
@@ -7986,10 +7986,9 @@ i(a){var s=this,r=s.x
 return s.a+" Season:"+s.b+" Day:"+s.c+" "+s.e+" "+s.r+" "+new A.b2(r,A.j(r).h("b2<1>")).i(0)}}
 A.am.prototype={
 e7(a,b,c,d,e,f,g,h,i,j,k,a0,a1,a2,a3){var s,r,q,p,o,n,m,l=this
-for(s=l.Q,r=J.ah(j),q=0;q<7;++q)B.b.m(s,q,J.as(r.j(j,q)))
-for(s=l.as,r=J.ah(a2),p=l.at,o=J.ah(a),n=l.ax,m=J.ah(k),q=0;q<5;++q){B.b.m(s,q,J.as(r.j(a2,q)))
-B.b.m(p,q,J.as(o.j(a,q)))
-B.b.m(n,q,J.as(m.j(k,q)))}},
+for(s=l.Q,r=J.ah(j),q=l.as,p=J.ah(a2),o=l.at,n=J.ah(a),m=0;m<7;++m){B.b.m(s,m,J.as(r.j(j,m)))
+B.b.m(q,m,J.as(p.j(a2,m)))
+B.b.m(o,m,J.as(n.j(a,m)))}for(s=l.ax,r=J.ah(k),m=0;m<5;++m)B.b.m(s,m,J.as(r.j(k,m)))},
 am(){var s=this,r=t.z
 return A.hB(["id",s.a,"fullName",s.b,"nickname",s.c,"emoji",s.d,"subleague",s.e,"wins",s.f,"losses",s.r,"runDifferential",s.w,"gamesPlayed",s.x,"gbDiv",s.y,"gbWc",s.z,"po",s.Q,"winning",s.as,"elimination",s.at,"post",s.ax],r,r)},
 i(a){var s=this

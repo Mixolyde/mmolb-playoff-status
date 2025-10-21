@@ -85,6 +85,9 @@ void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata, b
         case 'X':
           cell.classList.add('redcell');
           break;
+        case '^':
+          cell.classList.add('greencell');
+          break;
         default:
           // TODO figure out red/green cell logic from winning table
           break;
@@ -131,9 +134,9 @@ void populatePostseasonTable(List<TeamStandings> allStandings,
     for(var i = 0; i < psRounds; i++){
       var cell = trow.insertCell(4 + i);
       cell.innerText = row.post[i];
-      if(row.winning[4] == 'E' ){
+      if(row.post[i] == 'X' ){
         cell.classList.add('redcell');
-      } else if (row.winning[4] == '^') {
+      } else if (row.post[i] == '^') {
         cell.classList.add('greencell');
       } 
 

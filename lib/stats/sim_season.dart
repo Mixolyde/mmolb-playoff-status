@@ -105,7 +105,6 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
         standing.po[i] = formatPercent(poCounts[standing.id]![i] / numSims);
       }
 
-      /* TODO re enable when .winning converted to single league
       switch(standing.winning[i]){
         case '^':
         case 'X':
@@ -116,9 +115,7 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
           standing.po[i] = formatPercent(poCounts[standing.id]![i] / numSims);
           break;
       }
-      */
       
-
     }
 
     //only three rounds and champ of post season percents to format
@@ -130,8 +127,18 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
         standing.post[i] = formatPercent(postCounts[standing.id]![i] / numSims);
       }
     }
+
+    //if any of the first 4 winning slots are clinched, mark League Series as clinched
+    if (standing.winning.take(4).any(  (win) => win == '^') ) {
+      standing.post[2] = '^';
+    }
+    //if any of the first 6 winning slots are clinched, mark Wild Card Series as clinched
+    if (standing.winning.take(6).any(  (win) => win == '^') ) {
+      standing.post[3] = '^';
+    }
+
     print('$standing Po ${standing.po} Post ${standing.post} Winning ${standing.winning}');
-  }
+    }
   }
   
 }

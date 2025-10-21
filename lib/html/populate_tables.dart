@@ -56,9 +56,10 @@ void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata, b
     for(var i = 0; i < a.po.length - 1 ; i++){
       if(b.po[i] != a.po[i]){
         return getOrderValue(b.po[i]).compareTo(getOrderValue(a.po[i]));
-      } else if (b.po[b.po.length - 1] != a.po[a.po.length - 1]){
-        return getOrderValue(a.po[a.po.length - 1]).compareTo(getOrderValue(b.po[b.po.length - 1]));
-      }
+      } 
+    }
+    if (b.po[b.po.length - 1] != a.po[a.po.length - 1]){
+      return getOrderValue(a.po[a.po.length - 1]).compareTo(getOrderValue(b.po[b.po.length - 1]));
     }
     return a.compareTo(b);
   });
@@ -107,9 +108,10 @@ void populatePostseasonTable(List<TeamStandings> allStandings,
     for(var i = 0; i < a.post.length - 1; i++){
       if(b.post[i] != a.post[i]){
         return getOrderValue(b.post[i]).compareTo(getOrderValue(a.post[i]));
-      } else if (b.post[b.post.length - 1] != a.post[a.post.length - 1]){
-        return getOrderValue(a.post[a.post.length - 1]).compareTo(getOrderValue(b.post[b.post.length - 1]));
-      }
+      } 
+    }
+    if (b.post[b.post.length - 1] != a.post[a.post.length - 1]){
+      return getOrderValue(a.post[a.post.length - 1]).compareTo(getOrderValue(b.post[b.post.length - 1]));
     }
     return a.compareTo(b);
   });
@@ -292,7 +294,9 @@ void insertSeparatorRow(HTMLTableElement table, int row, int columns){
 }
 
 int getOrderValue(String percent){
-  if(percent == 'X'){
+  if(percent == 'E'){
+    return -20;
+  } else if(percent == 'X'){
     return -10;
   } else if(percent == '<1%'){
     return 0;

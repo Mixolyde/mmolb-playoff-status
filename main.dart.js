@@ -3409,10 +3409,12 @@ j.innerText=p[k]
 if(!(k<p.length))return A.c(p,k)
 switch(p[k]){case"E":case"X":A.b(j.classList).add("redcell")
 break
+case"^":A.b(j.classList).add("greencell")
+break
 default:break}}}if(c)A.be(i,10,11)
 else A.be(i,8,11)},
-n0(a,b,c){var s,r,q,p,o,n,m,l,k,j,i,h=A.i(A.b(v.G.document).querySelector("#standingsTable"))
-if(h==null)h=A.b(h)
+n0(a,b,c){var s,r,q,p,o,n,m,l,k,j,i=A.i(A.b(v.G.document).querySelector("#standingsTable"))
+if(i==null)i=A.b(i)
 B.b.ar(a,new A.jS())
 s=A.y(a)
 r=A.l(a.slice(0),s)
@@ -3424,15 +3426,15 @@ o=s.h("e.E")
 r=A.N(new A.E(a,p.a(new A.jT(q)),s),o)
 s=A.N(new A.E(a,p.a(new A.jU(q)),s),o)
 B.b.W(r,s)}for(s=r.length,n=0;n<r.length;r.length===s||(0,A.aG)(r),++n){m=r[n]
-l=A.fz(h,m,b,!1)
-for(p=m.as,o=m.ax,k=0;k<4;++k){j=A.b(l.insertCell(4+k))
-if(!(k<o.length))return A.c(o,k)
-j.innerText=o[k]
-if(4>=p.length)return A.c(p,4)
-i=p[4]
-if(i==="E")A.b(j.classList).add("redcell")
-else if(i==="^")A.b(j.classList).add("greencell")}}if(c)A.be(h,10,8)
-else A.be(h,8,8)},
+l=A.fz(i,m,b,!1)
+for(p=m.ax,k=0;k<4;++k){j=A.b(l.insertCell(4+k))
+if(!(k<p.length))return A.c(p,k)
+j.innerText=p[k]
+if(!(k<p.length))return A.c(p,k)
+o=p[k]
+if(o==="X")A.b(j.classList).add("redcell")
+else if(o==="^")A.b(j.classList).add("greencell")}}if(c)A.be(i,10,8)
+else A.be(i,8,8)},
 n1(a,b,c){var s,r,q,p,o,n,m,l,k,j,i=A.i(A.b(v.G.document).querySelector("#standingsTable"))
 if(i==null)i=A.b(i)
 B.b.b3(a)

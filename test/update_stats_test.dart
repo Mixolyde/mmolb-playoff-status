@@ -25,8 +25,8 @@ void main() {
 
       var standings = decodeStandings(body);
       expect(standings.length, greaterThanOrEqualTo(8));
-      expect(standings[0].winning.length, 5);
-      expect(standings[0].elimination.length, 5);
+      expect(standings[0].winning.length, 7);
+      expect(standings[0].elimination.length, 7);
       expect(standings[0].id.length, greaterThan(0));
       expect(standings[0].gbDiv.length, greaterThan(0));
       expect(standings[0].gbWc.length, greaterThan(0));
@@ -36,8 +36,8 @@ void main() {
 
       standings = decodeStandings(body);
       expect(standings.length, greaterThanOrEqualTo(8));
-      expect(standings[0].winning.length, 5);
-      expect(standings[0].elimination.length, 5);
+      expect(standings[0].winning.length, 7);
+      expect(standings[0].elimination.length, 7);
       expect(standings[0].id.length, greaterThan(0));
       expect(standings[0].gbDiv.length, greaterThan(0));
       expect(standings[0].gbWc.length, greaterThan(0));      

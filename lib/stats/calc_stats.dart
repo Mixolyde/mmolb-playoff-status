@@ -173,7 +173,7 @@ void calculateGamesBehind(List<TeamStandings> teamStandings, int wcLeaderDiff) {
       teamStandings[i].gbWc = formatGamesBehind(gbWildCard);
     }
     
-    print('GbDiv ${teamStandings[i].gbDiv} GbWc ${teamStandings[i].gbWc}');
+    //print('GbDiv ${teamStandings[i].gbDiv} GbWc ${teamStandings[i].gbWc}');
   }  
 }
 

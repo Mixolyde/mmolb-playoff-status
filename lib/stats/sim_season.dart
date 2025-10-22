@@ -128,8 +128,8 @@ void runSimulations(Set<Game> games, List<List<TeamStandings>> standings,
       }
     }
 
-    //if any of the first 4 winning slots are clinched, mark League Series as clinched
-    if (standing.winning.take(4).any(  (win) => win == '^') ) {
+    //if any of the first 2 winning slots are clinched, mark League Series as clinched
+    if (standing.winning.take(2).any(  (win) => win == '^') ) {
       standing.post[2] = '^';
     }
     //if any of the first 6 winning slots are clinched, mark Wild Card Series as clinched

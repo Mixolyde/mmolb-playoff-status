@@ -8,9 +8,12 @@ Published at https://mmolbplayoffstat.us
 
 ## TODO
 * Fix dev/prod environment switching in web app
-* Better wild card playoff spot handling
+* Improve wild card playoff spot handling
+* Disable nav buttons when they don't apply
 * Add Dark Mode support
 * Lesser League stat pages
+* Lesser League Run Diff behind calcs
+* Lesser League probabilities
 * Setup multiple development environments for testing data/web changes
 * Figure out what's up with tied records getting weird sim results
 * Display Postseason bracket schedule
@@ -60,7 +63,7 @@ Published at https://mmolbplayoffstat.us
 
 * v0.1.3
 - [ ] Lesser League stats
-- [ ] Remove broken magic number stat pages
+- [ ] Fix geater league playoff magic number edge cases
 - [ ] Cleanup small TODO items
 
 * v0.1.4

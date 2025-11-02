@@ -28,6 +28,8 @@ void main() {
       expect(standings[0].winning.length, 7);
       expect(standings[0].elimination.length, 7);
       expect(standings[0].id.length, greaterThan(0));
+      expect(standings[0].fullName.length, greaterThan(0));
+      expect(standings[0].nickname.length, greaterThan(0));
       expect(standings[0].gbDiv.length, greaterThan(0));
       expect(standings[0].gbWc.length, greaterThan(0));
       
@@ -39,6 +41,8 @@ void main() {
       expect(standings[0].winning.length, 7);
       expect(standings[0].elimination.length, 7);
       expect(standings[0].id.length, greaterThan(0));
+      expect(standings[0].fullName.length, greaterThan(0));
+      expect(standings[0].nickname.length, greaterThan(0));
       expect(standings[0].gbDiv.length, greaterThan(0));
       expect(standings[0].gbWc.length, greaterThan(0));      
     });

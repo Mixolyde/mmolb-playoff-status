@@ -47,9 +47,8 @@ void apiTests() {
       var greaterLeague1 = await getLeague(greaterLeague1Id);
       var current = await getTeam(greaterLeague1.teams[0]);
       expect(current, isNotNull);
-      expect(current.fullName, isNotNull);
-      expect(current.shorthand, isNotNull);
-      expect(current.location, isNotNull);
+      expect(current.fullName, isNotEmpty);
+      expect(current.location, isNotEmpty);
       print('Team: $current');
     });
     test('Get AllRegularSeasonGamesByTeamId', () async {

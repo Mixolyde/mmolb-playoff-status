@@ -93,10 +93,13 @@ Future<List<TeamStandings>> calculateGreaterLeague(TimeData timeData, int wcLead
     if (!timeData.inPostSeason){
       gamesPlayed = team.wins + team.losses;
     }
+
+    var fullName = '${team.location} ${team.fullName}';
+    var shorthand = fullName.split(' ').map((word) => word[0]).join();
     
     var standing = 
       TeamStandings(team.id, 
-      '${team.location} ${team.fullName}', team.shorthand, team.emoji,
+      fullName, shorthand, team.emoji,
       _sub1.teams.contains(team.id) ? _sub1.name : _sub2.name,
       team.wins, 
       team.losses,
@@ -131,10 +134,13 @@ Future<List<TeamStandings>> calculateLesserLeague(Subleague sub, List<Team> team
     if (!timeData.inPostSeason){
       gamesPlayed = team.wins + team.losses;
     }
+
+    var fullName = '${team.location} ${team.fullName}';
+    var shorthand = fullName.split(' ').map((word) => word[0]).join();
     
     var standing = 
       TeamStandings(team.id, 
-      '${team.location} ${team.fullName}', team.shorthand, team.emoji,
+      fullName, shorthand, team.emoji,
       sub.name,
       team.wins, 
       team.losses,

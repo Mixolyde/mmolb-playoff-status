@@ -175,9 +175,9 @@ void populateWinningTable(List<TeamStandings> allStandings, SiteData sitedata, b
   }
 
   if(groupBySubLeague == true){
-    insertSeparatorRow(table, 10, 11); 
+    insertSeparatorRow(table, 10, 13); 
   } else {
-    insertSeparatorRow(table, 8, 11); 
+    insertSeparatorRow(table, 8, 13); 
   }
   
 }
@@ -214,9 +214,9 @@ void populateEliminationTable(List<TeamStandings> allStandings, SiteData sitedat
   }
 
   if(groupBySubLeague == true){
-    insertSeparatorRow(table, 10, 11); 
+    insertSeparatorRow(table, 10, 13); 
   } else {
-    insertSeparatorRow(table, 8, 11); 
+    insertSeparatorRow(table, 8, 13); 
   }
   
 }

@@ -3456,8 +3456,8 @@ if(!(k<p.length))return A.c(p,k)
 switch(p[k]){case"E":case"X":A.b(j.classList).add("redcell")
 break
 default:A.b(j.classList).add("greencell")
-break}}}if(c)A.be(i,10,11)
-else A.be(i,8,11)},
+break}}}if(c)A.be(i,10,13)
+else A.be(i,8,13)},
 mZ(a,b,c){var s,r,q,p,o,n,m,l,k,j,i=A.i(A.b(v.G.document).querySelector("#standingsTable"))
 if(i==null)i=A.b(i)
 B.b.b3(a)
@@ -3479,8 +3479,8 @@ if(!(k<p.length))return A.c(p,k)
 switch(p[k]){case"E":case"X":A.b(j.classList).add("redcell")
 break
 default:A.b(j.classList).add("greencell")
-break}}}if(c)A.be(i,10,11)
-else A.be(i,8,11)},
+break}}}if(c)A.be(i,10,13)
+else A.be(i,8,13)},
 fz(a,b,c,d){var s,r,q,p,o,n=A.b(a.insertRow()),m=v.G,l=A.b(A.b(m.document).createElement("a")),k="https://mmolb.com/team/"+b.a
 l.href=k
 l.innerText=b.c

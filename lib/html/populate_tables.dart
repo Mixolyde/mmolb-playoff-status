@@ -41,14 +41,6 @@ String getEntryText(PlayoffBracketEntry entry){
   }
 }
 
-void assignBracketClass(HTMLSpanElement span, PlayoffBracketEntry entry){
-  if (entry.teamNickname == 'TBD'){
-    span.classList.add('brk-ttbd');
-  } else {
-    span.classList.remove('brk-ttbd');
-  }
-}
-
 void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata, bool groupBySubLeague){
   var table = document.querySelector('#standingsTable') as HTMLTableElement;
 

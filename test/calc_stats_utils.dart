@@ -2,6 +2,7 @@ import 'package:mmolb_playoff_status/src/team_standings.dart';
 
 //test data used for generating standings
 List<List<dynamic>> standingsData = [
+//name, subleague, run differential, wins, losses
 ['Crabs',        'High', 18, 66, 24],
 ['Spies',         'Low', 20, 55, 35],
 ['Sunbeams',      'Low', 10, 53, 36],

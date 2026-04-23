@@ -55,12 +55,13 @@ void apiTests() {
       var data = await getStateData();
       var greaterLeague1Id = data.greaterLeagues[0];
       var greaterLeague1 = await getLeague(greaterLeague1Id);
-      var current = await getAllRegularSeasonGamesByTeamId(greaterLeague1.teams[0]);
+      var current = await getAllRegularSeasonGamesByTeamId(
+        greaterLeague1.teams[0],
+      );
       expect(current, isNotNull);
       expect(current.length, 120);
       //print('Team: $current');
     });
-
   });
   /* TODO postseasons
   group('postseason', () {

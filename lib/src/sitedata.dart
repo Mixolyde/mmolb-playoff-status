@@ -11,27 +11,37 @@ class SiteData {
   final int daysInSeason;
   final int gamesInSeason;
 
-  
-  List<String> get subNicknames => 
-    [sub1name, sub2name];
-  
-  SiteData.fromMap({this.lastUpdate = '', 
-    this.season = 0, this.day = "0",
-    this.sub1id = '', this.sub1name = '',
-    this.sub2id = '', this.sub2name = '',
+  List<String> get subNicknames => [sub1name, sub2name];
+
+  SiteData.fromMap({
+    this.lastUpdate = '',
+    this.season = 0,
+    this.day = "0",
+    this.sub1id = '',
+    this.sub1name = '',
+    this.sub2id = '',
+    this.sub2name = '',
     this.lesserLeagueIds = const {},
     this.attributes = const [],
     this.daysInSeason = 99,
-    this.gamesInSeason = 99});
-  
-  SiteData(this.lastUpdate, 
-    this.season, this.day,
-    this.sub1id, this.sub1name,
-    this.sub2id, this.sub2name, 
+    this.gamesInSeason = 99,
+  });
+
+  SiteData(
+    this.lastUpdate,
+    this.season,
+    this.day,
+    this.sub1id,
+    this.sub1name,
+    this.sub2id,
+    this.sub2name,
     this.lesserLeagueIds,
-    this.attributes, this.daysInSeason, this.gamesInSeason);
-  
-  factory SiteData.fromJson(Map<String, dynamic> json){
+    this.attributes,
+    this.daysInSeason,
+    this.gamesInSeason,
+  );
+
+  factory SiteData.fromJson(Map<String, dynamic> json) {
     return SiteData.fromMap(
       lastUpdate: json['lastUpdate'] as String,
       season: json['season'] as int,
@@ -41,31 +51,32 @@ class SiteData {
       sub2id: json['sub2id'] as String,
       sub2name: json['sub2name'] as String,
       lesserLeagueIds: Map<String, String>.from(json['lesserLeagueIds'] ?? {}),
-      attributes: [],      
+      attributes: [],
       daysInSeason: json['daysInSeason'] as int,
-      gamesInSeason: json['gamesInSeason'] ?? 99, // Default to 99 if not provided
+      gamesInSeason:
+          json['gamesInSeason'] ?? 99, // Default to 99 if not provided
     );
   }
-  
-  Map toJson() => {
-      'lastUpdate':    lastUpdate,
-      'season':        season,
-      'day':           day,
-      'sub1id':        sub1id,
-      'sub1name':      sub1name,
-      'sub2id':        sub2id,
-      'sub2name':      sub2name,
-      'lesserLeagueIds': lesserLeagueIds,
-      'attributes':    attributes,
-      'daysInSeason':  daysInSeason,
-      'gamesInSeason': gamesInSeason,
-  };
-  
-  @override
-  String toString() => '$lastUpdate Season:$season Day:$day $sub1name $sub2name ${lesserLeagueIds.keys}';
-  
-  bool get leagueWildCards => attributes.contains('WILD_CARDS');
-  
-  bool get leagueMildCards => attributes.contains('MILD_CARDS');
 
+  Map toJson() => {
+    'lastUpdate': lastUpdate,
+    'season': season,
+    'day': day,
+    'sub1id': sub1id,
+    'sub1name': sub1name,
+    'sub2id': sub2id,
+    'sub2name': sub2name,
+    'lesserLeagueIds': lesserLeagueIds,
+    'attributes': attributes,
+    'daysInSeason': daysInSeason,
+    'gamesInSeason': gamesInSeason,
+  };
+
+  @override
+  String toString() =>
+      '$lastUpdate Season:$season Day:$day $sub1name $sub2name ${lesserLeagueIds.keys}';
+
+  bool get leagueWildCards => attributes.contains('WILD_CARDS');
+
+  bool get leagueMildCards => attributes.contains('MILD_CARDS');
 }

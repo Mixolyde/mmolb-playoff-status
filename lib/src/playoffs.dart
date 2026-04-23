@@ -3,41 +3,51 @@ class CompletePostseason {
   final Playoffs playoffs;
   final Map<String, PlayoffRound> playoffRounds;
   final Map<String, PlayoffMatchup> playoffMatchups;
-  
-  CompletePostseason({required this.id, required this.playoffs, 
-    required this.playoffRounds, required this.playoffMatchups});
-    
-  static CompletePostseason fromStreamData(Map<String, dynamic> json){
+
+  CompletePostseason({
+    required this.id,
+    required this.playoffs,
+    required this.playoffRounds,
+    required this.playoffMatchups,
+  });
+
+  static CompletePostseason fromStreamData(Map<String, dynamic> json) {
     Playoffs playoffs = Playoffs(
       id: json['playoffs']['id'] as String,
       name: json['playoffs']['name'] as String,
       numberOfRounds: json['playoffs']['numberOfRounds'] as int,
       playoffDay: json['playoffs']['playoffDay'] as int,
-      rounds: json['playoffs']['rounds']
-        .map((t) => t.toString()).toList() as List<String>,
+      rounds:
+          json['playoffs']['rounds'].map((t) => t.toString()).toList()
+              as List<String>,
       season: json['playoffs']['season'] as int,
-      round: json['playoffs']['round'] as int, 
-      tomorrowRound: json['playoffs']['tomorrowRound'] as int, 
-      winner: json['playoffs']['winner'] as String,      
+      round: json['playoffs']['round'] as int,
+      tomorrowRound: json['playoffs']['tomorrowRound'] as int,
+      winner: json['playoffs']['winner'] as String,
     );
-    
+
     var playoffRounds = <String, PlayoffRound>{};
-    for(var roundMap in json['allRounds']){
+    for (var roundMap in json['allRounds']) {
       playoffRounds[roundMap['id']] = PlayoffRound.fromJson(roundMap);
     }
-    
+
     var playoffMatchups = <String, PlayoffMatchup>{};
-    for(var matchupMap in json['allMatchups']){
+    for (var matchupMap in json['allMatchups']) {
       playoffMatchups[matchupMap['id']] = PlayoffMatchup.fromJson(matchupMap);
     }
-    
-    return CompletePostseason(id: playoffs.id, playoffs: playoffs, 
-    playoffRounds: playoffRounds, playoffMatchups: playoffMatchups);
+
+    return CompletePostseason(
+      id: playoffs.id,
+      playoffs: playoffs,
+      playoffRounds: playoffRounds,
+      playoffMatchups: playoffMatchups,
+    );
   }
-  
+
   @override
-  String toString() => 'Complete PostSeason ${playoffRounds.keys.length} Rounds '
-    '${playoffMatchups.keys.length} Matchups';
+  String toString() =>
+      'Complete PostSeason ${playoffRounds.keys.length} Rounds '
+      '${playoffMatchups.keys.length} Matchups';
 }
 
 /*
@@ -83,14 +93,21 @@ class Playoffs {
   final int tomorrowRound;
 
   final String? winner;
-  
-  Playoffs({required this.id, required this.name, required this.numberOfRounds, 
-    required this.playoffDay, required this.rounds, required this.season,
+
+  Playoffs({
+    required this.id,
+    required this.name,
+    required this.numberOfRounds,
+    required this.playoffDay,
+    required this.rounds,
+    required this.season,
     required this.round,
-    required this.tomorrowRound, this.winner});
-  
-  factory Playoffs.fromJson(Map<String, dynamic> json){
-    if(json['winner'] != null){
+    required this.tomorrowRound,
+    this.winner,
+  });
+
+  factory Playoffs.fromJson(Map<String, dynamic> json) {
+    if (json['winner'] != null) {
       //correction for old data
       json['round'] = json['numberOfRounds'] - 1;
     }
@@ -99,19 +116,19 @@ class Playoffs {
       name: json['name'] as String,
       numberOfRounds: json['numberOfRounds'] as int,
       playoffDay: json['playoffDay'] as int,
-      rounds: json['rounds']
-        .map((t) => t.toString()).toList() as List<String>,
+      rounds: json['rounds'].map((t) => t.toString()).toList() as List<String>,
       season: json['season'] as int,
-      round: json['round'] as int, 
-      tomorrowRound: json['tomorrowRound'] as int, 
-      winner: json['winner'] as String?,      
+      round: json['round'] as int,
+      tomorrowRound: json['tomorrowRound'] as int,
+      winner: json['winner'] as String?,
     );
   }
-  
+
   bool get currentRoundComplete => round != tomorrowRound || winner != null;
-  
+
   @override
-  String toString() => '$id Name: $name Season: $season NumberOfRounds: $numberOfRounds Current Round: $round';
+  String toString() =>
+      '$id Name: $name Season: $season NumberOfRounds: $numberOfRounds Current Round: $round';
 }
 
 /*
@@ -268,26 +285,34 @@ class PlayoffMatchup {
   final int homeSeed;
   final String? homeTeam;
   final int homeWins;
-  
-  PlayoffMatchup({required this.id, this.name, 
-    required this.awaySeed, this.awayTeam, required this.awayWins, 
-    required this.homeSeed, this.homeTeam, required this.homeWins});
-  
-  factory PlayoffMatchup.fromJson(Map<String, dynamic> json){
+
+  PlayoffMatchup({
+    required this.id,
+    this.name,
+    required this.awaySeed,
+    this.awayTeam,
+    required this.awayWins,
+    required this.homeSeed,
+    this.homeTeam,
+    required this.homeWins,
+  });
+
+  factory PlayoffMatchup.fromJson(Map<String, dynamic> json) {
     return PlayoffMatchup(
       id: json['id'] as String,
       name: json['name'] as String?,
       awaySeed: json['awaySeed'] as int? ?? 0,
-      awayTeam: json['awayTeam'] as String?,   
+      awayTeam: json['awayTeam'] as String?,
       awayWins: json['awayWins'] as int,
       homeSeed: json['homeSeed'] as int? ?? 0,
-      homeTeam: json['homeTeam'] as String?,   
+      homeTeam: json['homeTeam'] as String?,
       homeWins: json['homeWins'] as int,
     );
   }
-  
+
   @override
-  String toString() => '$id $awayTeam (Seed $awaySeed) vs. $homeTeam (Seed $homeSeed) ($awayWins - $homeWins)';
+  String toString() =>
+      '$id $awayTeam (Seed $awaySeed) vs. $homeTeam (Seed $homeSeed) ($awayWins - $homeWins)';
 }
 
 /*
@@ -397,29 +422,41 @@ class PlayoffRound {
   final String name;
   final int roundNumber;
   final bool special;
-  
-  PlayoffRound({required this.id, required this.matchupIDs, required this.gameIDs, 
-    required this.winnerIDs, required this.winnerSeeds, required this.gameIndex, 
-    required this.name, required this.roundNumber, required this.special});
-  
-  factory PlayoffRound.fromJson(Map<String, dynamic> json){
+
+  PlayoffRound({
+    required this.id,
+    required this.matchupIDs,
+    required this.gameIDs,
+    required this.winnerIDs,
+    required this.winnerSeeds,
+    required this.gameIndex,
+    required this.name,
+    required this.roundNumber,
+    required this.special,
+  });
+
+  factory PlayoffRound.fromJson(Map<String, dynamic> json) {
     return PlayoffRound(
       id: json['id'] as String,
       matchupIDs: (json['matchups'] as List<dynamic>)
-        .map((t) => t.toString()).toList(),
+          .map((t) => t.toString())
+          .toList(),
       gameIDs: (json['games'] as List<dynamic>)
-        .map((t) => t.toString()).toList(),
+          .map((t) => t.toString())
+          .toList(),
       winnerIDs: (json['winners'] as List<dynamic>)
-        .map((t) => t.toString()).toList(),
+          .map((t) => t.toString())
+          .toList(),
       winnerSeeds: (json['winnerSeeds'] as List<dynamic>)
-        .map((t) => int.parse(t.toString())).toList(),
+          .map((t) => int.parse(t.toString()))
+          .toList(),
       gameIndex: json['gameIndex'] as int,
       name: json['name'] as String,
       roundNumber: json['roundNumber'] as int,
-      special: json['special'] as bool,   
+      special: json['special'] as bool,
     );
   }
-  
+
   @override
   String toString() => '$id Name:$name Round:$roundNumber GameIndex:$gameIndex';
 }

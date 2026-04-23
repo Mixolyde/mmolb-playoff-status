@@ -5,7 +5,7 @@ import 'package:mmolb_playoff_status/site_objects.dart';
 
 Random rand = Random(0);
 
-Future<Set<Game>> getAllGames(List<List<TeamStandings>> subStandings) async{
+Future<Set<Game>> getAllGames(List<List<TeamStandings>> subStandings) async {
   Set<Game> games = {};
   for (var standingsList in subStandings) {
     for (var standing in standingsList) {
@@ -15,66 +15,71 @@ Future<Set<Game>> getAllGames(List<List<TeamStandings>> subStandings) async{
   }
 
   return games;
-
 }
 
-
-TeamSim simulateGame(TeamSim awaySim, TeamSim homeSim, int teamCount){
+TeamSim simulateGame(TeamSim awaySim, TeamSim homeSim, int teamCount) {
   //default away chance
   num awayChance = .5;
-  if(awaySim.winsSave != homeSim.winsSave ||
-    awaySim.lossesSave != homeSim.lossesSave){
+  if (awaySim.winsSave != homeSim.winsSave ||
+      awaySim.lossesSave != homeSim.lossesSave) {
     //print('Uneven match: ${awaySim.actualwinsSave}-${awaySim.lossesSave} vs. ' +
     //  '${homeSim.actualwinsSave}-${homeSim.lossesSave}');
-    //Pa = (wPa * (1 - wPh)) / 
+    //Pa = (wPa * (1 - wPh)) /
     // ((wPa * (1 - wPh) + wPh * ( 1 - wPa)))
     num wPa = awaySim.winsSave / (awaySim.lossesSave + awaySim.winsSave);
     num wPh = homeSim.winsSave / (homeSim.lossesSave + homeSim.winsSave);
-    awayChance = (wPa * (1 - wPh)) / 
-      ((wPa * (1 - wPh) + wPh * ( 1 - wPa)));
+    awayChance = (wPa * (1 - wPh)) / ((wPa * (1 - wPh) + wPh * (1 - wPa)));
     //adjust chance for N-team league average without this team
     //WP'(N) = WP - ((WP - .500) / (N - 1))
     awayChance = awayChance - ((awayChance - .5) / (teamCount - 1));
   }
-  
-  //print('Calculated away win chance: $awayChance');    
-  if(rand.nextDouble() < awayChance){
+
+  //print('Calculated away win chance: $awayChance');
+  if (rand.nextDouble() < awayChance) {
     return awaySim;
   } else {
-    return homeSim;        
-  }    
-  
+    return homeSim;
+  }
 }
 
-
-TeamSim simulateSeries(TeamSim awaySim, TeamSim homeSim, int winsNeeded, int teamCount){
+TeamSim simulateSeries(
+  TeamSim awaySim,
+  TeamSim homeSim,
+  int winsNeeded,
+  int teamCount,
+) {
   var awayWins = 0;
   var homeWins = 0;
   TeamSim winner;
-  while(awayWins < winsNeeded && homeWins < winsNeeded){
+  while (awayWins < winsNeeded && homeWins < winsNeeded) {
     winner = simulateGame(awaySim, homeSim, teamCount);
-    if(winner == awaySim){
+    if (winner == awaySim) {
       awayWins++;
     } else {
       homeWins++;
     }
   }
-  if(awayWins >= winsNeeded){
+  if (awayWins >= winsNeeded) {
     return awaySim;
   } else {
     return homeSim;
   }
-  
 }
 
-Map<String, TeamSim> createTeamSimMap(List<List<TeamStandings>> standings, Set<Game> games){
+Map<String, TeamSim> createTeamSimMap(
+  List<List<TeamStandings>> standings,
+  Set<Game> games,
+) {
   var sims = <String, TeamSim>{};
   for (var standingsList in standings) {
     for (var standing in standingsList) {
-      var sim = TeamSim(standing.id, 
-        standing.wins, standing.losses,
+      var sim = TeamSim(
+        standing.id,
+        standing.wins,
+        standing.losses,
         standing.runDifferential,
-        standing.fullName);
+        standing.fullName,
+      );
       sim.save();
       sims[sim.id] = sim;
     }
@@ -82,11 +87,11 @@ Map<String, TeamSim> createTeamSimMap(List<List<TeamStandings>> standings, Set<G
   return sims;
 }
 
-String formatPercent(num perc){
+String formatPercent(num perc) {
   perc *= 100;
-  if(perc < 1){
+  if (perc < 1) {
     return '<1%';
-  } else if (perc > 99){
+  } else if (perc > 99) {
     return '>99%';
   } else {
     return '${perc.floor().toString()}%';
@@ -99,24 +104,23 @@ class TeamSim implements Comparable<TeamSim> {
   int losses;
   int runDifferential;
   String fullName;
-  
+
   int winsSave = 0;
   int lossesSave = 0;
-  
+
   bool wcSeries = false;
   bool slSeries = false;
   bool mmolbSeries = false;
   bool mmolbChamp = false;
-  
-  TeamSim(this.id, this.wins, this.losses,
-    this.runDifferential, this.fullName);
-  
-  void save(){
+
+  TeamSim(this.id, this.wins, this.losses, this.runDifferential, this.fullName);
+
+  void save() {
     winsSave = wins;
     lossesSave = losses;
   }
-  
-  void load(){
+
+  void load() {
     wins = winsSave;
     losses = lossesSave;
     wcSeries = false;
@@ -124,20 +128,20 @@ class TeamSim implements Comparable<TeamSim> {
     mmolbSeries = false;
     mmolbChamp = false;
   }
-  
+
   @override
-  String toString() => '$id Record: ($wins - $losses) '
-    'Saved: $winsSave $lossesSave [$wcSeries, $slSeries, $mmolbSeries, $mmolbChamp]';
+  String toString() =>
+      '$id Record: ($wins - $losses) '
+      'Saved: $winsSave $lossesSave [$wcSeries, $slSeries, $mmolbSeries, $mmolbChamp]';
 
   @override
   int compareTo(TeamSim other) {
-    if(wins != other.wins){
+    if (wins != other.wins) {
       return other.wins.compareTo(wins);
-    } else if(runDifferential != other.runDifferential) {
+    } else if (runDifferential != other.runDifferential) {
       return other.runDifferential.compareTo(runDifferential);
     } else {
       return id.compareTo(other.id);
     }
   }
-  
 }

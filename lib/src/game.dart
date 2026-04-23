@@ -1,5 +1,3 @@
-
-
 /*
 {
   "games": [
@@ -38,9 +36,9 @@
     state: Scheduled, 
     weather: {Emoji: 🌧️, Name: Rain Showers, Tooltip: It is Raining.}}
 */
-  
+
 class Game {
-  final String id;  
+  final String id;
   final String awayTeam;
   final String awayTeamNickname;
   final num awayScore;
@@ -50,32 +48,39 @@ class Game {
   final bool gameComplete;
   final int day;
   final String gameWinnerId;
-  
-  Game({this.id = '', this.awayTeam = '', this.awayTeamNickname = '',
+
+  Game({
+    this.id = '',
+    this.awayTeam = '',
+    this.awayTeamNickname = '',
     this.awayScore = 0,
-    this.homeTeam = '', this.homeTeamNickname = '', 
+    this.homeTeam = '',
+    this.homeTeamNickname = '',
     this.homeScore = 0,
     this.gameComplete = false,
     this.day = 0,
-    this.gameWinnerId = ''});
-    
-  factory Game.fromJson(Map<String, dynamic> json){
+    this.gameWinnerId = '',
+  });
+
+  factory Game.fromJson(Map<String, dynamic> json) {
     //print("Id: ${json['game_id']} Day: ${json['day']}");
 
     num awayScore = json['away_score'] as num? ?? 0;
     num homeScore = json['home_score'] as num? ?? 0;
     String gameWinnerId = "";
 
-    if (json['state'] as String == "Complete"){
+    if (json['state'] as String == "Complete") {
       if (awayScore > homeScore) {
         gameWinnerId = json['away_team_id'];
       } else {
         gameWinnerId = json['home_team_id'];
       }
-    } 
+    }
 
-    String gameId = json['game_id'] as String? ?? '${json['day']}_${json['away_team_id']}_${json['home_team_id']}';
-    
+    String gameId =
+        json['game_id'] as String? ??
+        '${json['day']}_${json['away_team_id']}_${json['home_team_id']}';
+
     return Game(
       id: gameId,
       awayTeam: json['away_team_id'] as String,
@@ -83,7 +88,7 @@ class Game {
       awayScore: awayScore,
       homeTeam: json['home_team_id'] as String,
       homeTeamNickname: json['home_team_name'] as String,
-      homeScore: homeScore,      
+      homeScore: homeScore,
       gameComplete: (json['state'] as String == "Complete"),
       day: json['day'] as int,
       gameWinnerId: gameWinnerId,
@@ -91,17 +96,17 @@ class Game {
   }
 
   @override
-  String toString() => 'Day $day $awayTeamNickname @ $homeTeamNickname '
-    'Completed: $gameComplete Score:$awayScore-$homeScore';
+  String toString() =>
+      'Day $day $awayTeamNickname @ $homeTeamNickname '
+      'Completed: $gameComplete Score:$awayScore-$homeScore';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Game &&
-      other.id == id;
+    return other is Game && other.id == id;
   }
-  
+
   @override
   int get hashCode => id.hashCode;
 }

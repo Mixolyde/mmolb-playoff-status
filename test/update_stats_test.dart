@@ -6,20 +6,20 @@ import '../tools/update_stats.dart' as update;
 import '../lib/s3_api.dart';
 import '../lib/site_objects.dart';
 
-void main() { 
+void main() {
   group('update tests', () {
     test('update and load objects', () async {
       await update.main(['-c', '3']);
-      
+
       var temp = Directory.systemTemp;
 
       var filenameJSON = "${temp.path}/data/sitedata.json";
-      var body = await File(filenameJSON).readAsString();     
+      var body = await File(filenameJSON).readAsString();
 
       var sitedata = SiteData.fromJson(json.decode(body));
       expect(sitedata.season, greaterThanOrEqualTo(0));
       expect(sitedata.day, isNotNull);
-      
+
       filenameJSON = "${temp.path}/data/${sitedata.sub1id}.json";
       body = await File(filenameJSON).readAsString();
 
@@ -32,7 +32,7 @@ void main() {
       expect(standings[0].nickname.length, greaterThan(0));
       expect(standings[0].gbDiv.length, greaterThan(0));
       expect(standings[0].gbWc.length, greaterThan(0));
-      
+
       filenameJSON = "${temp.path}/data/${sitedata.sub2id}.json";
       body = await File(filenameJSON).readAsString();
 
@@ -44,7 +44,7 @@ void main() {
       expect(standings[0].fullName.length, greaterThan(0));
       expect(standings[0].nickname.length, greaterThan(0));
       expect(standings[0].gbDiv.length, greaterThan(0));
-      expect(standings[0].gbWc.length, greaterThan(0));      
+      expect(standings[0].gbWc.length, greaterThan(0));
     });
   }, timeout: Timeout(Duration(minutes: 4)));
 }

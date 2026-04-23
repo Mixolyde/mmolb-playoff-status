@@ -81,12 +81,12 @@ Future<List<Team>> getTeams(List<String> teamIds) async {
 Future<List<Game>> getAllRegularSeasonGamesByTeamId(String teamId) async {
   var response = await get(Uri.parse(_teamScheduleUrl + teamId));
   //print('Team Response body: ${response.body}');
-  
+
   List<dynamic> entities = json.decode(response.body)['games'];
   print("Entity count: ${entities.length}");
-  
+
   var games = entities.expand((json) {
-   try {
+    try {
       return [Game.fromJson(json)];
     } catch (e) {
       print('Bad game json: $json');

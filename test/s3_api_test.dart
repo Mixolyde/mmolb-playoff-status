@@ -13,7 +13,7 @@ void apiTests() {
       var data = await getSiteData();
       expect(data.season, greaterThanOrEqualTo(seasonNumber));
     });
-      test('Current Standings', () async {
+    test('Current Standings', () async {
       var data = await getSiteData();
       var subStandings = await getSubStandings(data);
       expect(subStandings[0], isNotEmpty);
@@ -24,18 +24,17 @@ void apiTests() {
       expect(subStandings[0].last.gbDiv, isNot('-'));
       expect(subStandings[0].last.gbWc, isNot('-'));
       expect(subStandings[0][0].winning[0], isNot('-'));
-      expect(subStandings[0][0].elimination[0], isNot('-'));      
-      
+      expect(subStandings[0][0].elimination[0], isNot('-'));
+
       expect(subStandings[1], isNotNull);
       expect(subStandings[1].length, greaterThanOrEqualTo(2));
       expect(subStandings[1][0].id, isNotEmpty);
       expect(subStandings[1][0].fullName, isNotEmpty);
       expect(subStandings[1][0].nickname, isNotEmpty);
       expect(subStandings[1].last.gbDiv, isNot('-'));
-      expect(subStandings[1].last.gbWc, isNot('-'));      
+      expect(subStandings[1].last.gbWc, isNot('-'));
       expect(subStandings[1][0].winning[0], isNot('-'));
-      expect(subStandings[1][0].elimination[0], isNot('-'));        
+      expect(subStandings[1][0].elimination[0], isNot('-'));
     });
-
   });
 }

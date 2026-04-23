@@ -50,15 +50,17 @@ class TimeData {
   }
 
   @override
-  String toString() => 'Phase Times: $phaseTimes, Season Day: $seasonDay, Season Number: $seasonNumber, Season Status: $seasonStatus';
-  
-  bool get inPostSeason => (int.tryParse(seasonDay) ?? 0 ) >= daysInRegularSeason();
-  
+  String toString() =>
+      'Phase Times: $phaseTimes, Season Day: $seasonDay, Season Number: $seasonNumber, Season Status: $seasonStatus';
+
+  bool get inPostSeason =>
+      (int.tryParse(seasonDay) ?? 0) >= daysInRegularSeason();
+
   static int daysInRegularSeason() {
     return 239;
   }
-  
+
   static int gamesInRegularSeason() {
     return 120;
-  } 
+  }
 }

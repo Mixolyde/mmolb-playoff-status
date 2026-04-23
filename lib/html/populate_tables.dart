@@ -3,76 +3,91 @@ import 'dart:js_interop';
 import 'package:web/web.dart';
 import 'package:mmolb_playoff_status/site_objects.dart';
 
-void populateGamesBehindTable(List<TeamStandings> allStandings, SiteData sitedata, bool groupBySubLeague){
+void populateGamesBehindTable(
+  List<TeamStandings> allStandings,
+  SiteData sitedata,
+  bool groupBySubLeague,
+) {
   var table = document.querySelector('#standingsTable')! as HTMLTableElement;
   allStandings.sort();
   var standings = allStandings.toList();
 
-  if(groupBySubLeague == true){
+  if (groupBySubLeague == true) {
     var firstDiv = allStandings[0].subleague;
     standings = allStandings.where((t) => t.subleague == firstDiv).toList();
-    standings.addAll(allStandings.where((t) => 
-      t.subleague != firstDiv).toList());
+    standings.addAll(
+      allStandings.where((t) => t.subleague != firstDiv).toList(),
+    );
   }
-  
-  for (var row in standings){
+
+  for (var row in standings) {
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);
     var cell = trow.insertCell(6);
-    cell.innerText = row.gbDiv;        
+    cell.innerText = row.gbDiv;
     cell = trow.insertCell(7);
     cell.innerText = row.gbWc;
   }
 
-  if(groupBySubLeague == true){
-    insertSeparatorRow(table, 10, 8); 
+  if (groupBySubLeague == true) {
+    insertSeparatorRow(table, 10, 8);
   } else {
-    insertSeparatorRow(table, 8, 8); 
+    insertSeparatorRow(table, 8, 8);
   }
-  
 }
 
-String getEntryText(PlayoffBracketEntry entry){
-  if (entry.teamNickname == 'Seed'){
+String getEntryText(PlayoffBracketEntry entry) {
+  if (entry.teamNickname == 'Seed') {
     return '(${entry.seed}) Seed';
-  } else if (entry.teamNickname == 'TBD'){
+  } else if (entry.teamNickname == 'TBD') {
     return 'TBD';
   } else {
     return '(${entry.seed}) ${entry.teamNickname} Wins: ${entry.wins}';
   }
 }
 
-void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata, bool groupBySubLeague){
+void populateChancesTable(
+  List<TeamStandings> allStandings,
+  SiteData sitedata,
+  bool groupBySubLeague,
+) {
   var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
   allStandings.sort((a, b) {
-    for(var i = 0; i < a.po.length - 1 ; i++){
-      if(b.po[i] != a.po[i]){
+    for (var i = 0; i < a.po.length - 1; i++) {
+      if (b.po[i] != a.po[i]) {
         return getOrderValue(b.po[i]).compareTo(getOrderValue(a.po[i]));
-      } 
+      }
     }
-    if (b.po[b.po.length - 1] != a.po[a.po.length - 1]){
-      return getOrderValue(a.po[a.po.length - 1]).compareTo(getOrderValue(b.po[b.po.length - 1]));
+    if (b.po[b.po.length - 1] != a.po[a.po.length - 1]) {
+      return getOrderValue(
+        a.po[a.po.length - 1],
+      ).compareTo(getOrderValue(b.po[b.po.length - 1]));
     }
     return a.compareTo(b);
   });
 
   var standings = allStandings.toList();
-  if(groupBySubLeague == true){
+  if (groupBySubLeague == true) {
     var firstDiv = allStandings[0].subleague;
     standings = allStandings.where((t) => t.subleague == firstDiv).toList();
-    standings.addAll(allStandings.where((t) => 
-      t.subleague != firstDiv).toList());
+    standings.addAll(
+      allStandings.where((t) => t.subleague != firstDiv).toList(),
+    );
   }
 
-  
-  for(var row in standings) {
-    var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: false);
+  for (var row in standings) {
+    var trow = insertCommonCells(
+      table,
+      row,
+      sitedata,
+      showPlayedAndLeft: false,
+    );
     //print('Displaying playoff chances for ${row.fullName} ${row.po}');
 
-    for(var i = 0; i < 7; i++){
+    for (var i = 0; i < 7; i++) {
       var cell = trow.insertCell(4 + i);
       cell.innerText = row.po[i];
-      switch (row.po[i]){
+      switch (row.po[i]) {
         case 'E':
         case 'X':
           cell.classList.add('redcell');
@@ -87,82 +102,95 @@ void populateChancesTable(List<TeamStandings> allStandings, SiteData sitedata, b
     }
   }
 
-  if(groupBySubLeague == true){
-    insertSeparatorRow(table, 10, 11); 
+  if (groupBySubLeague == true) {
+    insertSeparatorRow(table, 10, 11);
   } else {
-    insertSeparatorRow(table, 8, 11); 
+    insertSeparatorRow(table, 8, 11);
   }
-  
 }
 
-void populatePostseasonTable(List<TeamStandings> allStandings,
-  SiteData sitedata, bool groupBySubLeague){
+void populatePostseasonTable(
+  List<TeamStandings> allStandings,
+  SiteData sitedata,
+  bool groupBySubLeague,
+) {
   var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
   allStandings.sort((a, b) {
-    for(var i = 0; i < a.post.length - 1; i++){
-      if(b.post[i] != a.post[i]){
+    for (var i = 0; i < a.post.length - 1; i++) {
+      if (b.post[i] != a.post[i]) {
         return getOrderValue(b.post[i]).compareTo(getOrderValue(a.post[i]));
-      } 
+      }
     }
-    if (b.post[b.post.length - 1] != a.post[a.post.length - 1]){
-      return getOrderValue(a.post[a.post.length - 1]).compareTo(getOrderValue(b.post[b.post.length - 1]));
+    if (b.post[b.post.length - 1] != a.post[a.post.length - 1]) {
+      return getOrderValue(
+        a.post[a.post.length - 1],
+      ).compareTo(getOrderValue(b.post[b.post.length - 1]));
     }
     return a.compareTo(b);
   });
 
   var standings = allStandings.toList();
-  if(groupBySubLeague == true){
+  if (groupBySubLeague == true) {
     var firstDiv = allStandings[0].subleague;
     standings = allStandings.where((t) => t.subleague == firstDiv).toList();
-    standings.addAll(allStandings.where((t) => 
-      t.subleague != firstDiv).toList());
+    standings.addAll(
+      allStandings.where((t) => t.subleague != firstDiv).toList(),
+    );
   }
-  
-  for(var row in standings) {
-    var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: false);
+
+  for (var row in standings) {
+    var trow = insertCommonCells(
+      table,
+      row,
+      sitedata,
+      showPlayedAndLeft: false,
+    );
     var psRounds = 4;
 
-    for(var i = 0; i < psRounds; i++){
+    for (var i = 0; i < psRounds; i++) {
       var cell = trow.insertCell(4 + i);
       cell.innerText = row.post[i];
-      if(row.post[i] == 'X' ){
+      if (row.post[i] == 'X') {
         cell.classList.add('redcell');
       } else if (row.post[i] == '^') {
         cell.classList.add('greencell');
-      } 
-
+      }
     }
   }
 
-  if(groupBySubLeague == true){
-    insertSeparatorRow(table, 10, 8); 
+  if (groupBySubLeague == true) {
+    insertSeparatorRow(table, 10, 8);
   } else {
-    insertSeparatorRow(table, 8, 8); 
+    insertSeparatorRow(table, 8, 8);
   }
-  
 }
 
-void populateWinningTable(List<TeamStandings> allStandings, SiteData sitedata, bool groupBySubLeague){
-  var table = document.querySelector('#standingsTable') as  HTMLTableElement;
+void populateWinningTable(
+  List<TeamStandings> allStandings,
+  SiteData sitedata,
+  bool groupBySubLeague,
+) {
+  var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
   allStandings.sort();
   var standings = allStandings.toList();
 
-  if(groupBySubLeague == true){
+  if (groupBySubLeague == true) {
     var firstDiv = allStandings[0].subleague;
     standings = allStandings.where((t) => t.subleague == firstDiv).toList();
-    standings.addAll(allStandings.where((t) => 
-      t.subleague != firstDiv).toList());
+    standings.addAll(
+      allStandings.where((t) => t.subleague != firstDiv).toList(),
+    );
   }
-  
-  for(var row in standings) {
+
+  for (var row in standings) {
     var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);
-     
-    for(var i = 0; i < 7; i++){
+
+    for (var i = 0; i < 7; i++) {
       var cell = trow.insertCell(6 + i);
       cell.innerText = row.winning[i];
-      switch (row.winning[i]){
+      switch (row.winning[i]) {
         case 'E':
         case 'X':
           cell.classList.add('redcell');
@@ -174,34 +202,38 @@ void populateWinningTable(List<TeamStandings> allStandings, SiteData sitedata, b
     }
   }
 
-  if(groupBySubLeague == true){
-    insertSeparatorRow(table, 10, 13); 
+  if (groupBySubLeague == true) {
+    insertSeparatorRow(table, 10, 13);
   } else {
-    insertSeparatorRow(table, 8, 13); 
+    insertSeparatorRow(table, 8, 13);
   }
-  
 }
 
-void populateEliminationTable(List<TeamStandings> allStandings, SiteData sitedata, bool groupBySubLeague){
-  var table = document.querySelector('#standingsTable') as  HTMLTableElement;
+void populateEliminationTable(
+  List<TeamStandings> allStandings,
+  SiteData sitedata,
+  bool groupBySubLeague,
+) {
+  var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
   allStandings.sort();
   var standings = allStandings.toList();
 
-  if(groupBySubLeague == true){
+  if (groupBySubLeague == true) {
     var firstDiv = allStandings[0].subleague;
     standings = allStandings.where((t) => t.subleague == firstDiv).toList();
-    standings.addAll(allStandings.where((t) => 
-      t.subleague != firstDiv).toList());
+    standings.addAll(
+      allStandings.where((t) => t.subleague != firstDiv).toList(),
+    );
   }
-  
-  for(var row in standings) {
-    var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);   
-   
-    for(var i = 0; i < 7; i++){
+
+  for (var row in standings) {
+    var trow = insertCommonCells(table, row, sitedata, showPlayedAndLeft: true);
+
+    for (var i = 0; i < 7; i++) {
       var cell = trow.insertCell(6 + i);
       cell.innerText = row.elimination[i];
-      switch (row.elimination[i]){
+      switch (row.elimination[i]) {
         case 'E':
         case 'X':
           cell.classList.add('redcell');
@@ -213,16 +245,19 @@ void populateEliminationTable(List<TeamStandings> allStandings, SiteData sitedat
     }
   }
 
-  if(groupBySubLeague == true){
-    insertSeparatorRow(table, 10, 13); 
+  if (groupBySubLeague == true) {
+    insertSeparatorRow(table, 10, 13);
   } else {
-    insertSeparatorRow(table, 8, 13); 
+    insertSeparatorRow(table, 8, 13);
   }
-  
 }
 
-HTMLTableRowElement insertCommonCells(HTMLTableElement table, 
-  TeamStandings row, SiteData sitedata, {showPlayedAndLeft = true} ){
+HTMLTableRowElement insertCommonCells(
+  HTMLTableElement table,
+  TeamStandings row,
+  SiteData sitedata, {
+  showPlayedAndLeft = true,
+}) {
   //print('Inserting TeamStandings for $row');
   var trow = table.insertRow();
 
@@ -233,15 +268,16 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
   HTMLAnchorElement longTeamLink = HTMLAnchorElement();
   longTeamLink.href = 'https://mmolb.com/team/${row.id}';
   longTeamLink.innerText = row.fullName;
-  longTeamLink.target = '_new';  
+  longTeamLink.target = '_new';
   var emojiSpan = HTMLSpanElement();
   //print('Emoji string: ${row.emoji}');
-  if(row.emoji.startsWith('0')){
-    emojiSpan.innerHTML = ' &#${row.emoji.substring(1, row.emoji.length)};'.toJS;
+  if (row.emoji.startsWith('0')) {
+    emojiSpan.innerHTML =
+        ' &#${row.emoji.substring(1, row.emoji.length)};'.toJS;
   } else {
     emojiSpan.innerHTML = '  '.toJS;
   }
-  
+
   var cell = trow.insertCell(0);
   cell.classList.add('tblteam');
   var wideSpan = HTMLSpanElement();
@@ -251,21 +287,21 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
 
   wideSpan.appendChild(longTeamLink);
   narrowSpan.appendChild(shortTeamLink);
-  
+
   cell.appendChild(wideSpan);
   cell.appendChild(narrowSpan);
   cell.appendChild(emojiSpan);
-  
+
   cell = trow.insertCell(1);
-  cell.innerText = row.subleague;    
+  cell.innerText = row.subleague;
 
   var record = '${row.gamesPlayed - row.losses} - ${row.losses}';
   cell = trow.insertCell(2);
   cell.innerText = record;
 
-  if(showPlayedAndLeft){
+  if (showPlayedAndLeft) {
     cell = trow.insertCell(3);
-    cell.innerText = row.gamesPlayed.toString();    
+    cell.innerText = row.gamesPlayed.toString();
     cell = trow.insertCell(4);
     cell.innerText = (sitedata.gamesInSeason - row.gamesPlayed).toString();
     cell = trow.insertCell(5);
@@ -275,29 +311,27 @@ HTMLTableRowElement insertCommonCells(HTMLTableElement table,
     cell.innerText = row.runDifferential.toString();
   }
 
-
   return trow;
-
 }
 
-void insertSeparatorRow(HTMLTableElement table, int row, int columns){
+void insertSeparatorRow(HTMLTableElement table, int row, int columns) {
   var sepRow = table.insertRow(row);
   sepRow.insertCell(0)
     ..innerText = '&nbsp;'
     ..colSpan = columns
-    ..classList.add('sepRow');  
+    ..classList.add('sepRow');
 }
 
-int getOrderValue(String percent){
-  if(percent == 'E'){
+int getOrderValue(String percent) {
+  if (percent == 'E') {
     return -20;
-  } else if(percent == 'X'){
+  } else if (percent == 'X') {
     return -10;
-  } else if(percent == '<1%'){
+  } else if (percent == '<1%') {
     return 0;
-  } else if(percent == '>99%'){
+  } else if (percent == '>99%') {
     return 100;
-  } else if(percent == '^'){
+  } else if (percent == '^') {
     return 101;
   } else {
     var digits = percent.replaceAll('%', '');

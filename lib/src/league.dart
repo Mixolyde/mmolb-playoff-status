@@ -24,13 +24,18 @@ class League {
   final String name;
   final String subleagueId1;
   final String subleagueId2;
-  
+
   Subleague? subleague1;
   Subleague? subleague2;
 
-  League({this.id = '', this.name = '', this.subleagueId1 = '', this.subleagueId2 = ''});
-    
-  factory League.fromJson(Map<String, dynamic> json){
+  League({
+    this.id = '',
+    this.name = '',
+    this.subleagueId1 = '',
+    this.subleagueId2 = '',
+  });
+
+  factory League.fromJson(Map<String, dynamic> json) {
     List<dynamic> subLeagueJson = json['subLeagues'];
     return League(
       id: json['id'] as String,
@@ -39,7 +44,7 @@ class League {
       subleagueId2: (subLeagueJson[1] as Map<String, dynamic>)['id'],
     );
   }
-  
+
   @override
   String toString() => '$name:$id';
 }
@@ -70,21 +75,24 @@ class Subleague {
   final String leagueType;
   final List<String> teams;
 
-  Subleague({this.id = '', this.name = '', this.leagueType = '', this.teams = const []});
-    
-  factory Subleague.fromJson(Map<String, dynamic> json){
+  Subleague({
+    this.id = '',
+    this.name = '',
+    this.leagueType = '',
+    this.teams = const [],
+  });
+
+  factory Subleague.fromJson(Map<String, dynamic> json) {
     return Subleague(
       id: json['_id'] as String,
       name: json['Name'] as String,
       leagueType: json['LeagueType'] as String,
-      teams: (json['Teams'] as List<dynamic>)
-        .map((t) => t.toString()).toList(),
+      teams: (json['Teams'] as List<dynamic>).map((t) => t.toString()).toList(),
     );
-  }  
-  
+  }
+
   @override
   String toString() => '$name:$id:$leagueType';
-
 }
 
 /*
@@ -98,23 +106,21 @@ class Subleague {
   ],
   'name': 'Lawful Good'
   */
-class Division{
+class Division {
   final String id;
   final String name;
-  final List<String> teams;  
-  
+  final List<String> teams;
+
   Division({required this.id, required this.name, required this.teams});
-    
-  factory Division.fromJson(Map<String, dynamic> json){
+
+  factory Division.fromJson(Map<String, dynamic> json) {
     return Division(
       id: json['id'] as String,
       name: json['name'] as String,
-      teams: (json['teams'] as List<dynamic>)
-        .map((t) => t.toString()).toList(),
+      teams: (json['teams'] as List<dynamic>).map((t) => t.toString()).toList(),
     );
-  }  
-  
+  }
+
   @override
   String toString() => '$name:$id';
-  
 }

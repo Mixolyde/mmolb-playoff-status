@@ -32,7 +32,7 @@ class StateData {
   final String seasonID;
   final String seasonStatus;
   final String id;
-  
+
   StateData({
     required this.greaterLeagues,
     required this.lesserLeagues,
@@ -54,6 +54,6 @@ class StateData {
   }
 
   @override
-  String toString() => 'StateData(greaterLeagues: $greaterLeagues, seasonID: $seasonID, seasonStatus: $seasonStatus, id: $id)';
-  
+  String toString() =>
+      'StateData(greaterLeagues: $greaterLeagues, seasonID: $seasonID, seasonStatus: $seasonStatus, id: $id)';
 }

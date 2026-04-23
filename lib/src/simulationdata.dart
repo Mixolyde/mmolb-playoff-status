@@ -35,12 +35,19 @@ class SimulationData {
   final String subEraTitle;
   final List<String> attributes;
 
-  SimulationData({required this.currentSeasonId, required this.day, required this.league, 
-    this.playOffRound, required this.season, required this.seasonId, 
-    required this.eraTitle, required this.subEraTitle,
-    required this.attributes});
-  
-  factory SimulationData.fromJson(Map<String, dynamic> json){
+  SimulationData({
+    required this.currentSeasonId,
+    required this.day,
+    required this.league,
+    this.playOffRound,
+    required this.season,
+    required this.seasonId,
+    required this.eraTitle,
+    required this.subEraTitle,
+    required this.attributes,
+  });
+
+  factory SimulationData.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> simJson = json['simData'];
     Map<String, dynamic> currentLeagueData = simJson['currentLeagueData'];
     return SimulationData(
@@ -57,32 +64,33 @@ class SimulationData {
       attributes: [],
     );
   }
-  
+
   @override
-  String toString() => 'CurrentSeasonId: $currentSeasonId, Season $season, Day $day, League $league, PlayoffRound $playOffRound, Attributes $attributes';
+  String toString() =>
+      'CurrentSeasonId: $currentSeasonId, Season $season, Day $day, League $league, PlayoffRound $playOffRound, Attributes $attributes';
 
   bool get leagueWildCards => attributes.contains('WILD_CARDS');
-  
+
   bool get leagueMildCards => attributes.contains('MILD_CARDS');
 
-  bool get inPostSeason => day >= SimulationData.daysInRegularSeason(currentSeasonId);
-  
+  bool get inPostSeason =>
+      day >= SimulationData.daysInRegularSeason(currentSeasonId);
+
   static int daysInRegularSeason(String simId) {
-    if(simId == 'gamma9'){
+    if (simId == 'gamma9') {
       return 166;
-    } else if (simId == 'gamma10'){
+    } else if (simId == 'gamma10') {
       return 219;
     } else {
       return 90;
-    } 
+    }
   }
-  
+
   static int gamesInRegularSeason(String simId) {
-    if (simId == 'gamma10'){
+    if (simId == 'gamma10') {
       return 162;
     } else {
       return 90;
     }
-  }  
-
+  }
 }

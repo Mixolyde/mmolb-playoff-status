@@ -1,10 +1,9 @@
-
 class Standings {
   final Map<String, Standing> standings;
-  
+
   Standings(this.standings);
-  
-  factory Standings.fromJson(Map<String, dynamic> json){
+
+  factory Standings.fromJson(Map<String, dynamic> json) {
     //var standingsMap = json as Map<String, Map<String, List<Map<String, dynamic>>>>;
     Map<String, Standing> result = <String, Standing>{};
     for (var leagueMap in json.values) {
@@ -27,8 +26,8 @@ class Standings {
       }
     }
     for (var leagueMap in json.values) {
-      leagueMap.values.forEach( (subleagueList) =>
-        subleagueList.forEach((stand){
+      leagueMap.values.forEach(
+        (subleagueList) => subleagueList.forEach((stand) {
           //print(stand);
           result[stand['id'] as String] = Standing(
             id: stand['id'] as String,
@@ -42,15 +41,15 @@ class Standings {
             deceased: stand['deceased'] as bool,
             scattered: stand['scattered'] as bool,
           );
-        }));
+        }),
+      );
     }
-      
+
     return Standings(result);
   }
-  
+
   @override
   String toString() => 'Standings: $standings';
-
 }
 
 /*
@@ -75,14 +74,21 @@ class Standing {
   final int losses;
   final bool elimination;
   final bool deceased;
-  final bool scattered; 
-  
-  Standing({required this.id, required this.emoji, required this.mainColor,
-    required this.secondaryColor, required this.fullName,
-    required this.wins, required this.losses,
-    required this.elimination, required this.deceased,
-    required this.scattered});
-    
+  final bool scattered;
+
+  Standing({
+    required this.id,
+    required this.emoji,
+    required this.mainColor,
+    required this.secondaryColor,
+    required this.fullName,
+    required this.wins,
+    required this.losses,
+    required this.elimination,
+    required this.deceased,
+    required this.scattered,
+  });
+
   @override
-  String toString() => 'Standing: $id $fullName ($wins-$losses)';    
+  String toString() => 'Standing: $id $fullName ($wins-$losses)';
 }

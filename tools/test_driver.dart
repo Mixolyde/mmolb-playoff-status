@@ -3,7 +3,7 @@ import 'package:mmolb_playoff_status/stats/calc_stats.dart';
 import 'package:mmolb_playoff_status/stats/sim_season.dart';
 
 /// Test script used for manually executing methods and testing functionality.
-Future<void> main() async { 
+Future<void> main() async {
   // Example: Fetching state data
   var stateData = await getStateData();
   print('State Data: $stateData');
@@ -54,5 +54,4 @@ Future<void> main() async {
   //for (var entry in lesserStandings.values) {
   //  print(entry.where((team) => team.wins + team.losses > 0).toList());
   //}
-  
 }

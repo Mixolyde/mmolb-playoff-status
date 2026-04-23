@@ -17,8 +17,8 @@ Future<void> main() async {
   print(siteData);
 
   // Example: Fetching subleague data
-  //var subleague = await getSubleague('6805db0cac48194de3cd3fe4');
-  //print('Subleague Data: $subleague');
+  var subleague = await getSubleague('6805db0cac48194de3cd3fe4');
+  print('Subleague Data: $subleague');
 
   //var team = await getTeam('6805db0cac48194de3cd3ff7');
   //print('Team Data: $team');

@@ -118,4 +118,93 @@ void main() {
       expect(standing.winning[0], '1');
     });
   });
+
+  group('calculateLosingMagicNumbers tests', () {
+    setUp(() {
+      // Ensure gamesInRegularSeason is 120 as per TimeData.gamesInRegularSeason()
+      gamesInRegularSeason = 120;
+    });
+
+    test('Team in safe spot (i <= k)', () {
+      // Create 7 teams to avoid index out of bounds in calculateWinningMagicNumbers
+      var teams = List.generate(
+        7,
+        (i) => TeamStandings('$i', 'Team $i', 'T$i', 'E', 'H', 60, 40, 0, 100),
+      );
+
+      calculateMagicNumbers(teams);
+
+      // Team 0 (i=0) is in spot 1 (k=0). i <= k -> MW
+      expect(teams[0].elimination[0], 'MW');
+      // Team 0 (i=0) is in spot 2 (k=1). i <= k -> MW
+      expect(teams[0].elimination[1], 'MW');
+    });
+
+    test('Team below spot (i > k) not yet eliminated', () {
+      var teams = List.generate(
+        7,
+        (i) => TeamStandings('$i', 'Team $i', 'T$i', 'E', 'H', 60, 40, 0, 100),
+      );
+      // Team 0 (spot 1): 80 wins.
+      teams[0].wins = 80;
+      // Team 6 (spot 7): 70 wins.
+      teams[6].wins = 70;
+
+      // Max wins Team 6 = 70 + (120 - 100) = 90.
+      // Team 0 wins = 80.
+      // winning[0] will be 'MW' because 90 > 80.
+      // elimination[0] = 90 - 80 = 10.
+
+      calculateMagicNumbers(teams);
+
+      expect(teams[6].elimination[0], '10');
+    });
+
+    test('Team eliminated from spot (X)', () {
+      var teams = List.generate(
+        7,
+        (i) => TeamStandings('$i', 'Team $i', 'T$i', 'E', 'H', 60, 40, 0, 100),
+      );
+      // Team 0 (spot 1): 100 wins.
+      teams[0].wins = 100;
+      // Team 6 (spot 7): 70 wins.
+      teams[6].wins = 70;
+
+      // Max wins Team 6 = 70 + 20 = 90.
+      // 90 <= 100 -> winning[0] = 'X'.
+      // elimination[0] = 'X'.
+
+      calculateMagicNumbers(teams);
+
+      expect(teams[6].winning[0], 'X');
+      expect(teams[6].elimination[0], 'X');
+    });
+
+    test('Elimination index 6', () {
+      var teams = List.generate(
+        7,
+        (i) => TeamStandings(
+          '$i',
+          'Team $i',
+          'T$i',
+          'E',
+          'H',
+          i == 0 ? 115 : (i == 6 ? 20 : 30),
+          0,
+          0,
+          115,
+        ),
+      );
+
+      calculateMagicNumbers(teams);
+
+      // Team 0 clinches spots -> winning[6] = 'X'
+      expect(teams[0].winning[6], 'X');
+      expect(teams[0].elimination[6], 'X');
+
+      // Team 6 is eliminated from everything -> winning[6] = 'E'
+      expect(teams[6].winning[6], 'E');
+      expect(teams[6].elimination[6], 'E');
+    });
+  });
 }

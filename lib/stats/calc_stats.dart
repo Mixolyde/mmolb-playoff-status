@@ -230,10 +230,7 @@ void calculateWinningMagicNumbers(List<TeamStandings> teamStandings) {
 
     for (var j = 0; j < i && j < 6; j++) {
       teamStandings[i].winning[j] = 'MW';
-      if (maxWins < teamStandings[j].wins ||
-          (maxWins == teamStandings[j].wins &&
-              teamStandings[i].runDifferential <
-                  teamStandings[j].runDifferential)) {
+      if (maxWins <= teamStandings[j].wins) {
         teamStandings[i].winning[j] = 'X';
       }
     }
@@ -266,11 +263,7 @@ void setWinningMagicNumber(
 ) {
   //Wb + GRb - Wa + 1
   var magic =
-      target.wins + (gamesInRegularSeason - target.gamesPlayed) - standing.wins;
-  if (standing.runDifferential < target.runDifferential) {
-    //team b wins ties
-    magic += 1;
-  }
+      target.wins + (gamesInRegularSeason - target.gamesPlayed) - standing.wins + 1;
   //print('WinMN for ${teamStandings[i]} vs. ${teamStandings[b]}: $magic');
   if (magic > 0) {
     //set magic number
@@ -304,10 +297,6 @@ void calculateLosingMagicNumbers(List<TeamStandings> teamStandings) {
             //maxWinsi - Wk
             //print('Find Elim: $stand Berth: $k');
             var magic = maxWins - teamStandings[k].wins;
-            //if we don't have favor, elim is one lower
-            if (stand.runDifferential > teamStandings[k].runDifferential) {
-              magic += 1;
-            }
             stand.elimination[k] = '$magic';
           }
 

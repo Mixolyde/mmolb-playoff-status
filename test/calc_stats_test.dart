@@ -44,52 +44,58 @@ void main() {
       gamesInRegularSeason = 120;
     });
 
-    test('Standard magic number (no tiebreaker)', () {
+    test('Standard magic number (ignores tiebreaker)', () {
       var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 90, 0, 10, 90);
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 60, 0, 5, 80);
+      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 60, 20, 5, 80);
 
-      // magic = 60 + (120 - 80) - 90 = 10
-      // standing wins ties (10 > 5)
+      // magic = 60 + (120 - 80) - 90 + 1 = 11
       setWinningMagicNumber(standing, target, 0);
-      expect(standing.winning[0], '10');
+      expect(standing.winning[0], '11');
     });
 
-    test('Magic number with tiebreaker (standing loses tie)', () {
+    test('Magic number with different run differential (ignores it)', () {
       var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 90, 0, 5, 90);
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 60, 0, 10, 80);
+      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 60, 20, 10, 80);
 
-      // magic = 60 + (120 - 80) - 90 = 10
-      // standing loses ties (5 < 10) -> magic + 1 = 11
+      // magic = 60 + (120 - 80) - 90 + 1 = 11
       setWinningMagicNumber(standing, target, 0);
       expect(standing.winning[0], '11');
     });
 
     test('Clinched first spot (^)', () {
-      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 100, 0, 10, 100);
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 0, 5, 120);
+      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 101, 0, 10, 101);
+      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 20, 5, 120);
 
-      // magic = 100 + (120 - 120) - 100 = 0
-      // standing wins ties (10 > 5)
+      // magic = 100 + (120 - 120) - 101 + 1 = 0
       setWinningMagicNumber(standing, target, 0);
       expect(standing.winning[0], '^');
     });
 
-    test('Clinched and previous spot clinched (X)', () {
+    test('Not clinched if wins are equal (1)', () {
       var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 100, 0, 10, 100);
-      standing.winning[0] = '^';
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 0, 5, 120);
+      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 20, 5, 120);
 
-      // magic <= 0, winningIndex > 0, and standing.winning[0] == '^'
+      // magic = 100 + (120 - 120) - 100 + 1 = 1
+      setWinningMagicNumber(standing, target, 0);
+      expect(standing.winning[0], '1');
+    });
+
+    test('Clinched and previous spot clinched (X)', () {
+      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 101, 0, 10, 101);
+      standing.winning[0] = '^';
+      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 20, 5, 120);
+
+      // magic = 0, winningIndex > 0, and standing.winning[0] == '^'
       setWinningMagicNumber(standing, target, 1);
       expect(standing.winning[1], 'X');
     });
 
     test('Clinched but previous spot not clinched (^)', () {
-      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 100, 0, 10, 100);
+      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 101, 0, 10, 101);
       standing.winning[0] = '5';
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 0, 5, 120);
+      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 20, 5, 120);
 
-      // magic <= 0, winningIndex > 0, but no '^' yet
+      // magic = 0, winningIndex > 0, but no '^' yet
       setWinningMagicNumber(standing, target, 1);
       expect(standing.winning[1], '^');
     });
@@ -98,19 +104,18 @@ void main() {
       var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 1, 0, 0, 1);
       var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 0, 0, 0, 0);
 
-      // magic = 0 + (120 - 0) - 1 = 119
+      // magic = 0 + (120 - 0) - 1 + 1 = 120
       setWinningMagicNumber(standing, target, 0);
-      expect(standing.winning[0], '119');
+      expect(standing.winning[0], '120');
     });
 
-    test('Equal run differential (standing wins ties)', () {
+    test('Equal run differential (still needs more wins)', () {
       var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 100, 0, 10, 100);
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 0, 10, 120);
+      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 20, 10, 120);
 
-      // magic = 100 + (120 - 120) - 100 = 0
-      // runDiff equal (10 == 10) -> magic stays 0
+      // magic = 100 + (120 - 120) - 100 + 1 = 1
       setWinningMagicNumber(standing, target, 0);
-      expect(standing.winning[0], '^');
+      expect(standing.winning[0], '1');
     });
   });
 }

@@ -71,13 +71,13 @@ void main() {
       expect(standing.winning[0], '^');
     });
 
-    test('Not clinched if wins are equal (1)', () {
+    test('Not clinched if wins are equal (MW)', () {
       var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 100, 0, 10, 100);
       var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 20, 5, 120);
 
-      // magic = 100 + (120 - 120) - 100 + 1 = 1
+      // magic = MW because they are tied in wins
       setWinningMagicNumber(standing, target, 0);
-      expect(standing.winning[0], '1');
+      expect(standing.winning[0], 'MW');
     });
 
     test('Clinched and previous spot clinched (X)', () {
@@ -109,13 +109,23 @@ void main() {
       expect(standing.winning[0], '120');
     });
 
-    test('Equal run differential (still needs more wins)', () {
-      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 100, 0, 10, 100);
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 20, 10, 120);
+    test('Tie in wins with team below should be MW', () {
+      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 100, 10, 10, 110);
+      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 10, 5, 110);
 
-      // magic = 100 + (120 - 120) - 100 + 1 = 1
+      // They are tied in wins.
       setWinningMagicNumber(standing, target, 0);
-      expect(standing.winning[0], '1');
+      expect(standing.winning[0], 'MW');
+    });
+
+    test('Tie in wins with team below but already clinched should be X', () {
+      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 100, 10, 10, 110);
+      standing.winning[0] = '^'; // Clinched first spot
+      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 10, 5, 110);
+
+      // They are tied in wins, but spot 1 is already clinched.
+      setWinningMagicNumber(standing, target, 1);
+      expect(standing.winning[1], 'X');
     });
   });
 

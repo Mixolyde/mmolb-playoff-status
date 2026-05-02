@@ -261,6 +261,14 @@ void setWinningMagicNumber(
   TeamStandings target,
   int winningIndex,
 ) {
+  if (standing.wins == target.wins) {
+    if (standing.winning.any((s) => s == '^')) {
+      standing.winning[winningIndex] = 'X';
+    } else {
+      standing.winning[winningIndex] = 'MW';
+    }
+    return;
+  }
   //Wb + GRb - Wa + 1
   var magic =
       target.wins + (gamesInRegularSeason - target.gamesPlayed) - standing.wins + 1;

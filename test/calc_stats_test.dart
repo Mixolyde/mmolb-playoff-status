@@ -36,6 +36,56 @@ void main() {
       expect(standings[4].gbDiv, '22½');
       expect(standings[4].gbWc, '4½');
     });
+
+    test('All same wins', () {
+      var standings = List.generate(
+        10,
+        (i) => TeamStandings('$i', 'Team $i', 'T$i', 'E', 'H', 50, 50, 0, 100),
+      );
+      calculateGamesBehind(standings, 0);
+
+      for (var i = 0; i < 10; i++) {
+        expect(standings[i].gbDiv, '-');
+        expect(standings[i].gbWc, '-');
+      }
+    });
+
+    test('All different wins', () {
+      var standings = List.generate(
+        10,
+        (i) => TeamStandings(
+          '$i',
+          'Team $i',
+          'T$i',
+          'E',
+          'H',
+          100 - i,
+          i,
+          0,
+          100,
+        ),
+      );
+      // wcLeaderDiff = 100 - (100 - 100) = 100 for wild card leader
+      // Actually let's use a specific wcLeaderDiff
+      calculateGamesBehind(standings, 100);
+
+      expect(standings[0].gbDiv, '-');
+      expect(standings[0].gbWc, '-');
+
+      // Team 1: 99 wins, 1 loss. teamDiff = 99 - 1 = 98.
+      // subLeaderDiff = 100 - 0 = 100.
+      // gbSubLeader = (100 - 98) / 2 = 1.
+      expect(standings[1].gbDiv, '1');
+      expect(standings[1].gbWc, '-'); // gbWc only set if i > 1
+
+      for (var i = 2; i < 10; i++) {
+        // teamDiff = (100 - i) - i = 100 - 2i
+        // gbSubLeader = (100 - (100 - 2i)) / 2 = 2i / 2 = i
+        // gbWildCard = (100 - (100 - 2i)) / 2 = i
+        expect(standings[i].gbDiv, i.toString());
+        expect(standings[i].gbWc, i.toString());
+      }
+    });
   });
 
   group('setWinningMagicNumber tests', () {

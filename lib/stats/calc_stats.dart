@@ -198,20 +198,35 @@ void calculateGamesBehind(List<TeamStandings> teamStandings, int wcLeaderDiff) {
       teamStandings[0].wins -
       (teamStandings[0].gamesPlayed - teamStandings[0].wins);
 
-  for (var i = 1; i < teamStandings.length; i++) {
+  Map<String, int> subCount = {};
+  int wcCount = 0;
+
+  for (var i = 0; i < teamStandings.length; i++) {
+    var sub = teamStandings[i].subleague;
+    subCount[sub] = (subCount[sub] ?? 0) + 1;
+
     var teamDiff =
         teamStandings[i].wins -
         (teamStandings[i].gamesPlayed - teamStandings[i].wins);
     num gbSubLeader = (subLeaderDiff - teamDiff) / 2;
     num gbWildCard = (wcLeaderDiff - teamDiff) / 2;
+
     if (gbSubLeader > 0) {
       teamStandings[i].gbDiv = formatGamesBehind(gbSubLeader);
     }
-    if (gbWildCard > 0 && i > 1) {
-      teamStandings[i].gbWc = formatGamesBehind(gbWildCard);
-    }
 
-    //print('GbDiv ${teamStandings[i].gbDiv} GbWc ${teamStandings[i].gbWc}');
+    if (subCount[sub]! <= 2) {
+      // Top 2 of subleague, no gbWc
+      teamStandings[i].gbWc = '-';
+    } else {
+      wcCount++;
+      if (wcCount <= 2) {
+        // Top 2 of wildcards, no gbWc
+        teamStandings[i].gbWc = '-';
+      } else if (gbWildCard > 0) {
+        teamStandings[i].gbWc = formatGamesBehind(gbWildCard);
+      }
+    }
   }
 }
 

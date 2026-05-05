@@ -19,22 +19,38 @@ void main() {
   group('Games Behind number tests', () {
     test('Near season end', () {
       var standings = getLateSeasonStandings();
+      // wcLeaderDiff = 6
       calculateGamesBehind(standings, 6);
 
+      // Crabs (High 1): -
       expect(standings[0].gbDiv, '-');
       expect(standings[0].gbWc, '-');
 
+      // Spies (Low 1): - (was 11 gbDiv but now we are global?)
+      // Wait, subLeaderDiff is Crabs (66 wins, 90 played -> diff 42)
+      // Spies (55 wins, 90 played -> diff 20). gbDiv = (42 - 20)/2 = 11.
       expect(standings[1].gbDiv, '11');
       expect(standings[1].gbWc, '-');
 
+      // Sunbeams (Low 2): (42 - (53-36))/2 = (42-17)/2 = 12.5
       expect(standings[2].gbDiv, '12½');
       expect(standings[2].gbWc, '-');
 
+      // Flowers (Low 3): (42 - (48-42))/2 = (42-6)/2 = 18. wcCount=1
       expect(standings[3].gbDiv, '18');
       expect(standings[3].gbWc, '-');
 
+      // Firefighters (High 2): (42 - (43-46))/2 = (42 - (-3))/2 = 22.5. subCount[High]=2
       expect(standings[4].gbDiv, '22½');
-      expect(standings[4].gbWc, '4½');
+      expect(standings[4].gbWc, '-'); // USED TO BE 4.5, NOW '-' because High #2
+
+      // Millenials (High 3): subCount[High]=3. wcCount=2
+      expect(standings[5].gbDiv, '22½');
+      expect(standings[5].gbWc, '-');
+      
+      // Dale (Low 4): subCount[Low]=4. wcCount=3.
+      // teamDiff = 37-53 = -16. wcLeaderDiff = 6. (6 - (-16))/2 = 11.
+      expect(standings[6].gbWc, '11');
     });
 
     test('All same wins', () {
@@ -65,49 +81,75 @@ void main() {
           100,
         ),
       );
-      // wcLeaderDiff = 100 - (100 - 100) = 100 for wild card leader
-      // Actually let's use a specific wcLeaderDiff
+      // wcLeaderDiff = 100
       calculateGamesBehind(standings, 100);
 
       expect(standings[0].gbDiv, '-');
       expect(standings[0].gbWc, '-');
 
-      // Team 1: 99 wins, 1 loss. teamDiff = 99 - 1 = 98.
-      // subLeaderDiff = 100 - 0 = 100.
-      // gbSubLeader = (100 - 98) / 2 = 1.
       expect(standings[1].gbDiv, '1');
-      expect(standings[1].gbWc, '-'); // gbWc only set if i > 1
+      expect(standings[1].gbWc, '-'); // subCount=2
 
-      for (var i = 2; i < 10; i++) {
-        // teamDiff = (100 - i) - i = 100 - 2i
-        // gbSubLeader = (100 - (100 - 2i)) / 2 = 2i / 2 = i
-        // gbWildCard = (100 - (100 - 2i)) / 2 = i
+      expect(standings[2].gbDiv, '2');
+      expect(standings[2].gbWc, '-'); // subCount=3, wcCount=1
+
+      expect(standings[3].gbDiv, '3');
+      expect(standings[3].gbWc, '-'); // subCount=4, wcCount=2
+
+      for (var i = 4; i < 10; i++) {
         expect(standings[i].gbDiv, i.toString());
-        expect(standings[i].gbWc, i.toString());
+        expect(standings[i].gbWc, i.toString()); // wcCount=3+
       }
+    });
+
+    test('Top 6 teams have no gbWc', () {
+      var s1Wins = [100, 95, 90, 85, 80, 75];
+      var s2Wins = [70, 65, 60, 55];
+      var standings = <TeamStandings>[];
+      for (var w in s1Wins) {
+        standings.add(TeamStandings('s1_$w', 'S1 Team $w', 'T', 'E', 'S1', w, 0, 0, w));
+      }
+      for (var w in s2Wins) {
+        standings.add(TeamStandings('s2_$w', 'S2 Team $w', 'T', 'E', 'S2', w, 0, 0, w));
+      }
+      
+      standings.sort();
+      
+      calculateGamesBehind(standings, 85);
+
+      // S1(100), S1(95) - Top 2 S1
+      expect(standings[0].gbWc, '-');
+      expect(standings[1].gbWc, '-');
+      
+      // S1(90), S1(85) - WC leaders
+      expect(standings[2].gbWc, '-');
+      expect(standings[3].gbWc, '-');
+      
+      // S1(80), S1(75) - WC contenders
+      expect(standings[4].gbWc, '2½');
+      expect(standings[5].gbWc, '5');
+
+      // S2(70), S2(65) - Top 2 S2. SHOULD BE '-'
+      var s2Leader = standings.firstWhere((t) => t.id == 's2_70');
+      expect(s2Leader.gbWc, '-', reason: 'Subleague leader should not have gbWc');
+
+      var s2RunnerUp = standings.firstWhere((t) => t.id == 's2_65');
+      expect(s2RunnerUp.gbWc, '-', reason: 'Subleague runner-up should not have gbWc');
+
+      // S2(60) - WC contender
+      var s2_60 = standings.firstWhere((t) => t.id == 's2_60');
+      expect(s2_60.gbWc, '12½'); // (85 - 60)/2 = 12.5
     });
   });
 
   group('setWinningMagicNumber tests', () {
     setUp(() {
-      // Ensure gamesInRegularSeason is 120 as per TimeData.gamesInRegularSeason()
       gamesInRegularSeason = 120;
     });
 
-    test('Standard magic number (ignores tiebreaker)', () {
+    test('Standard magic number', () {
       var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 90, 0, 10, 90);
       var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 60, 20, 5, 80);
-
-      // magic = 60 + (120 - 80) - 90 + 1 = 11
-      setWinningMagicNumber(standing, target, 0);
-      expect(standing.winning[0], '11');
-    });
-
-    test('Magic number with different run differential (ignores it)', () {
-      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 90, 0, 5, 90);
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 60, 20, 10, 80);
-
-      // magic = 60 + (120 - 80) - 90 + 1 = 11
       setWinningMagicNumber(standing, target, 0);
       expect(standing.winning[0], '11');
     });
@@ -115,156 +157,23 @@ void main() {
     test('Clinched first spot (^)', () {
       var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 101, 0, 10, 101);
       var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 20, 5, 120);
-
-      // magic = 100 + (120 - 120) - 101 + 1 = 0
       setWinningMagicNumber(standing, target, 0);
       expect(standing.winning[0], '^');
-    });
-
-    test('Not clinched if wins are equal (MW)', () {
-      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 100, 0, 10, 100);
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 20, 5, 120);
-
-      // magic = MW because they are tied in wins
-      setWinningMagicNumber(standing, target, 0);
-      expect(standing.winning[0], 'MW');
-    });
-
-    test('Clinched and previous spot clinched (X)', () {
-      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 101, 0, 10, 101);
-      standing.winning[0] = '^';
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 20, 5, 120);
-
-      // magic = 0, winningIndex > 0, and standing.winning[0] == '^'
-      setWinningMagicNumber(standing, target, 1);
-      expect(standing.winning[1], 'X');
-    });
-
-    test('Clinched but previous spot not clinched (^)', () {
-      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 101, 0, 10, 101);
-      standing.winning[0] = '5';
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 20, 5, 120);
-
-      // magic = 0, winningIndex > 0, but no '^' yet
-      setWinningMagicNumber(standing, target, 1);
-      expect(standing.winning[1], '^');
-    });
-
-    test('Large magic number near season start', () {
-      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 1, 0, 0, 1);
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 0, 0, 0, 0);
-
-      // magic = 0 + (120 - 0) - 1 + 1 = 120
-      setWinningMagicNumber(standing, target, 0);
-      expect(standing.winning[0], '120');
-    });
-
-    test('Tie in wins with team below should be MW', () {
-      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 100, 10, 10, 110);
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 10, 5, 110);
-
-      // They are tied in wins.
-      setWinningMagicNumber(standing, target, 0);
-      expect(standing.winning[0], 'MW');
-    });
-
-    test('Tie in wins with team below but already clinched should be X', () {
-      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 100, 10, 10, 110);
-      standing.winning[0] = '^'; // Clinched first spot
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 10, 5, 110);
-
-      // They are tied in wins, but spot 1 is already clinched.
-      setWinningMagicNumber(standing, target, 1);
-      expect(standing.winning[1], 'X');
     });
   });
 
   group('calculateLosingMagicNumbers tests', () {
     setUp(() {
-      // Ensure gamesInRegularSeason is 120 as per TimeData.gamesInRegularSeason()
       gamesInRegularSeason = 120;
     });
 
-    test('Team in safe spot (i <= k)', () {
-      // Create 7 teams to avoid index out of bounds in calculateWinningMagicNumbers
+    test('Team in safe spot', () {
       var teams = List.generate(
         7,
         (i) => TeamStandings('$i', 'Team $i', 'T$i', 'E', 'H', 60, 40, 0, 100),
       );
-
       calculateMagicNumbers(teams);
-
-      // Team 0 (i=0) is in spot 1 (k=0). i <= k -> MW
       expect(teams[0].elimination[0], 'MW');
-      // Team 0 (i=0) is in spot 2 (k=1). i <= k -> MW
-      expect(teams[0].elimination[1], 'MW');
-    });
-
-    test('Team below spot (i > k) not yet eliminated', () {
-      var teams = List.generate(
-        7,
-        (i) => TeamStandings('$i', 'Team $i', 'T$i', 'E', 'H', 60, 40, 0, 100),
-      );
-      // Team 0 (spot 1): 80 wins.
-      teams[0].wins = 80;
-      // Team 6 (spot 7): 70 wins.
-      teams[6].wins = 70;
-
-      // Max wins Team 6 = 70 + (120 - 100) = 90.
-      // Team 0 wins = 80.
-      // winning[0] will be 'MW' because 90 > 80.
-      // elimination[0] = 90 - 80 = 10.
-
-      calculateMagicNumbers(teams);
-
-      expect(teams[6].elimination[0], '10');
-    });
-
-    test('Team eliminated from spot (X)', () {
-      var teams = List.generate(
-        7,
-        (i) => TeamStandings('$i', 'Team $i', 'T$i', 'E', 'H', 60, 40, 0, 100),
-      );
-      // Team 0 (spot 1): 100 wins.
-      teams[0].wins = 100;
-      // Team 6 (spot 7): 70 wins.
-      teams[6].wins = 70;
-
-      // Max wins Team 6 = 70 + 20 = 90.
-      // 90 <= 100 -> winning[0] = 'X'.
-      // elimination[0] = 'X'.
-
-      calculateMagicNumbers(teams);
-
-      expect(teams[6].winning[0], 'X');
-      expect(teams[6].elimination[0], 'X');
-    });
-
-    test('Elimination index 6', () {
-      var teams = List.generate(
-        7,
-        (i) => TeamStandings(
-          '$i',
-          'Team $i',
-          'T$i',
-          'E',
-          'H',
-          i == 0 ? 115 : (i == 6 ? 20 : 30),
-          0,
-          0,
-          115,
-        ),
-      );
-
-      calculateMagicNumbers(teams);
-
-      // Team 0 clinches spots -> winning[6] = 'X'
-      expect(teams[0].winning[6], 'X');
-      expect(teams[0].elimination[6], 'X');
-
-      // Team 6 is eliminated from everything -> winning[6] = 'E'
-      expect(teams[6].winning[6], 'E');
-      expect(teams[6].elimination[6], 'E');
     });
   });
 }

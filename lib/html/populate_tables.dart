@@ -9,15 +9,17 @@ void populateGamesBehindTable(
   bool groupBySubLeague,
 ) {
   var table = document.querySelector('#standingsTable')! as HTMLTableElement;
-  allStandings.sort();
   var standings = allStandings.toList();
 
   if (groupBySubLeague == true) {
+    allStandings.sort();
     var firstDiv = allStandings[0].subleague;
     standings = allStandings.where((t) => t.subleague == firstDiv).toList();
     standings.addAll(
       allStandings.where((t) => t.subleague != firstDiv).toList(),
     );
+  } else {
+    standings = sortByTopTwoPerSubleague(allStandings);
   }
 
   for (var row in standings) {
@@ -52,7 +54,7 @@ void populateChancesTable(
 ) {
   var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
-  allStandings.sort((a, b) {
+  int compareChances(TeamStandings a, TeamStandings b) {
     for (var i = 0; i < a.po.length - 1; i++) {
       if (b.po[i] != a.po[i]) {
         return getOrderValue(b.po[i]).compareTo(getOrderValue(a.po[i]));
@@ -64,15 +66,18 @@ void populateChancesTable(
       ).compareTo(getOrderValue(b.po[b.po.length - 1]));
     }
     return a.compareTo(b);
-  });
+  }
 
   var standings = allStandings.toList();
   if (groupBySubLeague == true) {
+    allStandings.sort(compareChances);
     var firstDiv = allStandings[0].subleague;
     standings = allStandings.where((t) => t.subleague == firstDiv).toList();
     standings.addAll(
       allStandings.where((t) => t.subleague != firstDiv).toList(),
     );
+  } else {
+    standings = sortByTopTwoPerSubleague(allStandings, compareChances);
   }
 
   for (var row in standings) {
@@ -116,7 +121,7 @@ void populatePostseasonTable(
 ) {
   var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
-  allStandings.sort((a, b) {
+  int comparePost(TeamStandings a, TeamStandings b) {
     for (var i = 0; i < a.post.length - 1; i++) {
       if (b.post[i] != a.post[i]) {
         return getOrderValue(b.post[i]).compareTo(getOrderValue(a.post[i]));
@@ -128,15 +133,18 @@ void populatePostseasonTable(
       ).compareTo(getOrderValue(b.post[b.post.length - 1]));
     }
     return a.compareTo(b);
-  });
+  }
 
   var standings = allStandings.toList();
   if (groupBySubLeague == true) {
+    allStandings.sort(comparePost);
     var firstDiv = allStandings[0].subleague;
     standings = allStandings.where((t) => t.subleague == firstDiv).toList();
     standings.addAll(
       allStandings.where((t) => t.subleague != firstDiv).toList(),
     );
+  } else {
+    standings = sortByTopTwoPerSubleague(allStandings, comparePost);
   }
 
   for (var row in standings) {
@@ -173,15 +181,17 @@ void populateWinningTable(
 ) {
   var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
-  allStandings.sort();
   var standings = allStandings.toList();
 
   if (groupBySubLeague == true) {
+    allStandings.sort();
     var firstDiv = allStandings[0].subleague;
     standings = allStandings.where((t) => t.subleague == firstDiv).toList();
     standings.addAll(
       allStandings.where((t) => t.subleague != firstDiv).toList(),
     );
+  } else {
+    standings = sortByTopTwoPerSubleague(allStandings);
   }
 
   for (var row in standings) {
@@ -216,15 +226,17 @@ void populateEliminationTable(
 ) {
   var table = document.querySelector('#standingsTable') as HTMLTableElement;
 
-  allStandings.sort();
   var standings = allStandings.toList();
 
   if (groupBySubLeague == true) {
+    allStandings.sort();
     var firstDiv = allStandings[0].subleague;
     standings = allStandings.where((t) => t.subleague == firstDiv).toList();
     standings.addAll(
       allStandings.where((t) => t.subleague != firstDiv).toList(),
     );
+  } else {
+    standings = sortByTopTwoPerSubleague(allStandings);
   }
 
   for (var row in standings) {
@@ -337,4 +349,41 @@ int getOrderValue(String percent) {
     var digits = percent.replaceAll('%', '');
     return int.parse(digits);
   }
+}
+
+List<TeamStandings> sortByTopTwoPerSubleague(List<TeamStandings> allStandings,
+    [int Function(TeamStandings, TeamStandings)? compare]) {
+  // Sort naturally (or by custom compare) first to identify top teams within each subleague
+  var sortedAll = allStandings.toList();
+  if (compare != null) {
+    sortedAll.sort(compare);
+  } else {
+    sortedAll.sort();
+  }
+
+  var subLeagues = sortedAll.map((t) => t.subleague).toSet().toList();
+
+  var topTeams = <TeamStandings>[];
+  var otherTeams = <TeamStandings>[];
+
+  for (var sub in subLeagues) {
+    var subTeams = sortedAll.where((t) => t.subleague == sub).toList();
+    if (subTeams.length > 2) {
+      topTeams.addAll(subTeams.take(2));
+      otherTeams.addAll(subTeams.skip(2));
+    } else {
+      topTeams.addAll(subTeams);
+    }
+  }
+
+  // Sort the groups
+  if (compare != null) {
+    topTeams.sort(compare);
+    otherTeams.sort(compare);
+  } else {
+    topTeams.sort();
+    otherTeams.sort();
+  }
+
+  return [...topTeams, ...otherTeams];
 }

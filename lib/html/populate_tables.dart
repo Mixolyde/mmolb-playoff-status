@@ -351,8 +351,10 @@ int getOrderValue(String percent) {
   }
 }
 
-List<TeamStandings> sortByTopTwoPerSubleague(List<TeamStandings> allStandings,
-    [int Function(TeamStandings, TeamStandings)? compare]) {
+List<TeamStandings> sortByTopTwoPerSubleague(
+  List<TeamStandings> allStandings, [
+  int Function(TeamStandings, TeamStandings)? compare,
+]) {
   // Sort naturally (or by custom compare) first to identify top teams within each subleague
   var sortedAll = allStandings.toList();
   if (compare != null) {

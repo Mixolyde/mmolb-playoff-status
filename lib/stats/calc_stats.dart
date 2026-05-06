@@ -286,7 +286,10 @@ void setWinningMagicNumber(
   }
   //Wb + GRb - Wa + 1
   var magic =
-      target.wins + (gamesInRegularSeason - target.gamesPlayed) - standing.wins + 1;
+      target.wins +
+      (gamesInRegularSeason - target.gamesPlayed) -
+      standing.wins +
+      1;
   //print('WinMN for ${teamStandings[i]} vs. ${teamStandings[b]}: $magic');
   if (magic > 0) {
     //set magic number

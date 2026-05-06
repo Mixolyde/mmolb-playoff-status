@@ -47,7 +47,7 @@ void main() {
       // Millenials (High 3): subCount[High]=3. wcCount=2
       expect(standings[5].gbDiv, '22½');
       expect(standings[5].gbWc, '-');
-      
+
       // Dale (Low 4): subCount[Low]=4. wcCount=3.
       // teamDiff = 37-53 = -16. wcLeaderDiff = 6. (6 - (-16))/2 = 11.
       expect(standings[6].gbWc, '11');
@@ -69,17 +69,8 @@ void main() {
     test('All different wins', () {
       var standings = List.generate(
         10,
-        (i) => TeamStandings(
-          '$i',
-          'Team $i',
-          'T$i',
-          'E',
-          'H',
-          100 - i,
-          i,
-          0,
-          100,
-        ),
+        (i) =>
+            TeamStandings('$i', 'Team $i', 'T$i', 'E', 'H', 100 - i, i, 0, 100),
       );
       // wcLeaderDiff = 100
       calculateGamesBehind(standings, 100);
@@ -107,34 +98,46 @@ void main() {
       var s2Wins = [70, 65, 60, 55];
       var standings = <TeamStandings>[];
       for (var w in s1Wins) {
-        standings.add(TeamStandings('s1_$w', 'S1 Team $w', 'T', 'E', 'S1', w, 0, 0, w));
+        standings.add(
+          TeamStandings('s1_$w', 'S1 Team $w', 'T', 'E', 'S1', w, 0, 0, w),
+        );
       }
       for (var w in s2Wins) {
-        standings.add(TeamStandings('s2_$w', 'S2 Team $w', 'T', 'E', 'S2', w, 0, 0, w));
+        standings.add(
+          TeamStandings('s2_$w', 'S2 Team $w', 'T', 'E', 'S2', w, 0, 0, w),
+        );
       }
-      
+
       standings.sort();
-      
+
       calculateGamesBehind(standings, 85);
 
       // S1(100), S1(95) - Top 2 S1
       expect(standings[0].gbWc, '-');
       expect(standings[1].gbWc, '-');
-      
+
       // S1(90), S1(85) - WC leaders
       expect(standings[2].gbWc, '-');
       expect(standings[3].gbWc, '-');
-      
+
       // S1(80), S1(75) - WC contenders
       expect(standings[4].gbWc, '2½');
       expect(standings[5].gbWc, '5');
 
       // S2(70), S2(65) - Top 2 S2. SHOULD BE '-'
       var s2Leader = standings.firstWhere((t) => t.id == 's2_70');
-      expect(s2Leader.gbWc, '-', reason: 'Subleague leader should not have gbWc');
+      expect(
+        s2Leader.gbWc,
+        '-',
+        reason: 'Subleague leader should not have gbWc',
+      );
 
       var s2RunnerUp = standings.firstWhere((t) => t.id == 's2_65');
-      expect(s2RunnerUp.gbWc, '-', reason: 'Subleague runner-up should not have gbWc');
+      expect(
+        s2RunnerUp.gbWc,
+        '-',
+        reason: 'Subleague runner-up should not have gbWc',
+      );
 
       // S2(60) - WC contender
       var s2_60 = standings.firstWhere((t) => t.id == 's2_60');
@@ -148,15 +151,55 @@ void main() {
     });
 
     test('Standard magic number', () {
-      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 90, 0, 10, 90);
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 60, 20, 5, 80);
+      var standing = TeamStandings(
+        '1',
+        'Team A',
+        'A',
+        '🍎',
+        'High',
+        90,
+        0,
+        10,
+        90,
+      );
+      var target = TeamStandings(
+        '2',
+        'Team B',
+        'B',
+        '🍌',
+        'High',
+        60,
+        20,
+        5,
+        80,
+      );
       setWinningMagicNumber(standing, target, 0);
       expect(standing.winning[0], '11');
     });
 
     test('Clinched first spot (^)', () {
-      var standing = TeamStandings('1', 'Team A', 'A', '🍎', 'High', 101, 0, 10, 101);
-      var target = TeamStandings('2', 'Team B', 'B', '🍌', 'High', 100, 20, 5, 120);
+      var standing = TeamStandings(
+        '1',
+        'Team A',
+        'A',
+        '🍎',
+        'High',
+        101,
+        0,
+        10,
+        101,
+      );
+      var target = TeamStandings(
+        '2',
+        'Team B',
+        'B',
+        '🍌',
+        'High',
+        100,
+        20,
+        5,
+        120,
+      );
       setWinningMagicNumber(standing, target, 0);
       expect(standing.winning[0], '^');
     });
